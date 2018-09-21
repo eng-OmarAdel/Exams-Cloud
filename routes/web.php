@@ -16,4 +16,8 @@ Route::get('/', 'pagesController@index' );
 //Route::get('/questions', 'pagesController@questions' );
 
 Route::resource('questions','questionsController');
-
+Route::get('/mcq','pagesController@mcq');
+Route::get('/tf','pagesController@tf');
+Route::get('/simple','pagesController@simple');
+Route::post('/storemcq', 'questionsController@storemcq');
+Route::post('/storetf', 'questionsController@storetf');
