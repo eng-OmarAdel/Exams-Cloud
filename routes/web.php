@@ -11,6 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'pagesController@index' );
+//Route::get('/createquestion', 'pagesController@createquestion' );
+//Route::get('/questions', 'pagesController@questions' );
+
+Route::resource('questions','questionsController');
+
