@@ -21,3 +21,5 @@ Route::get('/tf','pagesController@tf');
 Route::get('/simple','pagesController@simple');
 Route::post('/storemcq', 'questionsController@storemcq');
 Route::post('/storetf', 'questionsController@storetf');
+Route::get('/questions/{id}/take', 'questionsController@take');
+Route::post('/answer', 'questionsController@answer');

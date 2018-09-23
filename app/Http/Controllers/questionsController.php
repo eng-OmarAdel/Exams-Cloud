@@ -64,7 +64,8 @@ class questionsController extends Controller
             'answer1' => 'required',
             'answer2' => 'required',
             'answer3' => 'required',
-            'answer4' => 'required'
+            'answer4' => 'required',
+            'rightanswer' => 'required'
         ]);
 
         $question = new question;
@@ -74,6 +75,7 @@ class questionsController extends Controller
         $question->answer2 = $request->input('answer2');
         $question->answer3 = $request->input('answer3');
         $question->answer4 = $request->input('answer4');
+        $question->answer = $request->input('rightanswer');
         $question->save();
 
         return redirect('/questions' )->with('success', 'Your Question Added' );
@@ -85,6 +87,29 @@ class questionsController extends Controller
         $qst = question::find($id);  
         return view('questions.show')->with('question', $qst);
     }
+
+    public function take($id)
+    {
+        $qst = question::find($id);  
+        return view('questions.take')->with('question', $qst);
+    }
+
+    public function answer(Request $request)
+    {
+        $this->validate($request,[
+            'answer' => 'required'
+        ]);
+        $id = $request->input('id');
+        $answer = $request->input('answer');
+        $qst = question::find($id);
+        if($answer == $qst->answer)
+        {
+            return redirect('/questions')->with('success', 'Your Answered correctly' );
+        }else{
+            return redirect('/questions')->with('success', 'Try again' );
+        }
+    }
+
 
     /**
      * Show the form for editing the specified resource.

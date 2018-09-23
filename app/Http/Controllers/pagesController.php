@@ -32,4 +32,5 @@ class pagesController extends Controller
     {
         return view('questions.tf');
     }
+
 }
