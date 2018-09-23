@@ -24,3 +24,6 @@ Route::post('/storetf', 'questionsController@storetf');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/questions/{id}/take', 'questionsController@take');
+Route::post('/answer', 'questionsController@answer');

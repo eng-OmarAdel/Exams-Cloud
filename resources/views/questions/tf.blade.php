@@ -10,9 +10,9 @@
                             {{Form::text('title', '', ['class' => 'form-control', 'placeholder' => 'Question'])}}
                         </div>
                         <div class="form-group">
-                            {{Form::label('body', 'Answer')}}
-                            {{Form::text('answer','',['class' => 'form-control', 'placeholder' => 'Answer'])}}
-                        </div>
+                                <h2>{{Form::radio('answer', 'true')}}  True</h2>
+                                <h2>{{Form::radio('answer', 'false')}}  False</h2>
+                            </div>
                         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
                     {!! Form::close() !!}
          
