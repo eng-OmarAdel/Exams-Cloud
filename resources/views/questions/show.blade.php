@@ -11,6 +11,8 @@
                     {!!$question->answer2!!}<br>
                     {!!$question->answer3!!}<br>
                     {!!$question->answer4!!}<br>
+                    <h3>Right answer:</h3>
+                    {!!$question->answer!!}
                 @endif
                 @if($question->kind =='simple' || $question->kind =='tf')
                     {!!$question->answer!!}

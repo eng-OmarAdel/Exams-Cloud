@@ -16,6 +16,8 @@
                             {{Form::text('answer2', '', ['id' => '', 'class' => 'form-control', 'placeholder' => 'Choice 2'])}}<br>
                             {{Form::text('answer3', '', ['id' => '', 'class' => 'form-control', 'placeholder' => 'Choice 3'])}}<br>
                             {{Form::text('answer4', '', ['id' => '', 'class' => 'form-control', 'placeholder' => 'Choice 4'])}}<br>
+                            {{Form::text('rightanswer', '', ['id' => '', 'class' => 'form-control', 'placeholder' => 'Right Answer'])}}<br>
+
                         </div>
                         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
                     {!! Form::close() !!}

@@ -18,8 +18,9 @@
               </ul>
             </li>
             <li> 
-               <a class="nav-link" href="/questions" > questions</a>
+               <a class="nav-link" href="/questions" > Questions</a>
             </li>
+            
             
           </ul>
           <form class="form-inline my-2 my-lg-0">
