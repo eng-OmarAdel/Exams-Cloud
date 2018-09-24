@@ -21,7 +21,10 @@
                <a class="nav-link" href="/register" > register</a>
             </li>    
             @else
+                          <li> 
+
                <a class="nav-link" href="/logout" > logout</a>
+            </li>    
 
             @endif
 
