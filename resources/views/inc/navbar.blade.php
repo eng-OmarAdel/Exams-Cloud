@@ -13,7 +13,17 @@
             <li> 
                <a class="nav-link" href="/questions" > Questions</a>
             </li>
-            
-            
+            @if(!Auth::check())
+                    <li> 
+               <a class="nav-link" href="/login" > login</a>
+            </li>  
+              <li> 
+               <a class="nav-link" href="/register" > register</a>
+            </li>    
+            @else
+               <a class="nav-link" href="/logout" > logout</a>
+
+            @endif
+
           </ul>
         </nav>
