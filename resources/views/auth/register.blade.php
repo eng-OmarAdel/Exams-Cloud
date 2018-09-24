@@ -1,12 +1,12 @@
 @extends('layout.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
+ <div class="block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="box text-color-white equal-height">
+                        <h3>Register</h3>
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -70,8 +70,13 @@
                         </div>
                     </form>
                 </div>
+                        <div class="bg bg-color-danger"></div>
+                    </div>
+                </div>
+ 
             </div>
         </div>
+        <!--/ .container-->
+        <div class="bg"></div><!--/ .bg-->
     </div>
-</div>
 @endsection

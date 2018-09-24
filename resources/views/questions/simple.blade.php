@@ -2,7 +2,7 @@
 
 
 @section('content')
-<br>
+{{-- <br>
         <h1 class="text-center">Create Question <h1><br>
                         {!! Form::open(['action' => 'questionsController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                         <div class="form-group">
@@ -15,5 +15,5 @@
                         </div>
                         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
                     {!! Form::close() !!}
-         
+          --}}
                 @endsection

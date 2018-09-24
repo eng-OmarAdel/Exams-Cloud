@@ -1,14 +1,13 @@
 @extends('layout.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+ <div class="block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="box text-color-white equal-height">
+                        <h3>Login</h3>
+                                           <form method="POST" action="{{ route('login') }}">
                         @csrf
 
                         <div class="form-group row">
@@ -63,9 +62,14 @@
                             </div>
                         </div>
                     </form>
+                        <div class="bg bg-color-danger"></div>
+                    </div>
                 </div>
+ 
             </div>
         </div>
+        <!--/ .container-->
+        <div class="bg"></div><!--/ .bg-->
     </div>
-</div>
+
 @endsection

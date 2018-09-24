@@ -2,8 +2,16 @@
 
 
 @section('content')
-<br>
-<h1 class="text-center">Create Question <h1><br>
+
+<h2 class="text-center">Create a Question <h2><br>
+
+ <div class="block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="box text-color-white equal-height">
+                <div class="card-body">
+     
                         {!! Form::open(['action' => 'questionsController@storemcq', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                         <div class="form-group">
                             {{Form::label('title', 'Title')}}
@@ -19,7 +27,20 @@
                             {{Form::text('rightanswer', '', ['id' => '', 'class' => 'form-control', 'placeholder' => 'Right Answer'])}}<br>
 
                         </div>
-                        {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
+                        {{Form::submit('Submit', ['class'=>'btn btn-danger'])}}
                     {!! Form::close() !!}
-         
+          
+                </div>
+                                        <div class="bg bg-color-default"></div>
+
+                    </div>
+                </div>
+ 
+            </div>
+        </div>
+        <!--/ .container-->
+        <div class="bg"></div><!--/ .bg-->
+    </div>
+<br>
+
                 @endsection
