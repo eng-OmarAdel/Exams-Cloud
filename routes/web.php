@@ -11,19 +11,25 @@
 |
 */
 
-Route::get('/', 'pagesController@index' );
-//Route::get('/createquestion', 'pagesController@createquestion' );
-//Route::get('/questions', 'pagesController@questions' );
-
-Route::resource('questions','questionsController');
-Route::get('/mcq','pagesController@mcq');
-Route::get('/tf','pagesController@tf');
-Route::get('/simple','pagesController@simple');
-Route::post('/storemcq', 'questionsController@storemcq');
-Route::post('/storetf', 'questionsController@storetf');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'can:admin'], function() {
 
-Route::get('/questions/{id}/take', 'questionsController@take');
-Route::post('/answer', 'questionsController@answer');
+Route::get('adminsec', 'AdminController@view');
+});
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+
+///////////////////////////// Categories and their SubCategoies ///////////////////
+Route::resource("Category", "CategoryController");
+Route::delete("Categorydelete/{id}", "CategoryController@Categorydelete");
+
+Route::resource("SubCategories", "SubCategoryController");
+Route::delete("SubCategoriesdelete/{id}", "SubCategoryController@SubCategorydelete");
+Route::get("SubCategories2/{id}", "SubCategoryController@SubCategory2");
+
+
+/////////////////////////////////////////////////////////////////////////
+Route::resource("Question", "QuestionController");
+Route::delete("Questiondelete/{id}", "QuestionController@Questiondelete");
+Route::post("Questionfilter", "QuestionController@Questionfilter");
