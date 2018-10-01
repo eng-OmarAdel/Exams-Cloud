@@ -33,3 +33,7 @@ Route::get("SubCategories2/{id}", "SubCategoryController@SubCategory2");
 Route::resource("Question", "QuestionController");
 Route::delete("Questiondelete/{id}", "QuestionController@Questiondelete");
 Route::post("Questionfilter", "QuestionController@Questionfilter");
+
+
+/*=========== Examination =======================*/
+Route::get('exam/generate', '/ExamController@generate');
