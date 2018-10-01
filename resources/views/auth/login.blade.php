@@ -61,8 +61,8 @@
     <div class="m-grid__item m-grid__item--fluid m-login__wrapper">
         <div class="m-login__container">
             <div class="m-login__logo">
-                <a href="#">
-                <img width="250px" src="{{url('')}}/logoland.png">    
+                <a href="{{url('')}}">
+                <img width="250px" src="{{url('')}}/assets/logo.png">    
                 </a>
             </div>
           {{--   <div class="m-login__account">

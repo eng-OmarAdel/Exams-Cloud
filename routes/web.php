@@ -13,6 +13,10 @@
 
 Auth::routes();
 
+Route::get('/', function(){
+    return view('frontend.home');
+});
+
 Route::group(['middleware' => 'can:admin'], function() {
 
 Route::get('adminsec', 'AdminController@view');
