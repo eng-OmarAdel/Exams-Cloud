@@ -12,6 +12,14 @@ protected $fillable=['difficulty','category_id','sub_category_id','user_id'];
     {
         return $this->embedsMany('App\Response');
     }
+	public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
+	public function sub_category()
+    {
+        return $this->belongsTo('App\SubCategory');
+    }
 
 }
 /*class question extends Model

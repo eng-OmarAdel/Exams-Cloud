@@ -47,4 +47,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('adminsec', 'AdminController@view');
     Route::get('exam/welcome', 'ExamController@welcome');
     Route::post('exam/generate', 'ExamController@generate');
+    Route::get('exam/{exam}/{q}/{count}', 'ExamController@take');
+    Route::post('answer', 'ExamController@answer')->name('answer');
 });

@@ -12,14 +12,15 @@
         <div class="container">
             <br>
 
-            <h2 class="text-center">Your score is {{$result}}</h2>
+            <h2 class="text-center">Your score is {{$points}} out of {{$total}}</h2>
+            <h2><?php $ratio = $points / $total; ?></h2>
 
-            @if($result>=8)
-            <h2>Awesome , you are a genius</h2>
-            @elseif($result>=5 && $result <8)
-            <h2>Good work , but you need some more practice</h2>
-            @elseif($result<5)
-            <h2>You need a lot of hard work</h2>
+            @if($ratio>= 0.8)
+            <h3 class="text-center">Awesome , you are a genius</h3>
+            @elseif($ratio>=0.5 && $ratio <0.8)
+            <h3 class="text-center">Good work , but you need some more practice</h3>
+            @elseif($ratio<5)
+            <h3 class="text-center">You need a lot of hard work</h3>
             @endif
         </div>
 @endsection

@@ -57,9 +57,9 @@ class ExamController extends Controller
                         ]
                     ],
                     [
-                        '$sample' => ['size' => 2]
+                        '$sample' => ['size' => 10]
                     ]
-                ]);
+                ]); //note: aggregate overrides previous filtering if was in laravel style
             })
             ->pluck('_id')->all();//array of ques' ids
 
@@ -73,9 +73,55 @@ class ExamController extends Controller
                 $exam->responses()->associate($response);
             }
             $exam->save();
-            return redirect()->url('exam/'+$exam->id+'/'+$ques[0]);    
+            //dd ($exam->_id);
+            return redirect("exam/$exam->_id/$ques[0]/1");    
         }
 
         return redirect()->back()->with(['msg'=>'no questions match your filters']);
+    }
+
+    public function take($e_id , $q_id, $count)
+    {
+        $exam = Exam::find($e_id);
+        $question = Question::find($q_id);
+        $total = count($exam->responses);
+        return view('frontend.exam.take',compact(
+            'exam',
+            'question',
+            'count',
+            'total'
+        ));
+    }
+
+    public function answer(Request $request)
+    {
+        //dd($request->all());
+        $exam = Exam::find($request->e_id);
+        //dd($exam);
+        $response = $exam->responses()->where('question_id',$request->q_id)->first();
+        //dd($response);
+        $response->answer_id = $request->answer_id;
+        $response->save();
+
+        $count= $request->count + 1;
+        $total = $request->total;
+        if($count <= $total){
+            $q_id = $exam->responses()->where('answer_id',0)->first()->question_id;
+            return redirect("exam/$request->e_id/$q_id/$count");
+        }
+        else{
+            //correction
+            $points = 0;
+            
+            foreach($exam->responses as $res){
+                $answer = Question::find($res->question_id)->answers()->find($res->answer_id);
+                $points += $answer->true_answer;
+            }
+            //dd($points);
+            return view('frontend.exam.result',compact(
+                'points',
+                'total'
+            ));
+        }
     }
 }
