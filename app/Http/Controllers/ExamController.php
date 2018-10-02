@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use App\Question;
+use App\Category;
+use App\SubCategory;
 use App\Exam;
 use App\Answer;
 use App\Response;
@@ -19,7 +21,10 @@ use Auth;
 class ExamController extends Controller
 {
     public function welcome() {
-        return view('frontend.exam.welcome');
+        $cats = Category::all();
+        return view('frontend.exam.welcome',compact(
+            'cats'
+        ));
     }
 
 
