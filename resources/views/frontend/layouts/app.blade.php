@@ -16,8 +16,9 @@
     <link rel="stylesheet" href="{{url('')}}/assets/revolution/css/layers.css" type="text/css">
     <link rel="stylesheet" href="{{url('')}}/assets/revolution/css/navigation.css" type="text/css">
     <link rel="stylesheet" href="{{url('')}}/assets/css/style.css" type="text/css">
+    @stack('customCSS')
 
-    <title>ExamCloud</title>
+    <title>ExamCloud | @yield('title') </title>
 
 </head>
 
@@ -77,6 +78,7 @@
 <!--[if lte IE 9]>
     <script src="{{url('')}}/assets/js/ie.js"></script>
 <![endif]-->
+@stack('customJS')
 <script type="text/javascript">
     
 

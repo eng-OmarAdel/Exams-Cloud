@@ -17,6 +17,12 @@
             <li>
               <a class="nav-link" href="{{url('adminsec')}}" > Admin Panel</a>
             </li>
+
+            <li>
+              <a class="nav-link" href="{{url('exam/welcome')}}" > Exam </a>
+            </li>
+
+
             @if(!Auth::check())
                     <li> 
                <a class="nav-link" href="/login" > login</a>

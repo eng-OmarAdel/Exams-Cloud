@@ -18,6 +18,11 @@ use Auth;
 
 class ExamController extends Controller
 {
+    public function welcome() {
+        return view('frontend.exam.welcome');
+    }
+
+
     public function generate(Request $request) {
         // question props: title','category_id','sub_category_id','difficulty','status'
 

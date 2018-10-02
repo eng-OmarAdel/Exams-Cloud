@@ -35,7 +35,7 @@
                         <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav">
                             <div class="m-header__title">
                                 <h3 class="m-header__title-text">
-                                    ExamCloud
+                                    <a href="{{url('/')}}" style="color:black" target="_blank">ExamCloud</a>
                                 </h3>
                             </div>
                             <!-- BEGIN: Horizontal Menu -->

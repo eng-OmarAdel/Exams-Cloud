@@ -17,6 +17,10 @@ Route::get('/', function(){
     return view('frontend.home');
 });
 
+Route::get('/home', function(){
+    return redirect('/');
+});
+
 Route::group(['middleware' => 'can:admin'], function() {
 
 Route::get('adminsec', 'AdminController@view');
@@ -40,4 +44,5 @@ Route::post("Questionfilter", "QuestionController@Questionfilter");
 
 
 /*=========== Examination =======================*/
-Route::get('exam/generate', '/ExamController@generate');
+Route::get('exam/welcome', 'ExamController@welcome');
+Route::post('exam/generate', 'ExamController@generate');
