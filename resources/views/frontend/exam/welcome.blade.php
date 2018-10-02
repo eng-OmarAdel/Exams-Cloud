@@ -10,13 +10,13 @@
         <div class="container">
             <br>
             <h2 class="text-center">Choose the exam properties</h2><br>
-            <form method="POST" action="/generateExam">
+            <form method="POST" action="/exam/generate">
                 {{csrf_field()}}
 
                 <select id="category" name="category_id" class="form-control">
-                    <option selected disabled>Choose the exam main category</option>
+                    <option value="" selected disabled>Choose the exam main category</option>
                     @foreach ($cats as $cat)
-                        <option value="{{$cat->id}}">{{$cat->title}}</option>
+                        <option value="{{$cat->_id}}">{{$cat->title}}</option>
                     @endforeach
                 </select>
                 <br>
@@ -47,6 +47,7 @@
 @push('customJS')
     <script>
     $(document).ready(function(){
+        $('#category').val('')
         //----------------------------------AJAX code -------------------------//
         // (-2) because of current route has 2 segments over base url
         $.ajaxSetup({

@@ -12,6 +12,7 @@ use Validator;
 use Illuminate\Support\Facades\Input ;
 use File;
 use Auth;
+use DB;
 
 /**
  * toDo:
@@ -29,26 +30,42 @@ class ExamController extends Controller
 
 
     public function generate(Request $request) {
+
         // question props: title','category_id','sub_category_id','difficulty','status'
 
         $category_id = $request['category_id'];
         $sub_category_id = $request['sub_category_id'];
-        $difficulty = $request['difficulty'];
-
+        $difficulty = strtolower($request['difficulty']);
+        //dd($category_id, $sub_category_id, $difficulty);
         $exam = new Exam();
         $exam->category_id = $category_id;
         $exam->sub_category_id = $sub_category_id;
-        $exam->sub_category_id = $sub_category_id;
+        $exam->user_id = auth()->user()->id;
         $exam->difficulty =$difficulty;
 
-        $ques = Question::inRandomOrder()
-            ->where('category_id',$category_id)
-            ->where('sub_category_id',$sub_category_id)
-            ->where('difficulty',$difficulty)
-            ->where('status',1)
-            ->take(10)
-            ->pluck('id')->all();//array of ques' ids
-        if(len($ques)){
+        //dd($exam);
+        
+        $ques = Question::raw(function($collection) use ($category_id,$sub_category_id,$difficulty)
+            {
+                return $collection->aggregate([
+                    [
+                        '$match' => [
+                            'category_id' => "$category_id",
+                            'sub_category_id' => "$sub_category_id",
+                            'difficulty' => "$difficulty",
+                            'status' => 1
+                        ]
+                    ],
+                    [
+                        '$sample' => ['size' => 2]
+                    ]
+                ]);
+            })
+            ->pluck('_id')->all();//array of ques' ids
+
+        //dd($ques);
+
+        if(count($ques)){
             foreach ($ques as $q){
                 $response = new Response();
                 $response->question_id = $q;
@@ -58,6 +75,7 @@ class ExamController extends Controller
             $exam->save();
             return redirect()->url('exam/'+$exam->id+'/'+$ques[0]);    
         }
-        return redirect()->back()->with(['msg'=>'no questions matches your filters']);
+
+        return redirect()->back()->with(['msg'=>'no questions match your filters']);
     }
 }

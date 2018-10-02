@@ -22,8 +22,7 @@ Route::get('/home', function(){
 });
 
 Route::group(['middleware' => 'can:admin'], function() {
-
-Route::get('adminsec', 'AdminController@view');
+    Route::get('adminsec', 'AdminController@view');
 });
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
@@ -44,5 +43,8 @@ Route::post("Questionfilter", "QuestionController@Questionfilter");
 
 
 /*=========== Examination =======================*/
-Route::get('exam/welcome', 'ExamController@welcome');
-Route::post('exam/generate', 'ExamController@generate');
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('adminsec', 'AdminController@view');
+    Route::get('exam/welcome', 'ExamController@welcome');
+    Route::post('exam/generate', 'ExamController@generate');
+});
