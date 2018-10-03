@@ -62,7 +62,7 @@ Questions
                          <div class="col-md-12">
                                                   
                     <div class="form-group m-form__group">
-                                    <select class="form-control m-input m-input--air" id="mark" name="city_id">
+                                    <select class="form-control m-input m-input--air" id="mark1" name="city_id">
                                         <option value="">choose a category</option>
                                 @foreach($categories as $category)
                                         <option value="{{$category->_id}}">{{$category->title}}</option>
@@ -73,7 +73,7 @@ Questions
 
                     </div>
                     <div class="form-group m-form__group">
-                        <select required class="form-control m-input m-input--air" id="series" name="location_id">
+                        <select required class="form-control m-input m-input--air" id="series1" name="location_id">
                             <option value="">choose a sub-category</option>
                                     @foreach ($subcategories as $subcategory)
 
@@ -551,8 +551,11 @@ $(document).on("change",":checkbox",function() {
     $(":checkbox").prop('checked', false);
     $(this).prop('checked', true);
 });
+
 jQuery(document).ready(function() {
     MyTable.init("Questionfilter",".m_datatable");
+    $("#series1").chained("#mark1");
+
     Form_submit.init();
 
     });
