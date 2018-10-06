@@ -106,6 +106,10 @@ class ExamController extends Controller
         $count= $request->count + 1;
         $total = $request->total;
         if($count <= $total){
+            /**
+             * Important:
+             * if any answer id is NULL it will be treated as 'answer_id',0
+             */
             $q_id = $exam->responses()->where('answer_id',0)->first()->question_id;
             return redirect("exam/$request->e_id/$q_id/$count");
         }
