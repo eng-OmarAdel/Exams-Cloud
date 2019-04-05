@@ -2,22 +2,18 @@
 
 namespace App;
 
-//use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Category extends Eloquent {
-
-
-protected $fillable=["title","status"];
-
-    public function exams()
+class Category extends Eloquent
+{
+	    public function subs()
     {
-        return $this->hasMany('App\Exam','category_id');
+        return $this->embedsMany('App\Category');
     }
-    public function sub()
-    {
-        return $this->hasMany('App\SubCategory',"category_id");
-    }
+
+    protected $fillable = [
+        'name',  'created_at','updated_at',
+    ];
 }
-    
-
