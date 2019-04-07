@@ -18,4 +18,6 @@ Route::get('category', 'QuestionController@category');
 Route::put('Correct/{id}', 'QuestionController@Correct');
 Route::resource('Question', 'QuestionController');
 Route::resource('Answer', 'QuestionController@answer');
+Route::resource('Authority', 'AuthorityController');
+Route::resource('Track', 'TrackController');
 Route::get('emailcheck', 'UsersController@emailcheck');
