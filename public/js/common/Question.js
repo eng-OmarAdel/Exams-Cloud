@@ -11,7 +11,10 @@ var DatatablesDataSourceAjaxServer = function() {
 			searchDelay: 500,
       processing: true,
 			serverSide: true,
-			ajax: tablename,
+
+       ajax:{url:tablename, function (data, callback, settings) {
+       }
+       },
 			columns: [
 
                 {data: 'name' ,title: "name"},

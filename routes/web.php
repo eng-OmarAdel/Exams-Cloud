@@ -19,3 +19,8 @@ Route::put('Correct/{id}', 'QuestionController@Correct');
 Route::resource('Question', 'QuestionController');
 Route::resource('Answer', 'QuestionController@answer');
 Route::get('emailcheck', 'UsersController@emailcheck');
+Route::get('register', 'registerController@create');
+Route::post('register', 'registerController@store');
+
+
+

@@ -18,7 +18,10 @@ class User extends Authenticatable
         'email', 'type', 'password', 'username', 'phone', 'status', 'email_token', 'verified', 'full_name', 'package_id',
 
     ];
-
+     public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
     /**
      * The attributes that should be hidden for arrays.
      *
