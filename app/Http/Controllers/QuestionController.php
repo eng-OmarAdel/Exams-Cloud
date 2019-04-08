@@ -23,16 +23,15 @@ class QuestionController extends Controller
 
     public function index()
     {
-        $questions['aaData'] = Question::orderBy("id")->with('tags')->get();
+        $questions = Question::orderBy("id")->with('tags')->get();
 
-        foreach ($questions['aaData'] as $key => &$value1) {
+        foreach ($questions as $key => &$value1) {
             foreach ($value1['tags'] as  &$value) {
                 $value1['mytags'].=  $value['tag'].",";
             }
             $value1['mytags'] = rtrim($value1['mytags'], ",");
         }
-
-        return response()->json($questions);
+    return datatables()->of($questions)->toJson();
     }
 
     /**

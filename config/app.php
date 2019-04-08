@@ -149,6 +149,7 @@ return [
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
 
         /*
@@ -214,6 +215,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
     ],
 
