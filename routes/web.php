@@ -1,6 +1,6 @@
 <?php
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/logout', 'Auth\LoginController@logout');
 // Route::post('register', 'FrontController@register');
