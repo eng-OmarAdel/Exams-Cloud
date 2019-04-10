@@ -36,7 +36,7 @@ class registerController extends Controller
         
         auth()->login($user);
         
-        return redirect()->to('/');
+        //return redirect()->to('/');
     }
 
 }
