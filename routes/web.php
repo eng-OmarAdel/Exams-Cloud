@@ -1,12 +1,12 @@
 <?php
 
-//Auth::routes();
+Auth::routes();
 
 Route::get('/logout', 'Auth\LoginController@logout');
 // Route::post('register', 'FrontController@register');
 // Route::get("emailcheck2", "FrontController@emailcheck");
 Route::get('register', 'registerController@create');
-Route::post('register', 'registerController@store ');
+Route::post('register', 'registerController@store');
 /**************************
  * admins
   * *************************/

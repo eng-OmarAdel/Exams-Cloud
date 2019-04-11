@@ -18,16 +18,16 @@ class registerController extends Controller
    
              {
         $this->validate(request(), [
-            'name' => 'required',
+            'fullname' => 'required',
             'email' => 'required|email|unique:users',
-            'username' => 'required|unique:users',
-            'password' => 'required'
+            //'username' => 'required|unique:users',
+            'password' => 'required|confirmed|min:6'
         ]);
         $user= new User() ;
         $user->password=$request['password'];
         $user->email=$request['email'];
-        $user->username=$request['username'];
-        $user->full_name=$request['name'];
+        //$user->username=$request['username'];
+        $user->full_name=$request['fullname'];
         $user->status='approved';
         $user->type='user';
         // $user = User::create(request(['name', 'email', 'password']));
@@ -36,7 +36,7 @@ class registerController extends Controller
         
         auth()->login($user);
         
-        //return redirect()->to('/');
+        return redirect()->to('/');
     }
 
 }

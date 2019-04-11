@@ -1,4 +1,5 @@
 //== Class Definition
+
 var SnippetLogin = function() {
 
     var login = $('#m_login');
@@ -111,7 +112,7 @@ var SnippetLogin = function() {
             var btn = $(this);
             var form = $(this).closest('form');
 
-            form.validate({
+                form.validate({
                 rules: {
                     fullname: {
                         required: true
@@ -123,8 +124,10 @@ var SnippetLogin = function() {
                     password: {
                         required: true
                     },
-                    rpassword: {
-                        required: true
+                    password_confirmation: {
+                        required: true,
+                        minlength : 5,
+                        equalTo : "#password"
                     },
                     agree: {
                         required: true
@@ -135,28 +138,28 @@ var SnippetLogin = function() {
             if (!form.valid()) {
                 return;
             }
+           
+             btn.addClass('m-loader m-loader--right m-loader--light').attr('disabled', true);
+             form.submit();
+            // form.ajaxSubmit({
+            //     url: '',
+            //     success: function(response, status, xhr, $form) {
+            //     	// similate 2s delay
+            //     	setTimeout(function() {
+	           //          btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
+	           //          form.clearForm();
+	           //          form.validate().resetForm();
 
-            btn.addClass('m-loader m-loader--right m-loader--light').attr('disabled', true);
+	           //          // display signup form
+	           //          displaySignInForm();
+	           //          var signInForm = login.find('.m-login__signin form');
+	           //          signInForm.clearForm();
+	           //          signInForm.validate().resetForm();
 
-            form.ajaxSubmit({
-                url: '',
-                success: function(response, status, xhr, $form) {
-                	// similate 2s delay
-                	setTimeout(function() {
-	                    btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
-	                    form.clearForm();
-	                    form.validate().resetForm();
-
-	                    // display signup form
-	                    displaySignInForm();
-	                    var signInForm = login.find('.m-login__signin form');
-	                    signInForm.clearForm();
-	                    signInForm.validate().resetForm();
-
-	                    showErrorMsg(signInForm, 'success', 'Thank you. To complete your registration please check your email.');
-	                }, 2000);
-                }
-            });
+	           //          showErrorMsg(signInForm, 'success', 'Thank you. To complete your registration please check your email.');
+	           //      }, 2000);
+            //     }
+            // });
         });
     }
 
