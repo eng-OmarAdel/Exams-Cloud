@@ -5,8 +5,10 @@ Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout');
 // Route::post('register', 'FrontController@register');
 // Route::get("emailcheck2", "FrontController@emailcheck");
-Route::get('register', 'registerController@create');
 Route::post('register', 'registerController@store');
+
+// reset-password
+//--------------------------------------------------
 /**************************
  * admins
   * *************************/

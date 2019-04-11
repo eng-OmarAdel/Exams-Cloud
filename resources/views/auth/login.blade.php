@@ -70,6 +70,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                 <div class="m-login__signin">
                     <form method="POST" action="{{ route('login') }}" class="m-login__form m-form">
+                        @if(session()->has('message'))
+    <div class="alert alert-success">
+        {{ session()->get('message') }}
+    </div>
+@endif
                         @if (Session::has('verification_success'))
                             <div class="m-alert m-alert--outline alert alert-success alert-dismissible animated fadeIn"
                                  role="alert">
@@ -167,9 +172,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <h3 class="m-login__title">Forgotten Password ?</h3>
                                         <div class="m-login__desc">Enter your email to reset your password:</div>
                                     </div>
-                                    <form class="m-login__form m-form" action="">
+                                    <form class="m-login__form m-form" method="POST" action="{{ route('password.email') }}">
+                                        {{ csrf_field() }}
                                         <div class="form-group m-form__group">
                                             <input class="form-control m-input" type="text" placeholder="Email" name="email" id="m_email" autocomplete="off">
+                                   
                                         </div>
                                         <div class="m-login__form-action">
                                             <button id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">Request</button>

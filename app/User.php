@@ -3,6 +3,7 @@
 namespace App;
 use Illuminate\Notifications\Notifiable;
 use Jenssegers\Mongodb\Auth\User as Authenticatable;
+use App\Notifications\PasswordReset;
 
 class User extends Authenticatable
 {
@@ -58,4 +59,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Organization', 'user_id');
 
     }
+
+    public function sendPasswordResetNotification($token)
+{
+    $this->notify(new PasswordReset($token));
+}
+
+
 }

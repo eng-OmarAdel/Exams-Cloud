@@ -91,17 +91,17 @@ var SnippetLogin = function() {
             }
 
             btn.addClass('m-loader m-loader--right m-loader--light').attr('disabled', true);
-
-            form.ajaxSubmit({
-                url: '',
-                success: function(response, status, xhr, $form) {
-                	// similate 2s delay
-                	setTimeout(function() {
-	                    btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
-	                    showErrorMsg(form, 'danger', 'Incorrect username or password. Please try again.');
-                    }, 2000);
-                }
-            });
+            form.submit();
+            // form.ajaxSubmit({
+            //     url: '',
+            //     success: function(response, status, xhr, $form) {
+            //     	// similate 2s delay
+            //     	setTimeout(function() {
+	           //          btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
+	           //          showErrorMsg(form, 'danger', 'Incorrect username or password. Please try again.');
+            //         }, 2000);
+            //     }
+            // });
         });
     }
 
@@ -184,26 +184,26 @@ var SnippetLogin = function() {
             }
 
             btn.addClass('m-loader m-loader--right m-loader--light').attr('disabled', true);
+            form.submit();
+            // form.ajaxSubmit({
+            //     url: '',
+            //     success: function(response, status, xhr, $form) { 
+            //     	// similate 2s delay
+            //     	setTimeout(function() {
+            //     		btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false); // remove 
+	           //          form.clearForm(); // clear form
+	           //          form.validate().resetForm(); // reset validation states
 
-            form.ajaxSubmit({
-                url: '',
-                success: function(response, status, xhr, $form) { 
-                	// similate 2s delay
-                	setTimeout(function() {
-                		btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false); // remove 
-	                    form.clearForm(); // clear form
-	                    form.validate().resetForm(); // reset validation states
+	           //          // display signup form
+	           //          displaySignInForm();
+	           //          var signInForm = login.find('.m-login__signin form');
+	           //          signInForm.clearForm();
+	           //          signInForm.validate().resetForm();
 
-	                    // display signup form
-	                    displaySignInForm();
-	                    var signInForm = login.find('.m-login__signin form');
-	                    signInForm.clearForm();
-	                    signInForm.validate().resetForm();
-
-	                    showErrorMsg(signInForm, 'success', 'Cool! Password recovery instruction has been sent to your email.');
-                	}, 2000);
-                }
-            });
+	           //          showErrorMsg(signInForm, 'success', 'Cool! Password recovery instruction has been sent to your email.');
+            //     	}, 2000);
+            //     }
+            // });
         });
     }
 

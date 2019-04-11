@@ -39,4 +39,5 @@ class registerController extends Controller
         return redirect()->to('/');
     }
 
+
 }
