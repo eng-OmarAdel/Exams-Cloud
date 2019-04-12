@@ -23,6 +23,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
         <!--begin::Web font -->
         <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+            <script src="http://malsup.github.com/jquery.form.js"></script> 
+
         <script>
             WebFont.load({
             google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
@@ -30,6 +34,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 sessionStorage.fonts = true;
             }
           });
+                
         </script>
 
         <!--end::Web font -->
@@ -65,6 +70,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                 <div class="m-login__signin">
                     <form method="POST" action="{{ route('login') }}" class="m-login__form m-form">
+                        @if(session()->has('message'))
+    <div class="alert alert-success">
+        {{ session()->get('message') }}
+    </div>
+@endif
                         @if (Session::has('verification_success'))
                             <div class="m-alert m-alert--outline alert alert-success alert-dismissible animated fadeIn"
                                  role="alert">
@@ -127,18 +137,19 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <h3 class="m-login__title">Sign Up</h3>
                                         <div class="m-login__desc">Enter your details to create your account:</div>
                                     </div>
-                                    <form class="m-login__form m-form" action="">
+                                    <form class="m-login__form m-form" method="POST"
+                                     action="{{ action('registerController@store') }}" >
                                         <div class="form-group m-form__group">
                                             <input class="form-control m-input" type="text" placeholder="Fullname" name="fullname">
                                         </div>
                                         <div class="form-group m-form__group">
-                                            <input class="form-control m-input" type="text" placeholder="Email" name="email" autocomplete="off">
+                                            <input class="form-control m-input" type="text" placeholder="Email" name="email" autocomplete="">
                                         </div>
                                         <div class="form-group m-form__group">
-                                            <input class="form-control m-input" type="password" placeholder="Password" name="password">
+                                            <input class="form-control m-input" id="password" type="password" placeholder="Password" name="password">
                                         </div>
                                         <div class="form-group m-form__group">
-                                            <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Confirm Password" name="rpassword">
+                                            <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Confirm Password" name="password_confirmation">
                                         </div>
                                         <div class="row form-group m-form__group m-login__form-sub">
                                             <div class="col m--align-left">
@@ -150,9 +161,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                             </div>
                                         </div>
                                         <div class="m-login__form-action">
-                                            <button id="m_login_signup_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">Sign Up</button>
+                                            <button id="m_login_signup_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" type="submit">Sign Up</button>
                                             <button id="m_login_signup_cancel" class="btn btn-outline-focus  m-btn m-btn--pill m-btn--custom">Cancel</button>
                                         </div>
+                                        {{ csrf_field() }}
                                     </form>
                                 </div>
                                 <div class="m-login__forget-password">
@@ -160,9 +172,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <h3 class="m-login__title">Forgotten Password ?</h3>
                                         <div class="m-login__desc">Enter your email to reset your password:</div>
                                     </div>
-                                    <form class="m-login__form m-form" action="">
+                                    <form class="m-login__form m-form" method="POST" action="{{ route('password.email') }}">
+                                        {{ csrf_field() }}
                                         <div class="form-group m-form__group">
                                             <input class="form-control m-input" type="text" placeholder="Email" name="email" id="m_email" autocomplete="off">
+                                   
                                         </div>
                                         <div class="m-login__form-action">
                                             <button id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">Request</button>

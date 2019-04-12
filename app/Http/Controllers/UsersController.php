@@ -17,6 +17,7 @@ class UsersController extends Controller
 
     }
 
+
     /**
      * Display a listing of the resource.
      *
@@ -37,6 +38,7 @@ class UsersController extends Controller
 
         }
     }
+    
     public function index()
     {
         $users = User::where('type', "admin")->orderBy("updated_at", "desc")->get();
@@ -80,7 +82,7 @@ class UsersController extends Controller
         $request['status'] = "approved";
         $request['type']   = "admin";
 
-        $request['password'] = bcrypt($request['password']);
+        $request['password'] = $request['password'];
 
         $e->fill($request->all());
         $e->save();
@@ -123,7 +125,7 @@ class UsersController extends Controller
 
         } else {
 
-            $request['password'] = bcrypt($request['password']);
+            $request['password'] = $request['password'];
             $e->fill($request->all());
 
         }
