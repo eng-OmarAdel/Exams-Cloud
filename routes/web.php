@@ -5,12 +5,13 @@ Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout');
 // Route::post('register', 'FrontController@register');
 // Route::get("emailcheck2", "FrontController@emailcheck");
+Route::post('register', 'registerController@store');
 
-
-
+// reset-password
+//--------------------------------------------------
 /**************************
  * admins
- * *************************/
+  * *************************/
 Route::view('/profile', 'common/profile');
 Route::get('/', 'ViewController@view');
 Route::resource('Users', 'UsersController');
@@ -26,3 +27,4 @@ Route::get('emailcheck', 'UsersController@emailcheck');
 Route::get('trackOptions','TrackController@travesre_for_options');
 Route::get('categoryOptions','CategoryController@travesre_for_options');
 Route::get('showAuth/{id}','AuthProfileController@index');
+

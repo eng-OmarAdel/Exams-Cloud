@@ -9,8 +9,12 @@ var DatatablesDataSourceAjaxServer = function() {
 		table.DataTable({
 			responsive: true,
 			searchDelay: 500,
-			processing: true,
-			ajax: tablename,
+      processing: true,
+			serverSide: true,
+
+       ajax:{url:tablename, function (data, callback, settings) {
+       }
+       },
 			columns: [
 
                 {data: 'name' ,title: "name"},
@@ -24,7 +28,7 @@ var DatatablesDataSourceAjaxServer = function() {
 					targets: -1,
 					title: 'Actions',
 					orderable: false,
-					render: function(data, type, full, meta) {
+					render: function(data, type, full  , meta) {
                         // if (full.status == "approved") {
 
                         //     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\')" href="javascript:;"><i class="la la-ban"></i> suspend</a>'
@@ -130,6 +134,7 @@ jQuery(document).ready(function() {
         $(this).prop('checked', true);
     });
 var custom_after=  function(data){
+  alert("welcome to edit")
         $("#is_programming").trigger("change");
         is_programming=$("#is_programming").val();
         if(is_programming=="no"){

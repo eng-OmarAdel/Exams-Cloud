@@ -141,7 +141,7 @@ return [
         Illuminate\Pipeline\PipelineServiceProvider::class,
         Illuminate\Queue\QueueServiceProvider::class,
         Illuminate\Redis\RedisServiceProvider::class,
-        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
+        Jenssegers\Mongodb\Auth\PasswordResetServiceProvider::class,
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
@@ -149,12 +149,13 @@ return [
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
 
         /*
          * Package Service Providers...
          */
-
+        Jenssegers\Mongodb\Auth\PasswordResetServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -163,6 +164,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+       
 
     ],
 
@@ -214,6 +216,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
     ],
 

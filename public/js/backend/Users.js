@@ -10,6 +10,8 @@ var DatatablesDataSourceAjaxServer = function() {
 			responsive: true,
 			searchDelay: 500,
 			processing: true,
+            serverSide: true,
+
 			ajax: tablename,
 			columns: [
 				// {data: '_id' ,title: "#"},
