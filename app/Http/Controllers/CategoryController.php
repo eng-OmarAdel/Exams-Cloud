@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
-use App\Track;
+use App\Category;
 use Jenssegers\Mongodb\Auth\PasswordResetServiceProvider;
 use Jenssegers\Mongodb\Auth;
 use Illuminate\Support\Facades\DB;
 
-class TrackController extends Controller
+class CategoryController extends Controller
 {
 
 
@@ -20,24 +20,10 @@ class TrackController extends Controller
 
     }
 
-    /* general  */
-    public function object_traverse_recursive($tree_node , &$objects){
-            $objects[]=$tree_node;
-            foreach ($tree_node->child_ids as $child_id) {
-                $child = Track::find($child_id);
-                self::object_traverse_recursive($child,$objects);
-            }
-            return ;
-    }
-
-
-
     public function track_traverse_recursive($tree_node , &$options){
         $node_options = "";
-        //echo("tree_node ".$tree_node->name."\n");
         // if ($tree_node->level != "-1" ){ 
             $node_options .= "<option value =' " . $tree_node->_id . "'>";
-            
         // }
         for($j = 0 ; $j < $tree_node->level ; $j++)
         {
@@ -46,9 +32,7 @@ class TrackController extends Controller
         $node_options .= $tree_node->name . "</option>";
         $options.=$node_options;
         foreach ($tree_node->child_ids as $child_id) {
-            $child = Track::find($child_id);
-            //echo("child ".$child->name."\n");
-            //return;
+            $child = Category::find($child_id);
             self::track_traverse_recursive($child,$options);
         }
         return ;
@@ -56,33 +40,28 @@ class TrackController extends Controller
 
     public function index()
     {
-        //ordered as a tree ... (view)
-        $tracks = [];
-        $root = Track::where('name', 'root')->where('level',-1)->first();
-        self::object_traverse_recursive($root , $tracks);
-        return view("common.Track", ["tracks"=>$tracks]);
+        $categories = [];
+        $root = Category::where('name', 'root')->where('level','-1')->first();
+        self::object_traverse_recursive($root , $categories);
+        return view("common.Category", ["categories"=>$categories]);
     }
 
-    public function tracks_ordered()
-    {
-        //ordered as a tree ... (json)
-        $tracks = [];
-        $root = Track::where('name', 'root')->where('level',-1)->first();
-        self::object_traverse_recursive($root , $tracks);
-        $result['aaData'] = $tracks;
-        return response()->json($result);
+    public function object_traverse_recursive($tree_node , &$objects){
+        $objects[]=$tree_node;
+        foreach ($tree_node->child_ids as $child_id) {
+            $child = Category::find($child_id);
+            self::object_traverse_recursive($child,$objects);
+        }
+        return ;
     }
 
     public function travesre_for_options()
     {
-        $root = Track::where('name', 'root')->where('level',-1)->first();
+        $root = Category::where('name', 'root')->where('level','-1')->first();
         $root_opts = "";
         self::track_traverse_recursive($root , $root_opts);
         return response()->json($root_opts);
     }
-
-
-    
 
 
     /**
@@ -105,7 +84,6 @@ class TrackController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'        => 'required|max:255',
-            'parent_id' => 'max:255',
         ]);
 
         if ($validator->fails()) {
@@ -113,22 +91,22 @@ class TrackController extends Controller
 
         }
 
-        $parentID = $request->parentTrack;
-        $parent = Track::where('_id', $parentID)->first();
+        $parentID = $request->parentCategory;
+        $parent = Category::where('_id', $parentID)->first();
 
         $request['parent_id'] = $parent['_id'];
         $request['level'] = $parent['level'] + 1;
         $request['child_ids'] = [];
-        $new_track = new Track();
-        $new_track->fill($request->all());
-        $new_track->save();
+        $new_category = new Category();
+        $new_category->fill($request->all());
+        $new_category->save();
         //updating parent
         $childs = $parent->child_ids;
-        $childs[] = $new_track->_id;
+        $childs[] = $new_category->_id;
         $parent->child_ids = $childs;
         $parent->save();
         //
-        return response()->json($new_track);
+        return response()->json($new_category);
     }
 
     
@@ -140,9 +118,9 @@ class TrackController extends Controller
      */
     public function show($id)
     {
-         $Track = Track::where('_id', $id)->first();
+         $Category = Category::where('_id', $id)->first();
          
-        return response()->json($Track);
+        return response()->json($Category);
 
     }
     public function update(Request $request, $id)
@@ -158,13 +136,13 @@ class TrackController extends Controller
 
             }
 
-            $Track = Track::where('_id', $id)->first();
+            $Category = Category::where('_id', $id)->first();
 }
 
 
     public function destroy($id)
     {
-         Track::where('id', $id)->delete();
+         Category::where('id', $id)->delete();
     }
 
     

@@ -1,15 +1,16 @@
 @extends("layouts.index")
 @section("title")
-@php $tablename="Track" @endphp
+@php $tablename="Category" @endphp
 {{$tablename}}
 @endsection
 @section("content")						
+
 						<div class="m-portlet m-portlet--mobile">
 							<div class="m-portlet__head">
 								<div class="m-portlet__head-caption">
 									<div class="m-portlet__head-title">
 										<h3 class="m-portlet__head-text">
-											{{$tablename}}s
+											{{$tablename}}
 										</h3>
 									</div>
 								</div>
@@ -30,37 +31,37 @@
 							<div class="m-portlet__body">
 
 								<!--begin: Datatable -->
-								<table class="" id="m_table_1">
-									
-								</table>
+								{{-- <table class="" id="m_table_1">
+
+								</table> --}}
 
 								<table class="dataTable no-footer dtr-inline" role="grid" style="width: 1224px;">
-									<thead>
-										<tr role="row">
-											<th class="sorting_asc" tabindex="0" aria-controls="m_table_1" rowspan="1" colspan="1" style="width: 389px;" aria-label="name: activate to sort column descending" aria-sort="ascending">name</th>
-											<th class="sorting_asc" tabindex="0" aria-controls="m_table_1" rowspan="1" colspan="1" style="width: 389px;" aria-label="name: activate to sort column descending" aria-sort="ascending">creation date</th>
-										</tr>
-										<tbody>
-											@foreach ($tracks as $track)
-											@if ($track->level == -1)
-													@continue
-											@endif
-											<tr role="row" id="table">
-													<td>
-														@for ($i = 0; $i < $track->level; $i++)
-																&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														@endfor
-														{{$track->name}}
-													</td>
-													<td>
-														{{$track->created_at}}
-													</td>
-												</tr>
-											@endforeach
-											
-										</tbody>
-									</thead>
-								</table>
+										<thead>
+											<tr role="row">
+												<th class="sorting_asc" tabindex="0" aria-controls="m_table_1" rowspan="1" colspan="1" style="width: 389px;" aria-label="name: activate to sort column descending" aria-sort="ascending">name</th>
+												<th class="sorting_asc" tabindex="0" aria-controls="m_table_1" rowspan="1" colspan="1" style="width: 389px;" aria-label="name: activate to sort column descending" aria-sort="ascending">creation date</th>
+											</tr>
+											<tbody>
+												@foreach ($categories as $category)
+												@if ($category->level == -1)
+														@continue
+												@endif
+												<tr role="row" id="table">
+														<td>
+															@for ($i = 0; $i < $category->level; $i++)
+																	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+															@endfor
+															{{$category->name}}
+														</td>
+														<td>
+															{{$category->created_at}}
+														</td>
+													</tr>
+												@endforeach
+												
+											</tbody>
+										</thead>
+									</table>
 							</div>
 
 						<!-- END EXAMPLE TABLE PORTLET-->
@@ -92,11 +93,11 @@
 													</div>
 
 													<div class="form-group m-form__group">
-															<label for="exampleInputEmail1" id="question_label">Parent track</label>
+															<label for="exampleInputEmail1" id="question_label">Parent category</label>
 															{{-- <input class="ignoreField form-control m-input qbank" name="name" id="name"
 																				placeholder="Name"> --}}
 
-															<select class="form-control" id="parentTrack" name="parentTrack">
+															<select class="form-control" id="parentCategory" name="parentCategory">
 															</select>
 													</div>
 											        <div class="form-group m-form__group">

@@ -13,9 +13,7 @@ var DatatablesDataSourceAjaxServer = function() {
 			ajax: tablename,
 			columns: [
 
-        {data: 'name' ,title: "name"},
-        // {data: 'track' ,title: "track"},
-        // {data: 'category' ,title: "category"},
+                {data: 'name' ,title: "name"},
 				{data: 'created_at' ,title: "Creation date"},
 				{data: 'Actions',title: "Actions"},
 			],
@@ -32,10 +30,9 @@ var DatatablesDataSourceAjaxServer = function() {
                         // } else {
                         //     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\' )" href="javascript:;"><i class="la la-check-circle"></i> approve</a>'
                         // }
-                        // status = '<a class="dropdown-item" target="_blank" href="?view=AuthProfile&id='` + full._id + `'"><i class="la la-check-circle"></i> Solve the question</a>'
-                        status = '<a id="view" href="/showAuth/' + full._id + '" class="dropdown-item" > View Authority</a>'
-            
-                        return `
+          status = '<a class="dropdown-item" target="_blank" href="?view=QuestionSolve&id=' + full._id + '"><i class="la la-check-circle"></i> Solve the question</a>'
+
+						return `
                         <span class="dropdown">
                             <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
                               <i class="la la-ellipsis-h"></i>
@@ -46,8 +43,7 @@ var DatatablesDataSourceAjaxServer = function() {
                         </span>
                         <a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
                           <i class="la la-edit"></i>
-                        </a>
-                        `;
+                        </a>`;
 					},
 				},
 			],
@@ -66,30 +62,24 @@ var DatatablesDataSourceAjaxServer = function() {
 
 }();
 
+
+ 
+
 var table_reload;
 jQuery(document).ready(function() {
 	table_reload=DatatablesDataSourceAjaxServer.init();
                    validation( {});
-                   /*
-                   $.ajax({
-                    url: "/trackOptions",
-            
-                    complete: function(jqXHR){
-                    var data = $.parseJSON(jqXHR.responseText);
-                    //console.log(data);
-                    $("#track").html(data);
-                    }});
+        $.ajax({
+        url: "/categoryOptions",
 
-                    $.ajax({
-                      url: "/categoryOptions",
-              
-                      complete: function(jqXHR){
-                      var data = $.parseJSON(jqXHR.responseText);
-                      //console.log(data);
-                      $("#category").html(data);
-                      }}); 
-
-                    */
+        complete: function(jqXHR){
+        var data = $.parseJSON(jqXHR.responseText);
+        console.log(data);
+        $("#parentCategory").html(data);
+        }});
 });
+    //////////////////////////////////////////////////////////////////////
 
+
+        
 

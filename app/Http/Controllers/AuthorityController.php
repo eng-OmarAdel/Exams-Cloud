@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Authority;
+use App\Track;
+use App\Category;
 use Jenssegers\Mongodb\Auth\PasswordResetServiceProvider;
 use Jenssegers\Mongodb\Auth;
 
@@ -23,7 +25,6 @@ class AuthorityController extends Controller
     public function index()
     {
         $authorities['aaData'] = Authority::orderBy("id")->get();
-
         return response()->json($authorities);
     }
 
@@ -46,9 +47,8 @@ class AuthorityController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'        => 'required|max:255|unique:users',
-            'track'     => 'required|max:255|unique:users',
-            'category' => 'required|max:255|unique:users',
+            'name'        => 'required|max:255',
+            
         ]);
 
         if ($validator->fails()) {
@@ -56,9 +56,14 @@ class AuthorityController extends Controller
 
         }
 
+        // $track = Track::where('_id', $request['track'])->first();
+        // $category = Category::where('_id', $request['category'])->first();
+
 /////////////////////////////////////////////////////////////////////////////////////
         $e                 = new Authority();
-        $request['status'] = "approved";
+        // $request['track'] = $track['name'];
+        // $request['category'] = $category['name'];
+        // $request['status'] = "approved";
 
 
         $e->fill($request->all());
@@ -73,19 +78,12 @@ class AuthorityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-         $Question = Question::where('_id', $id)->with("answers")->with("tags")->first();
-         $tags="";
-         foreach ($Question['tags'] as  $value) {
-            $tags.=  $value['tag'].",";
-                     }
-        $tags = rtrim($tags, ",");
-            unset($Question['tags']);
-            $Question['tags']=$tags;
-        return response()->json($Question);
-
+       $auth =  Authority::where('_id', $id)->first();
+       return view("common.AuthProfile", ["auth"=>$auth]);
     }
+    
     public function update(Request $request, $id)
     {
 

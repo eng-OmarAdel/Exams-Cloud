@@ -4,7 +4,6 @@
 {{$tablename}}
 @endsection
 @section("content")						
-
 						<div class="m-portlet m-portlet--mobile">
 							<div class="m-portlet__head">
 								<div class="m-portlet__head-caption">
@@ -69,22 +68,35 @@
 											                      placeholder="Name">
 															</div>	
 															
-															<div class="form-group m-form__group">
+															{{-- <div class="form-group m-form__group">
 																	<label for="exampleInputEmail1" id="question_label">Track</label>
-											            <input class="ignoreField form-control m-input qbank" name="track" id="track"
-											                      placeholder="Track">
+											            
+																						
+																		<select class="form-control" name="track" id="track">
+																		</select>
 															</div>
+
+															<div class="form-group m-form__group">
+																	<label for="exampleInputEmail1" id="question_label">Track name</label>
+											            
+																						
+																						<input class="ignoreField form-control m-input qbank" name="trackname" id="trackname" placeholder="Track Name">
+																					</div>
 
 															<div class="form-group m-form__group">
 																	<label for="exampleInputEmail1" id="question_label">Subjects</label>
 											            <select class="form-control" name="category" id="category">
-																		<option>Maths</option>
-																		<option>Physics</option>
-																		<option>Chemistry</option>
-																		<option>English</option>
+														
 
 											            </select>
 															</div>
+
+															<div class="form-group m-form__group">
+																	<label for="exampleInputEmail1" id="question_label">Track name</label>
+											            
+																						
+																						<input class="ignoreField form-control m-input qbank" name="subjectname" id="subjectname" placeholder="Subject Name">
+																					</div> --}}
 
 													       
 

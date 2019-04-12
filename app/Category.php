@@ -14,6 +14,6 @@ class Category extends Eloquent
     }
 
     protected $fillable = [
-        'name',  'created_at','updated_at',
+        'name', 'level','parent_id','child_ids', 'created_at','updated_at',
     ];
 }
