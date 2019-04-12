@@ -90,3 +90,5 @@ function validation(rulz, form=$("#form_add"), table_id="#m_table_1") {
     });
     return x;
 }
+
+
