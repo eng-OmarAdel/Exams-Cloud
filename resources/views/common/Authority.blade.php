@@ -1,10 +1,9 @@
 @extends("layouts.index")
 @section("title")
-@php $tablename="Users" @endphp
+@php $tablename="Authority" @endphp
 {{$tablename}}
 @endsection
 @section("content")						
-
 						<div class="m-portlet m-portlet--mobile">
 							<div class="m-portlet__head">
 								<div class="m-portlet__head-caption">
@@ -20,7 +19,7 @@
 											<a href="#" onclick="actions()" class="btn btn-primary m-btn m-btn--pill m-btn--custom m-btn--icon m-btn--air" id="modal_button" data-toggle="modal" data-target="#m_modal_4">
 												<span>
 													<i class="la la-cart-plus"></i>
-													<span>New User</span>
+													<span>New Authority</span>
 												</span>
 											</a>
 										</li>
@@ -55,41 +54,62 @@
 
 										<div id="test">
 
+											{{csrf_field()}}
+											<input type="hidden" name="_method" value="post" fillable="never"/>
+											<div class="m-portlet__body">
+											    <div id="test">
+													<div>
 
-                                            <div class="form-group m-form__group">
-                                                <label for="exampleInputEmail1">Full name</label>
-                                                <input type="text" class="ignoreField form-control m-input"
-                                                       name="full_name" id="full_name" placeholder="Enter full name">
-                                            </div>
-                                            <div class="form-group m-form__group">
-                                                <label for="exampleInputEmail1">Username</label>
-                                                <input type="text" class="ignoreField form-control m-input"
-                                                       name="username" id="username" placeholder="Enter  username">
-                                            </div>
-                                            <div class="form-group m-form__group">
-                                                <label for="exampleInputEmail1">Login Email</label>
-                                                <input type="email" class="ignoreField form-control m-input"
-                                                       name="email" id="email" placeholder="Enter Login Email">
-                                            </div>
-                                            <div class="form-group m-form__group">
-                                                <label for="exampleInputEmail1">password</label>
-                                                <input type="password" class="ignoreField form-control m-input"
-                                                       name="password" id="password" placeholder="Enter password">
-                                            </div>
-                                            <div class="form-group m-form__group">
-                                                <label for="exampleInputEmail1">Confirm password</label>
-                                                <input type="password" class="ignoreField form-control m-input"
-                                                       name="confirmpassword" id="confirmpassword"
-                                                       placeholder="Enter password">
-                                            </div>
+														
+													</div>
+											        <div class="form-group m-form__group">
+											            <label for="exampleInputEmail1" id="question_label">Name</label>
+											            <input class="ignoreField form-control m-input qbank" name="name" id="name"
+											                      placeholder="Name">
+															</div>	
+															
+															{{-- <div class="form-group m-form__group">
+																	<label for="exampleInputEmail1" id="question_label">Track</label>
+											            
+																						
+																		<select class="form-control" name="track" id="track">
+																		</select>
+															</div>
 
+															<div class="form-group m-form__group">
+																	<label for="exampleInputEmail1" id="question_label">Track name</label>
+											            
+																						
+																						<input class="ignoreField form-control m-input qbank" name="trackname" id="trackname" placeholder="Track Name">
+																					</div>
+
+															<div class="form-group m-form__group">
+																	<label for="exampleInputEmail1" id="question_label">Subjects</label>
+											            <select class="form-control" name="category" id="category">
+														
+
+											            </select>
+															</div>
+
+															<div class="form-group m-form__group">
+																	<label for="exampleInputEmail1" id="question_label">Track name</label>
+											            
+																						
+																						<input class="ignoreField form-control m-input qbank" name="subjectname" id="subjectname" placeholder="Subject Name">
+																					</div> --}}
+
+													       
+
+											        
+											    </div>
+											</div>
 
                                         </div>
 
 						        <input style="display: none" type="reset" id="form_reset" class="btn btn-secondary">
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						        <button type="submit" class="btn btn-primary">Add user</button>
+						        <button type="submit" class="btn btn-primary">Add authority</button>
 						      </div>
 						        </form>
 						      </div>
@@ -108,6 +128,6 @@
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/backend/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection
 

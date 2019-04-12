@@ -20,7 +20,7 @@
 											<a href="#" onclick="actions()" class="btn btn-primary m-btn m-btn--pill m-btn--custom m-btn--icon m-btn--air" id="modal_button" data-toggle="modal" data-target="#m_modal_4">
 												<span>
 													<i class="la la-cart-plus"></i>
-													<span>New Record</span>
+													<span>New Question</span>
 												</span>
 											</a>
 										</li>
@@ -136,7 +136,7 @@
 						        <input style="display: none" type="reset" id="form_reset" class="btn btn-secondary">
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						        <button type="submit" class="btn btn-primary">Send message</button>
+						        <button type="submit" class="btn btn-primary">Add question</button>
 						      </div>
 						        </form>
 						      </div>
