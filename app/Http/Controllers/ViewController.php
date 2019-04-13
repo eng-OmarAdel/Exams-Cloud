@@ -12,7 +12,7 @@ class ViewController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
 
 
     }
@@ -39,7 +39,7 @@ class ViewController extends Controller
 * if not it will see the common folder else it will give an error  
 ******************************************************************************************/        
         if ($view == null || $view == '') {
-            $view = 'Question';
+            $view = 'Home-page';
         } 
         if (view()->exists($main."/".$view)) {
             $view=$main."/".$view;
