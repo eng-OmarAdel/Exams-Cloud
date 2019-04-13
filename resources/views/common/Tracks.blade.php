@@ -107,4 +107,3 @@
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
 <script type="text/javascript" authid="{{$_GET['id']}}" tablename="{{$tablename}}?id={{$_GET['id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection
-

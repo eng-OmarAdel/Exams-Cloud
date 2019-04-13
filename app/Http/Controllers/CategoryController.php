@@ -43,7 +43,16 @@ class CategoryController extends Controller
         $categories = [];
         $root = Category::where('name', 'root')->where('level','-1')->first();
         self::object_traverse_recursive($root , $categories);
-        return view("common.Category", ["categories"=>$categories]);
+        foreach ($categories as $track){
+            if ($track->level == -1)
+                    continue;
+
+        for ($i = 0; $i < $track->level; $i++){
+            $track->name="--".$track->name;
+                }
+    }
+        return datatables()->of($categories)->toJson();
+        //return view("common.Category", ["categories"=>$categories]);
     }
 
     public function object_traverse_recursive($tree_node , &$objects){
@@ -83,7 +92,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'        => 'required|max:255',
+            'name'        => 'required|max:255|unique:categories',
         ]);
 
         if ($validator->fails()) {
