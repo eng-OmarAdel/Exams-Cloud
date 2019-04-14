@@ -11,8 +11,9 @@
                                        
 @endsection
 @section("content")
-<div class="container">
-                <div class="row fullscreen d-flex align-items-center justify-content-center">
+<section class="home-banner-area relative">
+    <div class="container">
+                <div class="row fullscreen d-flex align-items-center justify-content-center" id="home_search_area">
                     <div class="banner-content col-lg-8 col-md-12">
                         <h1 class="wow fadeIn" data-wow-duration="4s">
                             the Best Questions
@@ -214,7 +215,7 @@
             <div class="container">
                 <div class="row align-items-center justify-content-center">
                     <div class="col-lg-5 col-md-6 about-left">
-                        <img alt="" class="img-fluid" src="img/about.jpg">
+                        <img alt="" class="img-fluid" src="{{url('')}}/img/about.jpg">
                         </img>
                     </div>
                     <div class="offset-lg-1 col-lg-6 offset-md-0 col-md-12 about-right">
