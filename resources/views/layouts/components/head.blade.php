@@ -73,6 +73,8 @@
 		<link rel="stylesheet" type="text/css" href="{{url("")}}/plugins/DataTables/datatables.min.css"/>
 
 		<link rel="shortcut icon" href="{{url('')}}/assets/demo/media/img/logo/favicon.ico" />
+		@yield('css') 
+		@yield('fonts') 
 	</head>
 
 	<!-- end::Head -->
