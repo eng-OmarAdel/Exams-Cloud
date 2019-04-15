@@ -1754,6 +1754,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/Nexmo/nexmo-php/zipball/f8582d2361382e2b02352b1cb96c69ce2a2c7360",
                 "reference": "f8582d2361382e2b02352b1cb96c69ce2a2c7360",
+
                 "shasum": ""
             },
             "require": {
@@ -1788,6 +1789,7 @@
                 }
             ],
             "description": "PHP Client for using Nexmo's API.",
+
             "time": "2019-04-13T10:18:16+00:00"
         },
         {

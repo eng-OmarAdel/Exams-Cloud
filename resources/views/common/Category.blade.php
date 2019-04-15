@@ -31,11 +31,11 @@
 							<div class="m-portlet__body">
 
 								<!--begin: Datatable -->
-								{{-- <table class="" id="m_table_1">
+								<table class="" id="m_table_1">
 
-								</table> --}}
+								</table>
 
-								<table class="dataTable no-footer dtr-inline" role="grid" style="width: 1224px;">
+								{{-- <table class="dataTable no-footer dtr-inline" role="grid" style="width: 1224px;">
 										<thead>
 											<tr role="row">
 												<th class="sorting_asc" tabindex="0" aria-controls="m_table_1" rowspan="1" colspan="1" style="width: 389px;" aria-label="name: activate to sort column descending" aria-sort="ascending">name</th>
@@ -61,7 +61,7 @@
 												
 											</tbody>
 										</thead>
-									</table>
+									</table> --}}
 							</div>
 
 						<!-- END EXAMPLE TABLE PORTLET-->

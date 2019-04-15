@@ -87,7 +87,16 @@ var DatatablesDataSourceAjaxServer = function() {
 var table_reload;
 jQuery(document).ready(function() {
 	table_reload=DatatablesDataSourceAjaxServer.init();
-	               validation( {});
+                 validation( {});
+                 
+                 $.ajax({
+                  url: "/categoryOptions",
+          
+                  complete: function(jqXHR){
+                  var data = $.parseJSON(jqXHR.responseText);
+                  console.log(data);
+                  $("#Category").html(data);
+                  }});
 });
     //////////////////////////////////////////////////////////////////////
     $(document).on('click', "#addanswer" , function(e) {

@@ -26,5 +26,12 @@ Route::resource('Category', 'CategoryController');
 Route::get('emailcheck', 'UsersController@emailcheck');
 Route::get('trackOptions','TrackController@travesre_for_options');
 Route::get('categoryOptions','CategoryController@travesre_for_options');
+Route::get('AuthcategoryOptions','AuthProfileController@travesre_for_options');
+Route::get('AuthtrackOptions','AuthProfileController@travesre_for_options1');
+Route::post('AuthProfile','AuthProfileController@addTrack');
+Route::resource('Tracks','TracksController1');
+Route::resource('Home','HomeController');
+
+//Route::post('addTrackToAuth', array('as' => 'addTrack', 'uses' => 'AuthProfileController@addTrack'));
 Route::get('showAuth/{id}','AuthProfileController@index');
 

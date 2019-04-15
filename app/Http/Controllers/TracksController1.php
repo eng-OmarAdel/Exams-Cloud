@@ -12,7 +12,7 @@ use Jenssegers\Mongodb\Auth\PasswordResetServiceProvider;
 use Jenssegers\Mongodb\Auth;
 use Illuminate\Support\Facades\DB;
 
-class AuthProfileController extends Controller
+class TracksController1 extends Controller
 {
 
 
@@ -22,8 +22,8 @@ class AuthProfileController extends Controller
 
     }
 
-    public function index(Request $request, $id)
-    {
+    public function index(Request $request)
+    {   $id=$request->id;
         $GLOBALS['authid'] = $id;
         // echo($GLOBALS['id']);
         // return;
@@ -35,7 +35,17 @@ class AuthProfileController extends Controller
         //self::category_traverse_recursive($rootCategory , $categories , $id);
         self::track_traverse_recursive($rootTrack , $tracks,$id);
         //return $tracks;
-        return view("common.AuthProfile", ["authority" => $authority,"tracks" => $tracks]);
+                foreach ($tracks as $track){
+            if ($track->level == -1)
+                    continue;
+
+        for ($i = 0; $i < $track->level; $i++){
+            $track->name="--".$track->name;
+                }
+    }
+        return datatables()->of($tracks)->toJson();
+
+        // return view("common.AuthProfile", ["authority" => $authority,"tracks" => $tracks]);
     }
 
     // category table data
@@ -142,7 +152,7 @@ class AuthProfileController extends Controller
 
 
 
-    public function addTrack(Request $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name'        => 'required|max:255',

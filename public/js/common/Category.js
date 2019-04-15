@@ -10,6 +10,11 @@ var DatatablesDataSourceAjaxServer = function() {
 			responsive: true,
 			searchDelay: 500,
 			processing: true,
+			"ordering": false,
+			"initComplete": function(settings, json) {
+				ajaxTracks();
+
+			},
 			ajax: tablename,
 			columns: [
 
@@ -68,7 +73,11 @@ var DatatablesDataSourceAjaxServer = function() {
 var table_reload;
 jQuery(document).ready(function() {
 	table_reload=DatatablesDataSourceAjaxServer.init();
-                   validation( {});
+									 validation( {});
+									 
+});
+
+var ajaxTracks= function(){
         $.ajax({
         url: "/categoryOptions",
 
@@ -77,7 +86,7 @@ jQuery(document).ready(function() {
         console.log(data);
         $("#parentCategory").html(data);
         }});
-});
+}
     //////////////////////////////////////////////////////////////////////
 
 
