@@ -12,7 +12,8 @@ Route::post('register', 'registerController@store');
 /**************************
  * admins
   * *************************/
-Route::view('/profile', 'common/profile');
+Route::get('/profile', 'UsersController@showProfile');
+Route::post('/profile/update', 'UsersController@update');
 Route::get('/', 'ViewController@view');
 Route::resource('Users', 'UsersController');
 Route::get('category', 'QuestionController@category');
@@ -27,4 +28,5 @@ Route::get('emailcheck', 'UsersController@emailcheck');
 Route::get('trackOptions','TrackController@travesre_for_options');
 Route::get('categoryOptions','CategoryController@travesre_for_options');
 Route::get('showAuth/{id}','AuthProfileController@index');
-
+Route::get('Exam', 'ExamController@create');
+Route::post('Exam/result', 'ExamController@result');
