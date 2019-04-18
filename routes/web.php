@@ -12,7 +12,8 @@ Route::post('register', 'registerController@store');
 /**************************
  * admins
   * *************************/
-Route::view('/profile', 'common/profile');
+Route::get('/profile', 'UsersController@showProfile');
+Route::post('/profile/update', 'UsersController@update');
 Route::get('/', 'ViewController@view');
 Route::resource('Users', 'UsersController');
 Route::get('category', 'QuestionController@category');
@@ -34,4 +35,5 @@ Route::resource('Home','HomeController');
 
 //Route::post('addTrackToAuth', array('as' => 'addTrack', 'uses' => 'AuthProfileController@addTrack'));
 Route::get('showAuth/{id}','AuthProfileController@index');
-
+Route::get('Exam', 'ExamController@create');
+Route::post('Exam/result', 'ExamController@result');

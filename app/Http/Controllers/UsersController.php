@@ -100,11 +100,25 @@ class UsersController extends Controller
         $e = User::where('type', "admin")->where('_id', $id)->get()->first();
         return response()->json($e);
     }
-    public function update(Request $request, $id)
+    public function showProfile()
+    {
+        $user = \Auth::user();
+        //$e = User::where('_id', $id)->get()->first();
+        return view("common/profile" ,compact("user"));
+    }
+    public function update(Request $request)
     {
         // return $id;
-
-        $validator = Validator::make($request->all(), [
+       
+        $id = \Auth::user()->id ;
+        $user=User::find($id);
+        $user->full_name=request('full_name');
+        $user->linkedin=request('linkedin');
+        $user->facebook=request('facebook');
+        $user->twitter=request('twitter');
+        $user->save();
+        return redirect('/profile');
+      /*  $validator = Validator::make($request->all(), [
             'full_name' => 'required|max:255',
 
             'username'  => 'required|max:255|unique:users,username,' . $id.',_id',
@@ -131,7 +145,7 @@ class UsersController extends Controller
         }
 
         $e->save();
-        return response()->json($e);
+        return response()->json($e);*/
     }
 
     /**

@@ -33,7 +33,7 @@
 														<img src="assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless m--img-centered" alt="" />
 													</span>
 													<span class="m-topbar__welcome">Hello,&nbsp;</span>
-													<span class="m-topbar__username">Nick</span>
+													<span class="m-topbar__username">{{explode(" ",\Auth::user()->full_name)[0] }}</span>
 												</a>
 												<div class="m-dropdown__wrapper">
 													<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
