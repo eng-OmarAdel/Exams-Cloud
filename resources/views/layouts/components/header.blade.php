@@ -98,6 +98,8 @@
 										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Track") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("Track")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Tracks</span></a></li>
 										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Category") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("Category")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Categories</span></a></li>
 
+										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Exam") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("Exam")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text"><button type="button" class="btn btn-outline-secondary">Generate Exam</button></span></a></li>
+
 									</ul>
 								</div>
 							</div>
