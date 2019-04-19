@@ -6,6 +6,13 @@ class ExamController  extends Controller
 {
     //
 
+     public function __construct()
+    {
+        $this->middleware('auth');
+
+
+    }
+
     public function create(Request $request){
     
         $questions= Question::take(1)->where('is_programming','=','no')->skip(rand(0,14))->take(10)->get();
