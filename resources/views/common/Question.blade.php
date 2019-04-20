@@ -43,7 +43,7 @@
 						  <div class="modal-dialog modal-lg" role="document">
 						    <div class="modal-content">
 						      <div class="modal-header">
-						        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+						        <h5 class="modal-title" id="exampleModalLabel">New question</h5>
 						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						          <span aria-hidden="true">×</span>
 						        </button>
@@ -127,7 +127,13 @@
 											            <label for="exampleInputEmail1">tags <small>comma separated</small></label>
 											            <textarea class="ignoreField form-control m-input" name="tags" id="tags"
 											                      placeholder="tags"></textarea>
-											        </div>
+															</div>
+															
+															<div class="form-group m-form__group">
+																<label for="exampleInputEmail1">Categories</label>
+																<select class="form-control" id="Category" name="Category">
+																</select>
+														</div>
 											    </div>
 											</div>
 

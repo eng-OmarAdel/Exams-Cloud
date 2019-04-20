@@ -10,6 +10,11 @@ var DatatablesDataSourceAjaxServer = function() {
 			responsive: true,
 			searchDelay: 500,
 			processing: true,
+			"ordering": false,
+			"initComplete": function(settings, json) {
+				ajaxTracks();
+
+			},
 			ajax: tablename,
 			columns: [
 
@@ -41,8 +46,11 @@ var DatatablesDataSourceAjaxServer = function() {
                                 `+status+`
                             </div>
                         </span>
-                        <a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
+                        <a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Edit">
                           <i class="la la-edit"></i>
+                        </a>
+<a href="#" onclick="delete_item('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Remove">
+                          <i class="la la-remove"></i>
                         </a>`;
 					},
 				},
@@ -68,7 +76,11 @@ var DatatablesDataSourceAjaxServer = function() {
 var table_reload;
 jQuery(document).ready(function() {
 	table_reload=DatatablesDataSourceAjaxServer.init();
-                   validation( {});
+									 validation( {});
+									 
+});
+
+var ajaxTracks= function(){
         $.ajax({
         url: "/categoryOptions",
 
@@ -77,7 +89,7 @@ jQuery(document).ready(function() {
         console.log(data);
         $("#parentCategory").html(data);
         }});
-});
+}
     //////////////////////////////////////////////////////////////////////
 
 

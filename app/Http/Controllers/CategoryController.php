@@ -43,16 +43,32 @@ class CategoryController extends Controller
         $categories = [];
         $root = Category::where('name', 'root')->where('level','-1')->first();
         self::object_traverse_recursive($root , $categories);
-        return view("common.Category", ["categories"=>$categories]);
+
+        foreach ($categories as $track){
+            if(isset($track))
+            {
+            if ($track->level == '-1')
+                    continue;
+
+        for ($i = 0; $i < $track->level; $i++){
+            $track->name="--".$track->name;
+                }
+            }
+    }
+        return datatables()->of($categories)->toJson();
+        //return view("common.Category", ["categories"=>$categories]);
     }
 
     public function object_traverse_recursive($tree_node , &$objects){
         $objects[]=$tree_node;
+        
+        if(isset($tree_node)){
         foreach ($tree_node->child_ids as $child_id) {
             $child = Category::find($child_id);
             self::object_traverse_recursive($child,$objects);
         }
         return ;
+        }
     }
 
     public function travesre_for_options()
@@ -83,7 +99,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'        => 'required|max:255',
+            'name'        => 'required|max:255|unique:categories',
         ]);
 
         if ($validator->fails()) {
@@ -123,6 +139,15 @@ class CategoryController extends Controller
         return response()->json($Category);
 
     }
+
+    public function deleteElement($element, &$array){
+        $index = array_search($element, $array);
+        if($index !== false){
+            unset($array[$index]);
+        }
+        return $array;
+    }
+
     public function update(Request $request, $id)
     {
 
@@ -136,13 +161,67 @@ class CategoryController extends Controller
 
             }
 
+            // Get the category id
             $Category = Category::where('_id', $id)->first();
+           
+            // Remove the category id from the parents child_ids
+            $oldParentID = $Category->parent_id;
+            $oldParent = Category::where('_id', $oldParentID)->first();
+            $oldChilds = $oldParent->child_ids;
+            $oldChilds = self::deleteElement($id,$oldChilds);
+            $oldParent->child_ids = $oldChilds;
+            $oldParent->save();
+            //echo $oldChilds;
+
+            // Delete the category
+            Category::where('_id', $id)->delete();
+
+
+            $validator = Validator::make($request->all(), [
+                'name'        => 'required|max:255',
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json($validator->errors()->all(), 422);
+            }
+    
+            $parentID = $request->parentCategory;
+            $parent = Category::where('_id', $parentID)->first();
+            
+            
+            $request['parent_id'] = $parent['_id'];
+            $request['level'] = $parent['level'] + 1;
+            $request['child_ids'] = [];
+            $new_category = new Category();
+            $new_category->fill($request->all());
+            $new_category->save();
+            //updating parent
+            $childs = $parent->child_ids;
+            $childs[] = $new_category->_id;
+            $parent->child_ids = $childs;
+            $parent->save();
 }
 
 
     public function destroy($id)
     {
-         Category::where('id', $id)->delete();
+        // $validator = Validator::make($request->all(), [
+            
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors()->all(), 422);
+
+        // }
+
+        $Category = Category::where('_id', $id)->first();
+        $parentID = $Category->parent_id;
+        $parent = Category::where('_id', $parentID)->first();
+        $oldChilds = $parent->child_ids;
+        $oldChilds = self::deleteElement($id,$oldChilds);
+        $parent->child_ids = $oldChilds;
+        $parent->save();
+        Category::where('_id', $id)->delete();
     }
 
     

@@ -42,15 +42,18 @@ function delete_item(id, form_id="#delete_form", table_id="#m_table_1", status =
         success: function () {
 
             toastr.success("Success");
-                $(table_id).DataTable().ajax.reload();
-
+            $(table_id).DataTable().ajax.reload( function ( json ) {
+                try {ajaxTracks();} catch (e) {}
+            } );
 
         },
         error: function (e) {
             error = $.parseJSON(e.responseText);
 
             toastr.error(error, "failed!");
-                $(table_id).DataTable().ajax.reload();
+                $(table_id).DataTable().ajax.reload( function ( json ) {
+                    try {ajaxTracks();} catch (e) {}
+                } );
 
 
         }
@@ -71,8 +74,9 @@ function validation(rulz, form=$("#form_add"), table_id="#m_table_1") {
                 },
                 success: function (e) {
                     toastr.success("Success");
-                $(table_id).DataTable().ajax.reload();
-
+                    $(table_id).DataTable().ajax.reload( function ( json ) {
+                        try {ajaxTracks();} catch (e) {}
+                    } );
                 },
                 error: function (e) {
                     error = $.parseJSON(e.responseText);

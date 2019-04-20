@@ -47,7 +47,7 @@ class AuthorityController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'        => 'required|max:255',
+            'name'        => 'required|max:255|unique:authorities',
             
         ]);
 
@@ -88,7 +88,7 @@ class AuthorityController extends Controller
     {
 
             $validator = Validator::make($request->all(), [
-                'name'    => 'required',
+                'name'    => 'required|max:255|unique:authorities',
 
             ]);
 
