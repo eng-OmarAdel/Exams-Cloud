@@ -1,7 +1,7 @@
 @extends("layouts.index")
 @section("title")
 @php $tablename="AuthProfile" @endphp
-{{$authority->name}}
+{{$authority->name}} {{$view_name}}
 @endsection
 @section("content")
 
@@ -40,7 +40,7 @@
 						        </button>
 						      </div>
 						      <div class="modal-body">
-                              <form action="{{url("AuthProfile?id=$authority->_id")}}" method="post" enctype="multipart/form-data" id="form_add">
+                              <form action="" method="post" enctype="multipart/form-data" id="form_add">
                                     {{csrf_field()}}
                                     <input type="hidden" name="_method" value="post" fillable="never"/>
 

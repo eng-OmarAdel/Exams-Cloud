@@ -1,6 +1,6 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
 var authid=document.currentScript.getAttribute("authid"); //1
-
+// alert(authid)
 var DatatablesDataSourceAjaxServer = function() {
 
 	var initTable1 = function() {

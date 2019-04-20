@@ -38,24 +38,40 @@ class CategoryController extends Controller
         return ;
     }
 
-    public function index()
-    {
-        $categories = [];
-        $root = Category::where('name', 'root')->where('level','-1')->first();
-        self::object_traverse_recursive($root , $categories);
+    
 
+    public function index(Request $request)
+    {
+        $id=$request->id;
+        
+        if(!isset($id))
+        {
+            $id = '5cacb5fcf34cdb15b5657de9';
+        }
+        // dd($id);
+        // echo $id;
+        // return;
+        $categories = [];
+        $root = Category::where('_id', $id)->first();
+        self::object_traverse_recursive($root , $categories);
+        $cats = [];
         foreach ($categories as $track){
             if(isset($track))
             {
-            if ($track->level == '-1')
-                    continue;
+            // if ($track->level == '-1')
+            //         continue;
+            
+            if($track->level == $root->level + 1)
+            {
+                $cats[] = $track;
+            }
 
-        for ($i = 0; $i < $track->level; $i++){
-            $track->name="--".$track->name;
-                }
+        // for ($i = 0; $i < $track->level; $i++){
+        //     $track->name="--".$track->name;
+        //         }
             }
     }
-        return datatables()->of($categories)->toJson();
+        return datatables()->of($cats)->toJson();
         //return view("common.Category", ["categories"=>$categories]);
     }
 
@@ -134,9 +150,34 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-         $Category = Category::where('_id', $id)->first();
-         
-        return response()->json($Category);
+        if(!isset($id))
+        {
+            $id = '5cacb5fcf34cdb15b5657de9';
+        }
+        //dd($id);
+        // echo $id;
+        // return;
+        $categories = [];
+        $root = Category::where('_id', $id)->first();
+        self::object_traverse_recursive($root , $categories);
+        $cats = [];
+        foreach ($categories as $track){
+            if(isset($track))
+            {
+            // if ($track->level == '-1')
+            //         continue;
+            
+            if($track->level == $root->level + 1)
+            {
+                $cats[] = $track;
+            }
+
+        // for ($i = 0; $i < $track->level; $i++){
+        //     $track->name="--".$track->name;
+        //         }
+            }
+    }
+        return datatables()->of($cats)->toJson();
 
     }
 

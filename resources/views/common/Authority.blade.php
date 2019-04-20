@@ -67,40 +67,7 @@
 											            <input class="ignoreField form-control m-input qbank" name="name" id="name"
 											                      placeholder="Name">
 															</div>	
-															
-															{{-- <div class="form-group m-form__group">
-																	<label for="exampleInputEmail1" id="question_label">Track</label>
-											            
-																						
-																		<select class="form-control" name="track" id="track">
-																		</select>
-															</div>
-
-															<div class="form-group m-form__group">
-																	<label for="exampleInputEmail1" id="question_label">Track name</label>
-											            
-																						
-																						<input class="ignoreField form-control m-input qbank" name="trackname" id="trackname" placeholder="Track Name">
-																					</div>
-
-															<div class="form-group m-form__group">
-																	<label for="exampleInputEmail1" id="question_label">Subjects</label>
-											            <select class="form-control" name="category" id="category">
-														
-
-											            </select>
-															</div>
-
-															<div class="form-group m-form__group">
-																	<label for="exampleInputEmail1" id="question_label">Track name</label>
-											            
-																						
-																						<input class="ignoreField form-control m-input qbank" name="subjectname" id="subjectname" placeholder="Subject Name">
-																					</div> --}}
-
-													       
-
-											        
+													
 											    </div>
 											</div>
 

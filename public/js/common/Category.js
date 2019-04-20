@@ -1,5 +1,6 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
-
+var authid=document.currentScript.getAttribute("authid"); //1
+//alert(authid)
 var DatatablesDataSourceAjaxServer = function() {
 
 	var initTable1 = function() {
@@ -11,18 +12,27 @@ var DatatablesDataSourceAjaxServer = function() {
 			searchDelay: 500,
 			processing: true,
 			"ordering": false,
-			"initComplete": function(settings, json) {
-				ajaxTracks();
+			// "initComplete": function(settings, json) {
+			// 	ajaxTracks();
 
-			},
+			// },
 			ajax: tablename,
 			columns: [
 
-                {data: 'name' ,title: "name"},
+        {data: 'name' ,title: "name"},
 				{data: 'created_at' ,title: "Creation date"},
 				{data: 'Actions',title: "Actions"},
 			],
 			columnDefs: [
+				{
+					targets: 0,
+					title : 'Name',
+					"render": function(data, type, full, meta){
+								data = '<a class="" href="?view=Category&id=' + full._id + '">' + full.name + '</a>';
+								// data += '<a href="/Category/' + full._id + '">' + full.name + '</a>';
+            return data;
+         }
+				},
 				{
 					targets: -1,
 					title: 'Actions',
@@ -80,16 +90,16 @@ jQuery(document).ready(function() {
 									 
 });
 
-var ajaxTracks= function(){
-        $.ajax({
-        url: "/categoryOptions",
+// var ajaxTracks= function(){
+//         $.ajax({
+//         url: "/categoryOptions",
 
-        complete: function(jqXHR){
-        var data = $.parseJSON(jqXHR.responseText);
-        console.log(data);
-        $("#parentCategory").html(data);
-        }});
-}
+//         complete: function(jqXHR){
+//         var data = $.parseJSON(jqXHR.responseText);
+//         console.log(data);
+//         $("#parentCategory").html(data);
+//         }});
+// }
     //////////////////////////////////////////////////////////////////////
 
 
