@@ -73,4 +73,12 @@ protected function authenticated(Request $request, $user)
             ->withInput($request->only($this->username(), 'remember'))
             ->withErrors($errors);
     }
+
+public function logout(Request $request) {
+  Auth::logout();
+  return redirect('/login');
 }
+
+
+}
+
