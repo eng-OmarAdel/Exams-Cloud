@@ -1,23 +1,20 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
 var authid=document.currentScript.getAttribute("authid"); //1
 var authname=document.currentScript.getAttribute("authname");
+//Update the path
+$(updateBreadCrumb(authname,authid));
 var DatatablesDataSourceAjaxServer = function() {
 
 	var initTable1 = function() {
 		var table = $('#m_table_1');
 
-//Update the path
-$(updateBreadCrumb(authname,authid));
+
 		// begin first table
 		table.DataTable({
 			responsive: true,
 			searchDelay: 500,
             processing: true,
             "ordering": false,
-            "initComplete": function(settings, json) {
-                ajaxTracks();
-
-            },
 			ajax: tablename,
 			columns: [
 
@@ -58,6 +55,24 @@ $(updateBreadCrumb(authname,authid));
                         `;
 					},
 				},
+				{
+					targets: 0,
+					title: 'Names',
+					orderable: false,
+					render: function(data, type, full, meta) {
+												// if (full.status == "approved") {
+
+												//     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\')" href="javascript:;"><i class="la la-ban"></i> suspend</a>'
+
+												// } else {
+												//     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\' )" href="javascript:;"><i class="la la-check-circle"></i> approve</a>'
+												// }
+												// status = '<a class="dropdown-item" target="_blank" href="?view=AuthProfile&id='` + full._id + `'"><i class="la la-check-circle"></i> Solve the question</a>'
+												status = `<a id="view" href="?view=Tracks&id=` + full._id + `&name=`+full.name+`" class="dropdown-item">`+full.name+`</a>`
+												return status;
+
+					},
+				},
 			],
 		});
 		return table;
@@ -67,8 +82,6 @@ $(updateBreadCrumb(authname,authid));
 
 		//main function to initiate the module
 		init: function() {
-            ajaxTracks();
-
 			return initTable1();
 		},
 
@@ -82,14 +95,3 @@ jQuery(document).ready(function() {
     validation( {});
 
 });
-var ajaxTracks= function(){
-
-    $.ajax({
-        url: "/AuthtrackOptions?id="+authid,
-
-        complete: function(jqXHR){
-        var data = $.parseJSON(jqXHR.responseText);
-        $("#parentTrack").html(data);
-        }});
-
-}

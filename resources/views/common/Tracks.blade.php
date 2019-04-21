@@ -50,7 +50,7 @@
 						        </button>
 						      </div>
 						      <div class="modal-body">
-                              <form action="{{$tablename}}?id={{$_GET['id']}}" method="post" enctype="multipart/form-data" id="form_add">
+                              <form method="post" enctype="multipart/form-data" id="form_add">
                                         {{csrf_field()}}
                                         <input type="hidden" name="_method" value="post" fillable="never"/>
 
@@ -58,6 +58,7 @@
 
                                                 {{csrf_field()}}
                                                 <input type="hidden" name="_method" value="post" fillable="never"/>
+																								<input type="hidden" id="parentTrack" name="parentTrack" value = "{{$_GET['id']}}" fillable="never"/>
                                                 <div class="m-portlet__body">
                                                     <div id="test">
                                                         <div>
@@ -65,14 +66,14 @@
 
                                                         </div>
 
-                                                        <div class="form-group m-form__group">
+                                                      {{--  <div class="form-group m-form__group">
                                                                 <label for="exampleInputEmail1" id="question_label">Parent track</label>
-                                                                {{-- <input class="ignoreField form-control m-input qbank" name="name" id="name"
-                                                                                    placeholder="Name"> --}}
+                                                                 <input class="ignoreField form-control m-input qbank" name="name" id="name"
+                                                                                    placeholder="Name">
 
                                                                 <select class="form-control" id="parentTrack" name="parentTrack">
                                                                 </select>
-                                                        </div>
+                                                        </div>--}}
                                                         <div class="form-group m-form__group">
                                                             <label for="exampleInputEmail1" id="question_label">Name</label>
                                                             <input class="ignoreField form-control m-input qbank" name="name" id="name"
