@@ -12,7 +12,7 @@
 											<img alt="" src="assets/demo/media/img/logo/logo.png" />
 										</a>
 									</div>
-		
+
 								</div>
 							</div>
 

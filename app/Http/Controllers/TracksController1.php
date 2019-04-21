@@ -24,27 +24,36 @@ class TracksController1 extends Controller
 
     public function index(Request $request)
     {   $id=$request->id;
-        $GLOBALS['authid'] = $id;
+        $authority = Authority::where('_id', $id)->first();
+        $categories = [];
+        $children = [];
+        //$tracks = [];
+
+        if(!$authority){
+          $rootCategory = Category::where('name', 'root')->where('level','-1')->first();
+          $rootTrack  = Track::where('_id', $id)->first();
+          $GLOBALS['authid'] = $rootTrack['auth_id'];
+        }
+        else{
+          $GLOBALS['authid'] = $id;
+          $rootCategory = Category::where('name', 'root')->where('level','-1')->first();
+          $rootTrack  = Track::where('name', 'root')->where('level',-1)->first();
+        }
+
         // echo($GLOBALS['id']);
         // return;
-        $categories = [];
-        $tracks = [];
-        $rootCategory = Category::where('name', 'root')->where('level','-1')->first();
-        $rootTrack  = Track::where('name', 'root')->where('level',-1)->first();
-        $authority = Authority::where('_id', $id)->first();
+        if(isset($rootTrack->child_ids)){
+          foreach ($rootTrack->child_ids as $child_id) {
+              $children[] = Track::where("_id",$child_id)->where('auth_id',$rootTrack['auth_id'])->first();
+            }
+        }
+
         //self::category_traverse_recursive($rootCategory , $categories , $id);
-        self::track_traverse_recursive($rootTrack , $tracks,$id);
+        //self::track_traverse_recursive($rootTrack , $tracks,$id);
         //return $tracks;
-                foreach ($tracks as $track){
-            if ($track->level == -1)
-                    continue;
 
-        for ($i = 0; $i < $track->level; $i++){
-            $track->name="--".$track->name;
-                }
-    }
-        return datatables()->of($tracks)->toJson();
-
+        //return datatables()->of($tracks)->toJson();
+        return datatables()->of($children)->toJson();
         // return view("common.AuthProfile", ["authority" => $authority,"tracks" => $tracks]);
     }
 
@@ -55,7 +64,7 @@ class TracksController1 extends Controller
         $objects[]=$tree_node;
         foreach ($tree_node->child_ids as $child_id) {
             $child = Category::find($child_id);
-            
+
             self::category_traverse_recursive($child,$objects,$id);
         }
         return ;
@@ -86,7 +95,7 @@ class TracksController1 extends Controller
 
     public function category_traverse_recursive1($tree_node , &$options){
         $node_options = "";
-        // if ($tree_node->level != "-1" ){ 
+        // if ($tree_node->level != "-1" ){
             $node_options .= "<option value =' " . $tree_node->_id . "'>";
         // }
         for($j = 0 ; $j < $tree_node->level ; $j++)
@@ -121,9 +130,9 @@ class TracksController1 extends Controller
         if(isset($tree_node->_id)){
         $node_options = "";
         //echo("tree_node ".$tree_node->name."\n");
-        // if ($tree_node->level != "-1" ){ 
+        // if ($tree_node->level != "-1" ){
             $node_options .= "<option value =' " . $tree_node->_id . "'>";
-            
+
         // }
         for($j = 0 ; $j < $tree_node->level ; $j++)
         {
@@ -136,7 +145,7 @@ class TracksController1 extends Controller
             //echo("child ".$child->name."\n");
             //return;
             self::track_traverse_recursive1($child,$options,$id);
-        }}       
+        }}
         return ;
     }
 
@@ -163,13 +172,22 @@ class TracksController1 extends Controller
             return response()->json($validator->errors()->all(), 422);
 
         }
+        $id = $request->parentTrack;
+        $parent = new Track();
+        $authority = Authority::where('_id', $id)->first();
 
-        $parentID = $request->parentTrack;
-        $parent = Track::where('_id', $parentID)->first();
+        if(!$authority){
+          $parent = Track::where('_id', $id)->first();
+        }
+        else{
+          $parent = Track::where('auth_id', $id)->where('name','root')->first();
+          //dd($parent);
+        }
+
 
         $request['parent_id'] = $parent['_id'];
         $request['level'] = $parent['level'] + 1;
-        $request['auth_id'] = $request['id'];
+        $request['auth_id'] = $parent['auth_id'];
         $request['child_ids'] = [];
         $new_track = new Track();
         $new_track->fill($request->all());
