@@ -1,7 +1,7 @@
 @extends("layouts.index")
 @section("title")
 @php $tablename="Tracks" @endphp
-{{$tablename}}
+{{$tablename}} {{$view_name}}
 @endsection
 @section("content")
 						<div class="m-portlet m-portlet--mobile">
