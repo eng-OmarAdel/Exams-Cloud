@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Category;
+use App\Question;
 use Jenssegers\Mongodb\Auth\PasswordResetServiceProvider;
 use Jenssegers\Mongodb\Auth;
 use Illuminate\Support\Facades\DB;
@@ -52,6 +53,10 @@ class CategoryController extends Controller
         // echo $id;
         // return;
         $categories = [];
+        $questions = Question::where('category', $id)->get();
+        // dd(count($questions));
+        // dd($questions);
+        // return;
         $root = Category::where('_id', $id)->first();
         self::object_traverse_recursive($root , $categories);
         $cats = [];
@@ -65,13 +70,12 @@ class CategoryController extends Controller
             {
                 $cats[] = $track;
             }
-
-        // for ($i = 0; $i < $track->level; $i++){
-        //     $track->name="--".$track->name;
-        //         }
+            // $cats[] = $questions;
+            $quests = $questions->toArray();
+            $result = array_merge($cats, $quests);
             }
     }
-        return datatables()->of($cats)->toJson();
+        return datatables()->of($result)->toJson();
         //return view("common.Category", ["categories"=>$categories]);
     }
 
@@ -115,7 +119,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'        => 'required|max:255|unique:categories',
+            'name'        => 'required|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -123,22 +127,88 @@ class CategoryController extends Controller
 
         }
 
-        $parentID = $request->parentCategory;
-        $parent = Category::where('_id', $parentID)->first();
+        if($request->type=="category")
+        {
+            $parentID = $request->parentCategory;
+            $parent = Category::where('_id', $parentID)->first();
 
-        $request['parent_id'] = $parent['_id'];
-        $request['level'] = $parent['level'] + 1;
-        $request['child_ids'] = [];
-        $new_category = new Category();
-        $new_category->fill($request->all());
-        $new_category->save();
-        //updating parent
-        $childs = $parent->child_ids;
-        $childs[] = $new_category->_id;
-        $parent->child_ids = $childs;
-        $parent->save();
-        //
-        return response()->json($new_category);
+            $request['parent_id'] = $parent['_id'];
+            $request['level'] = $parent['level'] + 1;
+            $request['child_ids'] = [];
+            $new_category = new Category();
+            $new_category->fill($request->all());
+            $new_category->save();
+            //updating parent
+            $childs = $parent->child_ids;
+            $childs[] = $new_category->_id;
+            $parent->child_ids = $childs;
+            $parent->save();
+            //
+            return response()->json($new_category);
+
+        }
+        elseif($request->type=="question") 
+        {
+            $validator = Validator::make($request->all(), [
+            'name'    => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->all(), 422);
+        }
+        if($request->is_programming=="no"){
+            foreach ($request->answer as $key => $value) {
+                $answer[$key]['answer'] = $value;
+                if (isset($request->is_true[$key])) {
+
+                // $isDuplicate=$this->isDuplicate( $request->name , $value );
+                // if($isDuplicate==1)
+                // return response()->json(["This question is a Duplicate"], 422);
+
+                    $true                    = 1;
+                    $answer[$key]['is_true'] = $request->is_true[$key];
+                } else {
+
+                    $answer[$key]['is_true'] = 0;
+                }
+            }
+
+            foreach ($answer as $key => $value) {
+                $validator = Validator::make($value, [
+                    'answer' => 'required|max:255',
+                ]);
+                if ($validator->fails()) {
+                    return response()->json($validator->errors()->all(), 422);
+                }
+            }
+            if (!isset($true)) {
+                return response()->json(["Please enter at least one true answer."], 422);
+            }
+            $catID = $request->category;
+            $all = $request->all();
+            if (isset($request->answer)) {
+                $e = new Question();
+                $all['status']="approved";
+
+                $e->fill($all);
+                $e->save();
+                foreach ($answer as &$value) {
+                    $Answers = $e->answers()->create(['answer' =>$value['answer'],'is_true' =>$value['is_true']]);
+                }
+                $pieces = explode(",", $all['tags']);
+                foreach ($pieces as $key => $value) {
+                $tags = $e->tags()->create(['tag' =>$value]);
+                }
+            }
+            }else{
+                    $all = $request->all();
+                    $e = new Question();
+                    $all['status']="approved";
+                    $e->fill($all);
+                    $e->save();
+                    return response()->json($e);
+            }
+        }
     }
 
     
@@ -150,34 +220,34 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        if(!isset($id))
-        {
-            $id = '5cacb5fcf34cdb15b5657de9';
-        }
-        //dd($id);
-        // echo $id;
-        // return;
-        $categories = [];
-        $root = Category::where('_id', $id)->first();
-        self::object_traverse_recursive($root , $categories);
-        $cats = [];
-        foreach ($categories as $track){
-            if(isset($track))
-            {
-            // if ($track->level == '-1')
-            //         continue;
+    //     if(!isset($id))
+    //     {
+    //         $id = '5cacb5fcf34cdb15b5657de9';
+    //     }
+    //     //dd($id);
+    //     // echo $id;
+    //     // return;
+    //     $categories = [];
+    //     $root = Category::where('_id', $id)->first();
+    //     self::object_traverse_recursive($root , $categories);
+    //     $cats = [];
+    //     foreach ($categories as $track){
+    //         if(isset($track))
+    //         {
+    //         // if ($track->level == '-1')
+    //         //         continue;
             
-            if($track->level == $root->level + 1)
-            {
-                $cats[] = $track;
-            }
+    //         if($track->level == $root->level + 1)
+    //         {
+    //             $cats[] = $track;
+    //         }
 
-        // for ($i = 0; $i < $track->level; $i++){
-        //     $track->name="--".$track->name;
-        //         }
-            }
-    }
-        return datatables()->of($cats)->toJson();
+    //     // for ($i = 0; $i < $track->level; $i++){
+    //     //     $track->name="--".$track->name;
+    //     //         }
+    //         }
+    // }
+    //     return datatables()->of($cats)->toJson();
 
     }
 
