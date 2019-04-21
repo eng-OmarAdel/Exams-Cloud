@@ -234,7 +234,7 @@ if($request->is_programming=="no"){
 
     public function destroy($id)
     {
-        Question::where('id', $id)->delete();
+        Question::where('_id', $id)->delete();
     }
 
     public function category(Request $request) { $result = Category::get();

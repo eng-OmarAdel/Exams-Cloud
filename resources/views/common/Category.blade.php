@@ -226,7 +226,7 @@
 
 @endsection
 @section("script")
-<script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
+<script type="text/javascript" tablename="Category" src="{{url("js/main.js")}}"></script>
 <script type="text/javascript" authid="{{$_GET['id']}}" tablename="{{$tablename}}?id={{$_GET['id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 {{-- <script type="text/javascript" tablename="Question" src="{{url("js/common/Question.js")}}"></script> --}}
 

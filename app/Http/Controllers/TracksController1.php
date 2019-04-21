@@ -65,12 +65,12 @@ class TracksController1 extends Controller
 
     // track table data
 
-    public function track_traverse_recursive($tree_node , &$objects,$id){
+    public function track_traverse_recursive($tree_node,&$objects,$id){
         if(isset($tree_node->child_ids))
 {
         $objects[]=$tree_node;
         foreach ($tree_node->child_ids as $child_id) {
-            $child = Track::where("_id",$child_id)->where('auth_id',$id)->first();
+            $child = Track::where("_id",$child_id)->where('auth_id',$id)->where('level',0)->first();
             self::track_traverse_recursive($child,$objects,$id);
         }
     }
