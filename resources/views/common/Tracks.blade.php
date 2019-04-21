@@ -3,13 +3,15 @@
 @php $tablename="Tracks" @endphp
 {{$tablename}}
 @endsection
-@section("content")						
+@section("content")
 						<div class="m-portlet m-portlet--mobile">
 							<div class="m-portlet__head">
 								<div class="m-portlet__head-caption">
 									<div class="m-portlet__head-title">
 										<h3 class="m-portlet__head-text">
-											{{$tablename}}
+											<ol id="authorityTableBreadcrumb" class="breadcrumb">
+												<li class="breadcrumb-item active" aria-current="page">Authorities</li>
+											</ol>
 										</h3>
 									</div>
 								</div>
@@ -51,23 +53,23 @@
                               <form action="{{$tablename}}?id={{$_GET['id']}}" method="post" enctype="multipart/form-data" id="form_add">
                                         {{csrf_field()}}
                                         <input type="hidden" name="_method" value="post" fillable="never"/>
-    
+
                                             <div id="test">
-    
+
                                                 {{csrf_field()}}
                                                 <input type="hidden" name="_method" value="post" fillable="never"/>
                                                 <div class="m-portlet__body">
                                                     <div id="test">
                                                         <div>
-    
-                                                            
+
+
                                                         </div>
-    
+
                                                         <div class="form-group m-form__group">
                                                                 <label for="exampleInputEmail1" id="question_label">Parent track</label>
                                                                 {{-- <input class="ignoreField form-control m-input qbank" name="name" id="name"
                                                                                     placeholder="Name"> --}}
-    
+
                                                                 <select class="form-control" id="parentTrack" name="parentTrack">
                                                                 </select>
                                                         </div>
@@ -75,14 +77,14 @@
                                                             <label for="exampleInputEmail1" id="question_label">Name</label>
                                                             <input class="ignoreField form-control m-input qbank" name="name" id="name"
                                                                       placeholder="Name">
-                                                                </div>	
-                                                                
-            
+                                                                </div>
+
+
                                                     </div>
                                                 </div>
-    
+
                                             </div>
-    
+
                                     <input style="display: none" type="reset" id="form_reset" class="btn btn-secondary">
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -105,5 +107,5 @@
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" authid="{{$_GET['id']}}" tablename="{{$tablename}}?id={{$_GET['id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" authname="{{$_GET['name']}}" authid="{{$_GET['id']}}" tablename="{{$tablename}}?id={{$_GET['id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection

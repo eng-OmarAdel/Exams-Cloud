@@ -1,11 +1,13 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
 var authid=document.currentScript.getAttribute("authid"); //1
-
+var authname=document.currentScript.getAttribute("authname");
 var DatatablesDataSourceAjaxServer = function() {
 
 	var initTable1 = function() {
 		var table = $('#m_table_1');
 
+//Update the path
+$(updateBreadCrumb(authname,authid));
 		// begin first table
 		table.DataTable({
 			responsive: true,
@@ -40,7 +42,7 @@ var DatatablesDataSourceAjaxServer = function() {
                         // }
                         // status = '<a class="dropdown-item" target="_blank" href="?view=AuthProfile&id='` + full._id + `'"><i class="la la-check-circle"></i> Solve the question</a>'
                         status = '<a id="view" href="/showAuth/' + full._id + '" class="dropdown-item" > View Authority</a>'
-            
+
                         return `
                         <span class="dropdown">
                             <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
@@ -78,7 +80,7 @@ var table_reload;
 jQuery(document).ready(function() {
     table_reload=DatatablesDataSourceAjaxServer.init();
     validation( {});
- 
+
 });
 var ajaxTracks= function(){
 
@@ -91,4 +93,3 @@ var ajaxTracks= function(){
         }});
 
 }
-
