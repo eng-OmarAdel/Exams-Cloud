@@ -1,4 +1,5 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
+
 function actions(form_id="#form_add") {
         $(form_id).attr('action', tablename);
         $("[name='_method']", $(form_id)).val('POST');
@@ -19,6 +20,7 @@ function updateBreadCrumb(authorityName,authorityID){
     `)
 }
 function fill_portlet(id, form_id="#form_add", reset_id="#form_reset", modal_button="#modal_button") {
+    
     mApp.block(form_id);
     $(reset_id).trigger("click");
     $(modal_button).trigger("click");
@@ -36,9 +38,14 @@ function fill_portlet(id, form_id="#form_add", reset_id="#form_reset", modal_but
         }
     });
 }
+//alert(tablename);
 
 function delete_item(id, form_id="#delete_form", table_id="#m_table_1", status = null) {
-
+    //tablename="Category";
+    //  alert(tablename);
+    //  return;
+    //alert("Delete");
+    //alert(id);
     $(form_id).ajaxSubmit({
         url: tablename + '/' + id, type: 'post',data:{'status' : status},
         beforeSubmit: function (arr, $form, options) {

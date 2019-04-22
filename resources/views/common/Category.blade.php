@@ -56,7 +56,7 @@
 						        </button>
 						      </div>
 						      <div class="modal-body">
-						        <form action="{{$tablename}}" method="post" enctype="multipart/form-data" id="form_add">
+						        <form action="{{$tablename}}" method="post" enctype="multipart/form-data" id="form_add2">
                                     {{csrf_field()}}
                                     <input type="hidden" name="_method" value="post" fillable="never"/>
 
@@ -226,7 +226,7 @@
 
 @endsection
 @section("script")
-<script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
+<script type="text/javascript" tablename="Category" src="{{url("js/main.js")}}"></script>
 <script type="text/javascript" authid="{{$_GET['id']}}" tablename="{{$tablename}}?id={{$_GET['id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 {{-- <script type="text/javascript" tablename="Question" src="{{url("js/common/Question.js")}}"></script> --}}
 

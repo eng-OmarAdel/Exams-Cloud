@@ -45,6 +45,7 @@ var DatatablesDataSourceAjaxServer = function() {
 					title: 'Actions',
 					orderable: false,
 					render: function(data, type, full, meta) {
+						//alert(full._id);
                         // if (full.status == "approved") {
 
                         //     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\')" href="javascript:;"><i class="la la-ban"></i> suspend</a>'
@@ -55,14 +56,7 @@ var DatatablesDataSourceAjaxServer = function() {
           status = '<a class="dropdown-item" target="_blank" href="?view=QuestionSolve&id=' + full._id + '"><i class="la la-check-circle"></i> Solve the question</a>'
 
 						return `
-                        <span class="dropdown">
-                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
-                              <i class="la la-ellipsis-h"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                `+status+`
-                            </div>
-                        </span>
+                        
                         <a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Edit">
                           <i class="la la-edit"></i>
                         </a>
@@ -93,7 +87,28 @@ var DatatablesDataSourceAjaxServer = function() {
 var table_reload;
 jQuery(document).ready(function() {
 	table_reload=DatatablesDataSourceAjaxServer.init();
-									 validation( {});
+	console.log(validation( {
+		name : {
+			required: true,
+		// 	remote: {
+		// 		url: 'http://www.testsob72.tk/duplication',
+		// 		type: 'get',
+		// 		data: {
+
+
+		// 				target: function () {
+		// 						return $('#question').val();
+		// 				},
+
+		// 		},
+		// },
+		
+	},
+
+	 }));
+									validation({},form=$("#form_add2"));
+
+
 									 
 });
 
@@ -153,7 +168,7 @@ jQuery(document).ready(function() {
 				 $(this).prop('checked', true);
 		 });
  var custom_after=  function(data){
-	 alert("welcome to edit")
+	 
 				 $("#is_programming").trigger("change");
 				 is_programming=$("#is_programming").val();
 				 if(is_programming=="no"){
