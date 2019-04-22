@@ -2,7 +2,7 @@ var tablename=document.currentScript.getAttribute("tablename"); //1
 var authid=document.currentScript.getAttribute("authid"); //1
 var authname=document.currentScript.getAttribute("authname");
 //Update the path
-$(updateBreadCrumb(authname,authid));
+$(updateBreadCrumb(authname));
 var DatatablesDataSourceAjaxServer = function() {
 
 	var initTable1 = function() {
