@@ -56,7 +56,7 @@
 						        </button>
 						      </div>
 						      <div class="modal-body">
-						        <form action="{{$tablename}}" method="post" enctype="multipart/form-data" id="form_add">
+						        <form action="{{$tablename}}" method="post" enctype="multipart/form-data" id="form_add2">
                                     {{csrf_field()}}
                                     <input type="hidden" name="_method" value="post" fillable="never"/>
 

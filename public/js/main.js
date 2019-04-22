@@ -14,7 +14,11 @@ function fill_data(data, form_id) {
         $(form_id + " [name='" + i + "'][type!='file']").val(item);
     });
 }
-
+function updateBreadCrumb(authorityName,authorityID){
+  $("#authorityTableBreadcrumb").append(`
+        <li class="breadcrumb-item active" aria-current="page">`+authorityName+`</li>
+    `)
+}
 function fill_portlet(id, form_id="#form_add", reset_id="#form_reset", modal_button="#modal_button") {
     
     mApp.block(form_id);
@@ -70,7 +74,7 @@ function delete_item(id, form_id="#delete_form", table_id="#m_table_1", status =
 
 function validation(rulz, form=$("#form_add"), table_id="#m_table_1") {
 
- 
+
 
     x = form.validate({
         rules: rulz,
@@ -102,5 +106,3 @@ function validation(rulz, form=$("#form_add"), table_id="#m_table_1") {
     });
     return x;
 }
-
-

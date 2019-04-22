@@ -87,7 +87,28 @@ var DatatablesDataSourceAjaxServer = function() {
 var table_reload;
 jQuery(document).ready(function() {
 	table_reload=DatatablesDataSourceAjaxServer.init();
-									 validation( {});
+	console.log(validation( {
+		name : {
+			required: true,
+		// 	remote: {
+		// 		url: 'http://www.testsob72.tk/duplication',
+		// 		type: 'get',
+		// 		data: {
+
+
+		// 				target: function () {
+		// 						return $('#question').val();
+		// 				},
+
+		// 		},
+		// },
+		
+	},
+
+	 }));
+									validation({},form=$("#form_add2"));
+
+
 									 
 });
 
