@@ -57,6 +57,7 @@
                                         {{csrf_field()}}
                                         <input type="hidden" name="_method" value="post" fillable="never"/>
 																				<input style="display: none" type="text" id="type" name="type" value="track">
+
                                             <div id="test">
 
                                                 {{csrf_field()}}
