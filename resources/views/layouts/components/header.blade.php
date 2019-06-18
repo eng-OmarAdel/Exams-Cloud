@@ -12,7 +12,7 @@
 											<img alt="" src="assets/demo/media/img/logo/logo.png" />
 										</a>
 									</div>
-		
+
 								</div>
 							</div>
 
@@ -95,8 +95,8 @@
 										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Question") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("?view=Question")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Questions</span></a></li>
 										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Users") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("?view=Users")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Users</span></a></li>
 										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Authority") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("?view=Authority")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Authorities</span></a></li>
-										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Track") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("Track")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Tracks</span></a></li>
-										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Category") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("Category")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Categories</span></a></li>
+										{{-- <li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Track") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("Track")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Tracks</span></a></li> --}}
+										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Category") m-menu__item--active @endif @endif" aria-haspopup="true"><a id="link" href="{{url("?view=Category&id=5cacb5fcf34cdb15b5657de9")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Categories</span></a></li>
 
 									</ul>
 								</div>
@@ -108,5 +108,10 @@
 					</div>
 				</div>
 			</header>
+ {{-- <script>
+			var elem = document.getElementById('link'),
+			myname = 'req.session.name';   //used it as a string, just for test cases
+			elem.href += myname;
+	</script> --}}
 
 			<!-- end::Header -->

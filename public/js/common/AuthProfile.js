@@ -1,10 +1,25 @@
+var authid=document.currentScript.getAttribute("authid"); //1
+
 jQuery(document).ready(function() {
     $.ajax({
-        url: "/trackOptions",
+        url: "/AuthtrackOptions?id="+authid,
 
         complete: function(jqXHR){
         var data = $.parseJSON(jqXHR.responseText);
-        //console.log(data);
-        $("#track").html(data);
+        console.log(data);
+        $("#parentTrack").html(data);
         }});
+
+
+        $.ajax({
+            url: "/AuthcategoryOptions",
+    
+            complete: function(jqXHR){
+            var data = $.parseJSON(jqXHR.responseText);
+            console.log(data);
+            $("#category").html(data);
+            }});
+
+
+        
     });

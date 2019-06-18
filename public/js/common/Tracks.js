@@ -1,17 +1,23 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
-
+var authid=document.currentScript.getAttribute("authid"); //1
+var authname=document.currentScript.getAttribute("authname");
+//Update the path
+$(updateBreadCrumb(authname,authid));
 var DatatablesDataSourceAjaxServer = function() {
 
 	var initTable1 = function() {
 		var table = $('#m_table_1');
 
+
 		// begin first table
 		table.DataTable({
 			responsive: true,
 			searchDelay: 500,
-			processing: true,
+            processing: true,
+            "ordering": false,
 			ajax: tablename,
 			columns: [
+
         {data: 'name' ,title: "name"},
         // {data: 'track' ,title: "track"},
         // {data: 'category' ,title: "category"},
@@ -32,7 +38,7 @@ var DatatablesDataSourceAjaxServer = function() {
                         //     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\' )" href="javascript:;"><i class="la la-check-circle"></i> approve</a>'
                         // }
                         // status = '<a class="dropdown-item" target="_blank" href="?view=AuthProfile&id='` + full._id + `'"><i class="la la-check-circle"></i> Solve the question</a>'
-                        status = '<a id="view" href="?view=Tracks&id=' + full._id + '" class="dropdown-item" > View Authority</a>'
+                        status = '<a id="view" href="/showAuth/' + full._id + '" class="dropdown-item" > View Authority</a>'
 
                         return `
                         <span class="dropdown">
@@ -67,7 +73,6 @@ var DatatablesDataSourceAjaxServer = function() {
 
 					},
 				},
-
 			],
 		});
 		return table;
@@ -86,26 +91,7 @@ var DatatablesDataSourceAjaxServer = function() {
 
 var table_reload;
 jQuery(document).ready(function() {
-	table_reload=DatatablesDataSourceAjaxServer.init();
-                   validation( {});
-                   /*
-                   $.ajax({
-                    url: "/trackOptions",
+    table_reload=DatatablesDataSourceAjaxServer.init();
+    validation( {});
 
-                    complete: function(jqXHR){
-                    var data = $.parseJSON(jqXHR.responseText);
-                    //console.log(data);
-                    $("#track").html(data);
-                    }});
-
-                    $.ajax({
-                      url: "/categoryOptions",
-
-                      complete: function(jqXHR){
-                      var data = $.parseJSON(jqXHR.responseText);
-                      //console.log(data);
-                      $("#category").html(data);
-                      }});
-
-                    */
 });
