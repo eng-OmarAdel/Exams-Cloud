@@ -41,10 +41,10 @@
           <ul class="navbar-nav ml-auto">
 		  @if (Route::has('login'))
                     @auth
-					<li class="nav-item">
-						<a  class="nav-link js-scroll-trigger"href="{{ url('/home') }}">Home</a>
-         		   </li>
-                        
+
+                <li class="nav-item">
+            <a  class="nav-link js-scroll-trigger" href="{{ url('/category') }}">Categories</a>
+               </li>         
                     @else
 					<li class="nav-item">
 					<a class="nav-link js-scroll-trigger" href="{{ route('login') }}" >Login / register</a>
