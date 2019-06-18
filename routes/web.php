@@ -11,8 +11,10 @@ Route::get('/logout', 'Auth\LoginController@logout');
 /**************************
  * admins
  * *************************/
+Route::get('/', function () {
+    return view('welcome');
+});
 Route::view('/profile', 'common/profile');
-Route::get('/', 'ViewController@view');
 Route::resource('Users', 'UsersController');
 Route::get('category', 'QuestionController@category');
 Route::put('Correct/{id}', 'QuestionController@Correct');
