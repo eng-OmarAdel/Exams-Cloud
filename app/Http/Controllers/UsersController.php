@@ -41,7 +41,7 @@ class UsersController extends Controller
     
     public function index()
     {
-        $users = User::orderBy("updated_at", "desc")->get();
+        $users = User::where('type', "admin")->orderBy("updated_at", "desc")->get();
         return datatables()->of($users)->toJson();
 
     }
@@ -94,17 +94,58 @@ class UsersController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+     */ 
     public function show($id)
     {
         $e = User::where('type', "admin")->where('_id', $id)->get()->first();
         return response()->json($e);
     }
-    public function update(Request $request, $id)
+    public function showProfile()
+    {
+        $user = \Auth::user();
+        //$e = User::where('_id', $id)->get()->first();
+        return view("common/profile" ,compact("user"));
+    }
+    public function proUpdate()
+    {
+        $user = \Auth::user();
+        return view("common/profileEdit" ,compact("user"));
+    }
+    public function activity()
+    {
+        $user = \Auth::user();
+        return view("common/Statistics" ,compact("user"));
+    }
+    public function update(Request $request)
     {
         // return $id;
+       
+        $id = \Auth::user()->id ;
+        $user=User::find($id);
+        $user->full_name=request('full_name');
+        $user->linkedin=request('linkedin');
+        $user->facebook=request('facebook');
+        $user->twitter=request('twitter');
 
-        $validator = Validator::make($request->all(), [
+         // Handle File Upload
+        if($request->hasFile('profile_img')){
+            // Get filename with the extension
+            $filenameWithExt = $request->file('profile_img')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('profile_img')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+            // Upload Image
+            $path = $request->file('profile_img')->storeAs('public/profile_img', $fileNameToStore);
+            $user->profile_img = $fileNameToStore;
+        } 
+
+
+        $user->save();
+        return redirect('/profile');
+      /*  $validator = Validator::make($request->all(), [
             'full_name' => 'required|max:255',
 
             'username'  => 'required|max:255|unique:users,username,' . $id.',_id',
@@ -131,7 +172,7 @@ class UsersController extends Controller
         }
 
         $e->save();
-        return response()->json($e);
+        return response()->json($e);*/
     }
 
     /**
