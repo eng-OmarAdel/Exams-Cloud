@@ -48,7 +48,7 @@ class AuthorityController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'        => 'required|max:255|unique:authorities',
-            
+
         ]);
 
         if ($validator->fails()) {
@@ -71,7 +71,7 @@ class AuthorityController extends Controller
         return response()->json($e);
     }
 
-    
+
     /**
      * Display the specified resource.
      *
@@ -83,7 +83,7 @@ class AuthorityController extends Controller
        $auth =  Authority::where('_id', $id)->first();
        return view("common.AuthProfile", ["auth"=>$auth]);
     }
-    
+
     public function update(Request $request, $id)
     {
 

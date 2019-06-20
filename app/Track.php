@@ -9,6 +9,6 @@ use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 class Track extends Eloquent
 {
     protected $fillable = [
-        'name','parent_id','auth_id','level','child_ids','created_at',
+        'name','type','parent_id','auth_id','level','child_ids','created_at',
     ];
 }
