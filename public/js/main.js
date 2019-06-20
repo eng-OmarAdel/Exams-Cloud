@@ -15,6 +15,7 @@ function fill_data(data, form_id) {
     });
 }
 function updateBreadCrumb(authorityName,authorityID){
+
   $("#authorityTableBreadcrumb").append(`
         <li class="breadcrumb-item active" aria-current="page">`+authorityName+`</li>
     `)
