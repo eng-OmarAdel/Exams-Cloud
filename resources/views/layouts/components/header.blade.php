@@ -12,7 +12,7 @@
 											<img alt="" src="assets/demo/media/img/logo/logo.png" />
 										</a>
 									</div>
-		
+
 								</div>
 							</div>
 
@@ -24,138 +24,7 @@
 									<div class="m-stack__item m-topbar__nav-wrapper">
 										<ul class="m-topbar__nav m-nav m-nav--inline">
 
-{{-- 											<li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width" m-dropdown-toggle="click"
-											 m-dropdown-persistent="1">
-												<a href="#" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
-													<span class="m-nav__link-badge m-badge m-badge--dot m-badge--dot-small m-badge--danger"></span>
-													<span class="m-nav__link-icon">
-														<span class="m-nav__link-icon-wrapper">
-															<i class="flaticon-alarm"></i>
-														</span>
-													</span>
-												</a>
-												<div class="m-dropdown__wrapper">
-													<span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
-													<div class="m-dropdown__inner">
-														<div class="m-dropdown__header m--align-center" style="background: url(assets/app/media/img/misc/notification_bg.jpg); background-size: cover;">
-															<span class="m-dropdown__header-title">9 New</span>
-															<span class="m-dropdown__header-subtitle">User Notifications</span>
-														</div>
-														<div class="m-dropdown__body">
-															<div class="m-dropdown__content">
-																<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
-																	<li class="nav-item m-tabs__item">
-																		<a class="nav-link m-tabs__link active" data-toggle="tab" href="#topbar_notifications_notifications" role="tab">
-																			Alerts
-																		</a>
-																	</li>
-																	<li class="nav-item m-tabs__item">
-																		<a class="nav-link m-tabs__link" data-toggle="tab" href="#topbar_notifications_events" role="tab">Events</a>
-																	</li>
-																	<li class="nav-item m-tabs__item">
-																		<a class="nav-link m-tabs__link" data-toggle="tab" href="#topbar_notifications_logs" role="tab">Logs</a>
-																	</li>
-																</ul>
-																<div class="tab-content">
-																	<div class="tab-pane active" id="topbar_notifications_notifications" role="tabpanel">
-																		<div class="m-scrollable" data-scrollable="true" data-height="250" data-mobile-height="200">
-																			<div class="m-list-timeline m-list-timeline--skin-light">
-																				<div class="m-list-timeline__items">
-																					<div class="m-list-timeline__item">
-																						<span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
-																						<span class="m-list-timeline__text">12 new users registered</span>
-																						<span class="m-list-timeline__time">Just now</span>
-																					</div>
-																					<div class="m-list-timeline__item">
-																						<span class="m-list-timeline__badge"></span>
-																						<span class="m-list-timeline__text">System shutdown <span class="m-badge m-badge--success m-badge--wide">pending</span></span>
-																						<span class="m-list-timeline__time">14 mins</span>
-																					</div>
-																					<div class="m-list-timeline__item">
-																						<span class="m-list-timeline__badge"></span>
-																						<span class="m-list-timeline__text">New invoice received</span>
-																						<span class="m-list-timeline__time">20 mins</span>
-																					</div>
-																					<div class="m-list-timeline__item">
-																						<span class="m-list-timeline__badge"></span>
-																						<span class="m-list-timeline__text">DB overloaded 80% <span class="m-badge m-badge--info m-badge--wide">settled</span></span>
-																						<span class="m-list-timeline__time">1 hr</span>
-																					</div>
-																					<div class="m-list-timeline__item">
-																						<span class="m-list-timeline__badge"></span>
-																						<span class="m-list-timeline__text">System error - <a href="#" class="m-link">Check</a></span>
-																						<span class="m-list-timeline__time">2 hrs</span>
-																					</div>
-																					<div class="m-list-timeline__item m-list-timeline__item--read">
-																						<span class="m-list-timeline__badge"></span>
-																						<span href="" class="m-list-timeline__text">New order received <span class="m-badge m-badge--danger m-badge--wide">urgent</span></span>
-																						<span class="m-list-timeline__time">7 hrs</span>
-																					</div>
-																					<div class="m-list-timeline__item m-list-timeline__item--read">
-																						<span class="m-list-timeline__badge"></span>
-																						<span class="m-list-timeline__text">Production server down</span>
-																						<span class="m-list-timeline__time">3 hrs</span>
-																					</div>
-																					<div class="m-list-timeline__item">
-																						<span class="m-list-timeline__badge"></span>
-																						<span class="m-list-timeline__text">Production server up</span>
-																						<span class="m-list-timeline__time">5 hrs</span>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="tab-pane" id="topbar_notifications_events" role="tabpanel">
-																		<div class="m-scrollable" data-scrollable="true" data-height="250" data-mobile-height="200">
-																			<div class="m-list-timeline m-list-timeline--skin-light">
-																				<div class="m-list-timeline__items">
-																					<div class="m-list-timeline__item">
-																						<span class="m-list-timeline__badge m-list-timeline__badge--state1-success"></span>
-																						<a href="" class="m-list-timeline__text">New order received</a>
-																						<span class="m-list-timeline__time">Just now</span>
-																					</div>
-																					<div class="m-list-timeline__item">
-																						<span class="m-list-timeline__badge m-list-timeline__badge--state1-danger"></span>
-																						<a href="" class="m-list-timeline__text">New invoice received</a>
-																						<span class="m-list-timeline__time">20 mins</span>
-																					</div>
-																					<div class="m-list-timeline__item">
-																						<span class="m-list-timeline__badge m-list-timeline__badge--state1-success"></span>
-																						<a href="" class="m-list-timeline__text">Production server up</a>
-																						<span class="m-list-timeline__time">5 hrs</span>
-																					</div>
-																					<div class="m-list-timeline__item">
-																						<span class="m-list-timeline__badge m-list-timeline__badge--state1-info"></span>
-																						<a href="" class="m-list-timeline__text">New order received</a>
-																						<span class="m-list-timeline__time">7 hrs</span>
-																					</div>
-																					<div class="m-list-timeline__item">
-																						<span class="m-list-timeline__badge m-list-timeline__badge--state1-info"></span>
-																						<a href="" class="m-list-timeline__text">System shutdown</a>
-																						<span class="m-list-timeline__time">11 mins</span>
-																					</div>
-																					<div class="m-list-timeline__item">
-																						<span class="m-list-timeline__badge m-list-timeline__badge--state1-info"></span>
-																						<a href="" class="m-list-timeline__text">Production server down</a>
-																						<span class="m-list-timeline__time">3 hrs</span>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="tab-pane" id="topbar_notifications_logs" role="tabpanel">
-																		<div class="m-stack m-stack--ver m-stack--general" style="min-height: 180px;">
-																			<div class="m-stack__item m-stack__item--center m-stack__item--middle">
-																				<span class="">All caught up!<br>No new logs.</span>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</li> --}}
+
 
 											<li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light"
 											 m-dropdown-toggle="click">
@@ -225,6 +94,9 @@
 									<ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
 										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Question") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("?view=Question")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Questions</span></a></li>
 										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Users") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("?view=Users")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Users</span></a></li>
+										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Authority") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("?view=Authority")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Authorities</span></a></li>
+										{{-- <li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Track") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("Track")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Tracks</span></a></li> --}}
+										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Category") m-menu__item--active @endif @endif" aria-haspopup="true"><a id="link" href="{{url("?view=Category&id=5cacb5fcf34cdb15b5657de9")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Categories</span></a></li>
 
 									</ul>
 								</div>
@@ -236,5 +108,10 @@
 					</div>
 				</div>
 			</header>
+ {{-- <script>
+			var elem = document.getElementById('link'),
+			myname = 'req.session.name';   //used it as a string, just for test cases
+			elem.href += myname;
+	</script> --}}
 
 			<!-- end::Header -->

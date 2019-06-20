@@ -10,12 +10,15 @@ var DatatablesDataSourceAjaxServer = function() {
 			responsive: true,
 			searchDelay: 500,
 			processing: true,
+            serverSide: true,
+
 			ajax: tablename,
 			columns: [
 				// {data: '_id' ,title: "#"},
 				{data: 'email' ,title: "email"},
 				{data: 'full_name' ,title: "Full name"},
-				{data: 'status' ,title: "Status"},
+                {data: 'status' ,title: "Status"},
+                {data: 'type' , title:"Type"},
 				{data: 'created_at' ,title: "Creation date"},
 				{data: 'Actions',title: "Actions"},
 			],

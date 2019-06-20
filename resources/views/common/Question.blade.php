@@ -20,7 +20,7 @@
 											<a href="#" onclick="actions()" class="btn btn-primary m-btn m-btn--pill m-btn--custom m-btn--icon m-btn--air" id="modal_button" data-toggle="modal" data-target="#m_modal_4">
 												<span>
 													<i class="la la-cart-plus"></i>
-													<span>New Record</span>
+													<span>New Question</span>
 												</span>
 											</a>
 										</li>
@@ -43,7 +43,7 @@
 						  <div class="modal-dialog modal-lg" role="document">
 						    <div class="modal-content">
 						      <div class="modal-header">
-						        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+						        <h5 class="modal-title" id="exampleModalLabel">New question</h5>
 						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						          <span aria-hidden="true">×</span>
 						        </button>
@@ -127,7 +127,13 @@
 											            <label for="exampleInputEmail1">tags <small>comma separated</small></label>
 											            <textarea class="ignoreField form-control m-input" name="tags" id="tags"
 											                      placeholder="tags"></textarea>
-											        </div>
+															</div>
+															
+															<div class="form-group m-form__group">
+																<label for="exampleInputEmail1">Categories</label>
+																<select class="form-control" id="Category" name="Category">
+																</select>
+														</div>
 											    </div>
 											</div>
 
@@ -136,7 +142,7 @@
 						        <input style="display: none" type="reset" id="form_reset" class="btn btn-secondary">
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						        <button type="submit" class="btn btn-primary">Send message</button>
+						        <button type="submit" class="btn btn-primary">Add question</button>
 						      </div>
 						        </form>
 						      </div>

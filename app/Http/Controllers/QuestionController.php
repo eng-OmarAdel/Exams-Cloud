@@ -23,16 +23,15 @@ class QuestionController extends Controller
 
     public function index()
     {
-        $questions['aaData'] = Question::orderBy("id")->with('tags')->get();
+        $questions = Question::orderBy("id")->with('tags')->get();
 
-        foreach ($questions['aaData'] as $key => &$value1) {
+        foreach ($questions as $key => &$value1) {
             foreach ($value1['tags'] as  &$value) {
                 $value1['mytags'].=  $value['tag'].",";
             }
             $value1['mytags'] = rtrim($value1['mytags'], ",");
         }
-
-        return response()->json($questions);
+    return datatables()->of($questions)->toJson();
     }
 
     /**
@@ -65,15 +64,15 @@ class QuestionController extends Controller
 
 
 ////////////////////////////////////////////////////////////////////////////
-if($request->is_programming=="no"){
+            if($request->is_programming=="no"){
             foreach ($request->answer as $key => $value) {
 
                 $answer[$key]['answer'] = $value;
                 if (isset($request->is_true[$key])) {
 
-                $isDuplicate=$this->isDuplicate( $request->name , $value );
-                if($isDuplicate==1)
-                return response()->json(["This question is a Duplicate"], 422);
+                // $isDuplicate=$this->isDuplicate( $request->name , $value );
+                // if($isDuplicate==1)
+                // return response()->json(["This question is a Duplicate"], 422);
 
                     $true                    = 1;
                     $answer[$key]['is_true'] = $request->is_true[$key];
@@ -99,6 +98,8 @@ if($request->is_programming=="no"){
                 return response()->json(["Please enter at least one true answer."], 422);
 
             }
+
+            $catID = $request->category;
 
         
 
@@ -129,6 +130,7 @@ if($request->is_programming=="no"){
 
             $e->fill($all);
             $e->save();
+            //return view('admin.profile',);
     }
     }
 
@@ -232,7 +234,7 @@ if($request->is_programming=="no"){
 
     public function destroy($id)
     {
-        Question::where('id', $id)->delete();
+        Question::where('_id', $id)->delete();
     }
 
     public function category(Request $request) { $result = Category::get();
