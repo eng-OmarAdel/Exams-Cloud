@@ -115,7 +115,8 @@
 						        </button>
 						      </div>
 						      <div class="modal-body">
-						        <form action="{{$tablename}}" method="post" enctype="multipart/form-data" id="form_add2">
+						        <form action="{{$tablename}}" method="post" enctype="multipart/form-data" id="form_add">
+
                                     {{csrf_field()}}
                                     <input type="hidden" name="_method" value="post" fillable="never"/>
 
@@ -142,8 +143,9 @@
 											            <label for="exampleInputEmail1" id="question_label">Category Name</label>
 											            <input class="ignoreField form-control m-input qbank" name="name" id="name"
 											                      placeholder="Name">
-															</div>
-
+															</div>	
+															
+		
 
 											    </div>
 											</div>

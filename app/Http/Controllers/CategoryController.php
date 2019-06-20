@@ -134,7 +134,7 @@ class CategoryController extends Controller
 
             $request['parent_id'] = $parent['_id'];
             $request['level'] = $parent['level'] + 1;
-            $request['child_ids'] = [];
+                $request['child_ids'] = [];
             $new_category = new Category();
             $new_category->fill($request->all());
             $new_category->save();

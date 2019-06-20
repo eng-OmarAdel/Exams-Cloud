@@ -1,67 +1,12 @@
 @extends("layouts.index")
 @section("title")
-Profile
+Edit Profile
 @endsection
 @section("content")
 
-					
 <div class="row">
-	<div class="col-lg-2"></div>
-	<div class="col-lg-8">
-		<div class="m-portlet m-portlet--full-height  ">
-			<div class="m-portlet__body">
-				<div class="m-card-profile">
-					<div class="m-card-profile__title m--hide">
-						Your Profile
-					</div>
-					<div class="">
-						<div class="">
-							<h2 class="text-center"><img style="width:200px;height:200px;border-radius:10%" src="/storage/profile_img/{{$user->profile_img}}" alt="" />
-							</h2>
-						</div>
-					</div><br>
-					<div class="m-card-profile__details">
-						<span class="m-card-profile__name">{{$user->full_name}}</span>
-						<a href="" class="m-card-profile__email m-link">{{$user->email}}</a><br>
-						<a href="{{$user->facebook}}" class="m-card-profile__email m-link">{{$user->facebook}}</a><br>
-						<a href="{{$user->linkedin}}" class="m-card-profile__email m-link">{{$user->linkedin}}</a><br>
-						<a href="{{$user->twitter}}" class="m-card-profile__email m-link">{{$user->twitter}}</a>
-
-					</div>
-				</div>
-				<ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
-					<li class="m-nav__separator m-nav__separator--fit"></li>
-					<li class="m-nav__section m--hide">
-						<span class="m-nav__section-text">Section</span>
-					</li>
-					{{-- <li class="m-nav__item">
-						<a href="header/profile&amp;demo=default.html" class="m-nav__link">
-							<i class="m-nav__link-icon flaticon-profile-1"></i>
-							<span class="m-nav__link-title">
-								<span class="m-nav__link-wrap">
-									<span class="m-nav__link-text">My Profile</span>
-									<span class="m-nav__link-badge"><span class="m-badge m-badge--success">2</span></span>
-								</span>
-							</span>
-						</a>
-					</li> --}}
-					<li class="m-nav__item">
-						<a href="/activity" class="m-nav__link">
-							<i class="m-nav__link-icon flaticon-share"></i>
-							<span class="m-nav__link-text">Activity</span>
-						</a>
-					</li>
-
-				</ul>
-				<div class="m-portlet__body-separator"></div>
-
-			</div>
-			<h2 class="text-center"><a href="{{url("profile/update/")}}"  class="btn btn-accent m-btn m-btn--air m-btn--custom">Edit profile</a>&nbsp;&nbsp;
-			</h2>
-		</div>
-	</div>
-	
-	{{-- <div class="col-lg-8">
+    	<div class="col-lg-2"></div>
+    <div class="col-lg-8">
 		<div class="m-portlet m-portlet--full-height m-portlet--tabs  ">
 			<div class="m-portlet__head">
 				<div class="m-portlet__head-tools">
@@ -72,18 +17,18 @@ Profile
 								Update Profile
 							</a>
 						</li>
-						<li class="nav-item m-tabs__item">
+						{{-- <li class="nav-item m-tabs__item">
 							<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_user_profile_tab_2" role="tab">
 								Messages
 							</a>
-						</li>
+						</li> --}}
 
 					</ul>
 				</div>
 			</div>
 			<div class="tab-content">
 				<div class="tab-pane active" id="m_user_profile_tab_1">
-					<form enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right" method="post" action='/profile/update'>
+					<form enctype="multipart/form-data" class="m-form m-form--fit m-form--label-align-right" method="post" action='/profile/edit'>
 						{{ csrf_field() }}
 						<div class="m-portlet__body">
 							<div class="form-group m-form__group m--margin-top-10 m--hide">
@@ -164,8 +109,7 @@ Profile
 
 			</div>
 		</div>
-	</div> --}}
+    </div>
 </div>
 
 @endsection
-

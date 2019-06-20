@@ -14,7 +14,8 @@ function fill_data(data, form_id) {
         $(form_id + " [name='" + i + "'][type!='file']").val(item);
     });
 }
-function updateBreadCrumb(authorityName){
+function updateBreadCrumb(authorityName,authorityID){
+
   $("#authorityTableBreadcrumb").append(`
         <li class="breadcrumb-item active" aria-current="page">`+authorityName+`</li>
     `)

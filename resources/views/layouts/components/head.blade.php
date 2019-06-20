@@ -73,6 +73,18 @@
 		<link rel="stylesheet" type="text/css" href="{{url("")}}/plugins/DataTables/datatables.min.css"/>
 
 		<link rel="shortcut icon" href="{{url('')}}/assets/demo/media/img/logo/favicon.ico" />
+
+		<!-- Chart.js files -->
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
+
+		<!-- end Chart.js files -->
+
 		@yield('css') 
 		@yield('fonts') 
 	</head>

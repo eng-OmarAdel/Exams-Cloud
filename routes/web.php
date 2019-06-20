@@ -37,4 +37,8 @@ Route::resource('Category','CategoryController');
 // Route::get('/?view=Category&id={id?}','CategoryController@index');
 
 
+Route::get('/profile', 'UsersController@showProfile');
+Route::get('/profile/update', 'UsersController@proUpdate');
+Route::post('/profile/edit','UsersController@update');
+Route::get('/activity','UsersController@activity');
 
