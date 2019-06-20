@@ -24,6 +24,7 @@ Route::resource('Authority', 'AuthorityController');
 Route::resource('Track', 'TrackController');
 Route::get('Track_ordered', 'TrackController@tracks_ordered'); //json
 Route::get('emailcheck', 'UsersController@emailcheck');
+
 Route::get('trackOptions','TrackController@travesre_for_options');
 Route::get('categoryOptions','CategoryController@travesre_for_options');
 Route::get('AuthcategoryOptions','AuthProfileController@travesre_for_options');
@@ -34,5 +35,6 @@ Route::resource('Home','HomeController');
 Route::resource('Category','CategoryController');
 // Route::get('/Category/{id?}','CategoryController@show');
 // Route::get('/?view=Category&id={id?}','CategoryController@index');
+
 
 
