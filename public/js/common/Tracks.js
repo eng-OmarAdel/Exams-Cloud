@@ -92,6 +92,7 @@ var DatatablesDataSourceAjaxServer = function() {
 var table_reload;
 jQuery(document).ready(function() {
     table_reload=DatatablesDataSourceAjaxServer.init();
-    validation( {});
+		validation( {});
+		validation( {},$("#form_add2"));
 
 });
