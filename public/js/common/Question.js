@@ -89,7 +89,7 @@ var DatatablesDataSourceAjaxServer = function() {
 var table_reload;
 jQuery(document).ready(function() {
 	table_reload=DatatablesDataSourceAjaxServer.init();
-  validation( {});
+  // validation( {});
   handle_question_type();
   //we no more need to get options
   // $.ajax({
