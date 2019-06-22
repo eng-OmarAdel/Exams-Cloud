@@ -18,7 +18,7 @@ var DatatablesDataSourceAjaxServer = function() {
 			columns: [
 
                 {data: 'title' ,title: "Title"},
-                {data: 'tags' ,title: "Tags"},
+                {data: 'tags[, ].tag' ,title: "Tags"},
                 {data: 'authority_name.name' ,title: "Authority"},
 								{data: 'track_name.name' ,title: "Track"},
 								{data: 'Actions',title: "Actions"},
