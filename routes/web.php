@@ -28,11 +28,12 @@ Route::get('trackOptions','TrackController@travesre_for_options');
 Route::get('categoryOptions','CategoryController@travesre_for_options');
 Route::get('AuthcategoryOptions','AuthProfileController@travesre_for_options');
 Route::get('AuthtrackOptions','AuthProfileController@travesre_for_options1');
+Route::get('Exams','ExamController@index');
+Route::get('Exams/{id}','ExamController@show');
+Route::post('Exams','ExamController@store');
 Route::post('AuthProfile','AuthProfileController@addTrack');
 Route::resource('Tracks','TracksController1');
 Route::resource('Home','HomeController');
 Route::resource('Category','CategoryController');
 // Route::get('/Category/{id?}','CategoryController@show');
 // Route::get('/?view=Category&id={id?}','CategoryController@index');
-
-
