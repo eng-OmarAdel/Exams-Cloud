@@ -20,6 +20,6 @@ class Question extends Eloquent
         return $this->embedsMany('App\Tag');
     }
     protected $fillable = [
-        'name',  'category', 'type','user_id',  'weight','exam_id','answer_id', 'is_programming','status', 'created_at','updated_at',
+        'name',  'category', 'type','user_id',  'weight','exam_id','answer_id', 'is_programming','status', 'created_at','created_by','updated_at',
     ];
 }

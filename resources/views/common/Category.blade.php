@@ -93,7 +93,7 @@
 						        <input style="display: none" type="reset" id="form_reset" class="btn btn-secondary">
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						        <button type="submit" class="btn btn-primary">Add track</button>
+						        <button type="submit" class="btn btn-primary">Add category</button>
 						      </div>
 						        </form>
 						      </div>

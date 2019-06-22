@@ -6,10 +6,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Category;
+use App\User;
 use App\Question;
 use Jenssegers\Mongodb\Auth\PasswordResetServiceProvider;
-use Jenssegers\Mongodb\Auth;
+//use Jenssegers\Mongodb\Auth;
 use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -43,6 +45,9 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {
+        // $user = $request->user();
+        // echo $user;
+        // return;
         $id=$request->id;
         
         if(!isset($id))
@@ -131,10 +136,13 @@ class CategoryController extends Controller
         {
             $parentID = $request->parentCategory;
             $parent = Category::where('_id', $parentID)->first();
-
+            $user = $request->user();
+            //echo $user['email'];
+            //return;
+            $request['created_by'] = $user['email'];
             $request['parent_id'] = $parent['_id'];
             $request['level'] = $parent['level'] + 1;
-                $request['child_ids'] = [];
+            $request['child_ids'] = [];
             $new_category = new Category();
             $new_category->fill($request->all());
             $new_category->save();
@@ -189,7 +197,11 @@ class CategoryController extends Controller
             if (isset($request->answer)) {
                 $e = new Question();
                 $all['status']="approved";
-
+                $user = $request->user();
+                //echo $user['email'];
+                //return;
+                $all['created_by'] = $user['email'];
+                $all['status']="approved";
                 $e->fill($all);
                 $e->save();
                 foreach ($answer as &$value) {
@@ -203,6 +215,10 @@ class CategoryController extends Controller
             }else{
                     $all = $request->all();
                     $e = new Question();
+                    $user = $request->user();
+                    //echo $user['email'];
+                    //return;
+                    $all['created_by'] = $user['email'];
                     $all['status']="approved";
                     $e->fill($all);
                     $e->save();
@@ -325,14 +341,19 @@ class CategoryController extends Controller
 
         // }
 
+
+        $user = \Auth::user();
         $Category = Category::where('_id', $id)->first();
-        $parentID = $Category->parent_id;
-        $parent = Category::where('_id', $parentID)->first();
-        $oldChilds = $parent->child_ids;
-        $oldChilds = self::deleteElement($id,$oldChilds);
-        $parent->child_ids = $oldChilds;
-        $parent->save();
-        Category::where('_id', $id)->delete();
+        if($user['email'] == $Category['created_by'])
+        {
+            $parentID = $Category->parent_id;
+            $parent = Category::where('_id', $parentID)->first();
+            $oldChilds = $parent->child_ids;
+            $oldChilds = self::deleteElement($id,$oldChilds);
+            $parent->child_ids = $oldChilds;
+            $parent->save();
+            Category::where('_id', $id)->delete();
+        }
     }
 
     
