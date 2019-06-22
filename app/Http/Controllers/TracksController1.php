@@ -37,8 +37,10 @@ class TracksController1 extends Controller
         else{
           $GLOBALS['authid'] = $id;
           $rootCategory = Category::where('name', 'root')->where('level','-1')->first();
-          $rootTrack  = Track::where('name', 'root')->where('level',-1)->where('auth_id',$id)->first();
+          $rootTrack  = Track::where('name', 'root')->where('level',-1)->first();
         }
+
+
         // echo($GLOBALS['id']);
         // return;
         if(isset($rootTrack->child_ids)){
@@ -228,6 +230,7 @@ class TracksController1 extends Controller
             $rootchilds[] = $new_category->id;
             $root->child_ids = $rootchilds;
             $root->save();
+
 
             $cats = $parent->cats_id;
             $cats[] = $new_category->id;

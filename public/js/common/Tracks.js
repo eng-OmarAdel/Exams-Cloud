@@ -2,7 +2,8 @@ var tablename=document.currentScript.getAttribute("tablename"); //1
 var authid=document.currentScript.getAttribute("authid"); //1
 var authname=document.currentScript.getAttribute("authname");
 //Update the path
-$(updateBreadCrumb(authname));
+$(updateBreadCrumb(authname,authid));
+
 var DatatablesDataSourceAjaxServer = function() {
 
 	var initTable1 = function() {
@@ -93,5 +94,6 @@ var table_reload;
 jQuery(document).ready(function() {
     table_reload=DatatablesDataSourceAjaxServer.init();
     validation( {});
+
 
 });
