@@ -61,11 +61,8 @@
 											    <div id="test">
 											        <div class="form-group m-form__group">
 											            <label for="exampleInputEmail1" id="question_label">Title</label>
-                                  <select id="title" name="title" class="form-control m-input">
-
-                                    <option selected value="none">Select title...</option>
-                                    <option value="Physics">Physics 2019</option>
-                                  </select>
+											            <textarea class="ignoreField form-control m-input" name="title" id="title"
+											                      placeholder="Exam title"></textarea>
 											            <!--<textarea class="ignoreField form-control m-input qbank" name="name" id="question"
 											                      placeholder="Question"></textarea>-->
 											        </div>
@@ -77,11 +74,13 @@
 															<div class="form-group m-form__group">
 																<label for="exampleInputEmail1">Authority</label>
 																<select class="form-control" id="Authority" name="Authority">
+																	<option value="5cb8a6dc76e7492510007032">Faculty of Engineering</option>
 																</select>
 														  </div>
                               <div class="form-group m-form__group">
 																<label for="exampleInputEmail1">Track</label>
-																<select class="form-control" id="Category" name="Category">
+																<select class="form-control" id="Track" name="Track">
+																	<option value="5cbc7c2c76e7490450007418">Electrical</option>
 																</select>
 														  </div>
 											    </div>

@@ -1,5 +1,5 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
-
+console.log(tablename);
 var DatatablesDataSourceAjaxServer = function() {
 
 	var initTable1 = function() {
@@ -19,8 +19,9 @@ var DatatablesDataSourceAjaxServer = function() {
 
                 {data: 'title' ,title: "Title"},
                 {data: 'tags' ,title: "Tags"},
-                {data: 'authorityName' ,title: "Authority"},
-								{data: 'trackName' ,title: "Track"},
+                {data: 'authority_name.name' ,title: "Authority"},
+								{data: 'track_name.name' ,title: "Track"},
+								{data: 'Actions',title: "Actions"},
 				// {data: 'created_at' ,title: "Creation date"},
 				// {data: 'Actions',title: "Actions"},
 			],
@@ -52,20 +53,7 @@ var DatatablesDataSourceAjaxServer = function() {
                           <i class="la la-edit"></i>
                         </a>`;
 					},
-				},{
-                    targets: -3,
-                    title: 'Type',
-                    orderable: false,
-                    render: function(data, type, full, meta) {
-
-                        if(data=="no"){
-                            return "Choice"
-                        }else{
-                            return "programming"
-
-                        }
-                    },
-                }
+				}
 			],
 		});
 		return table;
@@ -91,7 +79,7 @@ jQuery(document).ready(function() {
                  validation( {});
 
                  $.ajax({
-                  url: "/categoryOptions",
+                  url: "/Exams",
 
                   complete: function(jqXHR){
                   var data = $.parseJSON(jqXHR.responseText);
