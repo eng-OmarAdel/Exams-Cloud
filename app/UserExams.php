@@ -20,6 +20,9 @@ class UserExams extends Authenticatable
 
     ];
   
-
+  public function Exams()
+    {
+        return $this->belongsTo('App\Exam',"exam_id");
+    }
 
 }

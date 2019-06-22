@@ -22,4 +22,5 @@ class Question extends Eloquent
     protected $fillable = [
         'name',  'category', 'type','user_id',  'weight','exam_id','answer_id', 'is_programming','status', 'created_at','updated_at',
     ];
+    
 }

@@ -11,4 +11,5 @@ class Track extends Eloquent
     protected $fillable = [
         'name','type','parent_id','auth_id','level','child_ids','created_at',
     ];
+    
 }
