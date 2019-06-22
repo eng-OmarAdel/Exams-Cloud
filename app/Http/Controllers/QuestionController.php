@@ -279,7 +279,6 @@ class QuestionController extends Controller
         curl_close($curl);
         // "true" -> not duplicate
         // "duplicated entry" -> duplicate
-        dd($response);
         if($response === "true"){
             return "not_duplicate";
         }
