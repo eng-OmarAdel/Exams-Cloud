@@ -100,127 +100,144 @@ jQuery(document).ready(function() {
 });
     //////////////////////////////////////////////////////////////////////
     $(document).on('click', "#addanswer" , function(e) {
-     //add a new day
-
-
+      //add a new day
+      
+      
       e.preventDefault();
-
-
-     $("#answer").append(`
-    <div class="subdays subdays2 form-group m-form__group row"><div class="col-lg-12 col-md-12 col-sm-12"> <div class="input-group pull-right " > 
-
-
-    <div class="col-md-8">
-
-    <input class="form-control m-input m-input--air answer" type="text"  placeholder="answer"  name="answer[`+$(".answer").length+`]">
-    </div>
-    <div class="col-md-2">
-    <label for="is_true">true</label>
-    <input class="checkbox" value="1" type="checkbox"  id="is_true" name="is_true[`+$(".answer").length+`]">
-    </div>
-    <div class="col-md-2">
-
-                    <a href="#" class="delete_answer btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill"> <i class="fa fa-close"></i> </a>
-    </div>
-       </div> </div></div>`);
-     // delete_day();
-
+      
+      
+      $("#answer").append(`
+      <div class="subdays subdays2 form-group m-form__group row"><div class="col-lg-12 col-md-12 col-sm-12"> <div class="input-group pull-right " > 
 
       
-    });
+      <div class="col-md-8">
+      
+      <input class="form-control m-input m-input--air answer" type="text"  placeholder="answer"  name="answer[`+$(".answer").length+`]">
+      </div>
+      <div class="col-md-2">
+      <label for="is_true">true</label>
+      <input class="checkbox" value="1" type="checkbox"  id="is_true" name="is_true[`+$(".answer").length+`]">
+      </div>
+      <div class="col-md-2">
+      
+      <a href="#" class="delete_answer btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill"> <i class="fa fa-close"></i> </a>
+    </div>
+    </div> </div></div>`);
+     // delete_day();
+     
 
+     
+    });
+    
     //Delete day
     $(document).on('click', ".delete_answer" , function(e) {
-
+      
       e.preventDefault();
-       //remove day
+      //remove day
       $(this).parent().parent().parent().parent().remove();
       
     });
-
+    
     $(document).on("change",".checkbox",function() {
-        $(".checkbox").prop('checked', false);
-        $(this).prop('checked', true);
+      $(".checkbox").prop('checked', false);
+      $(this).prop('checked', true);
     });
-var custom_after=  function(data){
-  alert("welcome to edit")
+    var custom_after=  function(data){
+      alert("welcome to edit")
         $("#is_programming").trigger("change");
         is_programming=$("#is_programming").val();
         if(is_programming=="no"){
-        $(".answer").each(function(index, value) {
+          $(".answer").each(function(index, value) {
                  $(this).val("")
 
-               value.readOnly = false;
+                 value.readOnly = false;
 
 
-        })
-            answers=data.answers;
-            var count=0
-             
-            $(".subdays2").remove();
-            var numItems = $('.answer').length
-
-            $.each( answers, function( key, value ) {
-                count++;
-
-                if (count>numItems) {
+                })
+                answers=data.answers;
+                var count=0
+                
+                $(".subdays2").remove();
+                var numItems = $('.answer').length
+                
+                $.each( answers, function( key, value ) {
+                  count++;
+                  
+                  if (count>numItems) {
                     $("#addanswer").trigger('click'); 
-              }
-            });
-
-            $(".answer").each(function( key, value ) {
-
+                  }
+                });
+                
+                $(".answer").each(function( key, value ) {
+                  
                $(this).val(answers[key].answer);
                if(answers[key].is_true==1){
-               $(this).parent().parent().find(".checkbox").prop("checked",true)
+                 $(this).parent().parent().find(".checkbox").prop("checked",true)
            }
            else{
-
-               $(this).parent().parent().find(".checkbox").prop("checked",false)
+             
+             $(this).parent().parent().find(".checkbox").prop("checked",false)
             }
-              });
-            }
-
+          });
+        }
         
-}
-    $(document).on("change",".checkbox",function() {
+        
+      }
+      $(document).on("change",".checkbox",function() {
         $(".checkbox").prop('checked', false);
         $(this).prop('checked', true);
-    });
-        $(document).on("change","#is_programming",function() {
-            type=$(this).val()
-                if(type=="no"){
-        $("#essay_answer").hide();
+      });
+      $(document).on("change","#is_programming",function() {
+        type=$(this).val()
+        if(type=="no"){
+          $("#essay_answer").hide();
+          
+          $("#answers1").show();
+          $("#addanswer").show();
+          $("#interactive").hide();
+          
+          $(".answer").each(function(index, value) {
+            $(this).val("")
+            
+            value.readOnly = false;
+            
+            
+          })
+          
+        }else {
+          $("#answers1").hide();
+          $("#essay_answer").show();
+          $("#interactive").hide();
+          
+          if(type=="complete")
+          $("#question_label").html("statment");
+          
+        }
+        
+      });
+      // ===================== Abdullah =====================
+      $(document).on('click', "#generate_tags" , function(e) {
+        e.preventDefault();
+        var quest_body = $("#question").val();
+        if ($.trim(quest_body).length == 0) {
+          alert("No question provided, idiot!");
+        }
+        else{
+          $.get( "http://134.209.204.108/tagmaker?target="+quest_body, function( data ) {
+            // alert(data);
+            $("#tags").val(data);
+          });
+        }
+      });
 
-        $("#answers1").show();
-        $("#addanswer").show();
-                $("#interactive").hide();
-
-        $(".answer").each(function(index, value) {
-                 $(this).val("")
-
-               value.readOnly = false;
+      // =====================================================
 
 
-        })
-
-     }else {
-        $("#answers1").hide();
-        $("#essay_answer").show();
-        $("#interactive").hide();
-
-            if(type=="complete")
-                $("#question_label").html("statment");
-
-     }
-
-    });
-
-  // $.ajax({
-  //       url: "category",
-
-  //      complete: function(jqXHR){
-  //   var data = $.parseJSON(jqXHR.responseText);
+      // $.ajax({
+        //       url: "category",
+        
+        //      complete: function(jqXHR){
+          //   var data = $.parseJSON(jqXHR.responseText);
   //   $("#category").chainedSelects({
   //     data: data,
   //     placeholder:'Other'

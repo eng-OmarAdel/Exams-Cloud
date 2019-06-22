@@ -125,7 +125,8 @@
 
 											        <div class="form-group m-form__group">
 											            <label for="exampleInputEmail1">tags <small>comma separated</small></label>
-											            <textarea class="ignoreField form-control m-input" name="tags" id="tags"
+											            <a href="#" id="generate_tags" class="btn btn-success ">auto generate</a>
+																	<textarea class="ignoreField form-control m-input" name="tags" id="tags"
 											                      placeholder="tags"></textarea>
 															</div>
 															
