@@ -44,6 +44,19 @@ jQuery(document).ready(function() {
                       });
 
                       $("#test").html(result);
-                      $("#block-view").show();
+                      // 
                   }});
+
+$('#submit').click(function(e){
+
+                 $("#proceed").ajaxSubmit({url: '/proceed', type: 'post',      
+                      success: function (data) {
+                    $("#block-view").show();
+                    $("#proceed-view").hide();
+                }
+               })
+e.preventDefault();
+})
+
+
 });

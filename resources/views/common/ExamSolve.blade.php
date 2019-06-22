@@ -53,6 +53,37 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="proceed-view"  class="col-lg-12">
+                            <div class="m-portlet">
+                                <div class="m-portlet__body m-portlet__body--no-padding">
+                                    <div class="m-invoice-2">
+                                        <div class="m-invoice__wrapper">
+                                           
+                                            <div class="m-invoice__body m-invoice__body--centered">
+                                                <h1>Are you ready to start the exam?</h1><br>
+                                                <div >
+                                                        <form action="{{url("")}}" method="post"  id="proceed">
+                                                            {{csrf_field()}}
+                                                            <input type="hidden" name="_method" value="post" fillable="never"/>
+                                                            <input name="exam_id" type="hidden" value="{{$_GET['_id']}}"/>
+
+                                                            <div id="test">
+                                                            </div>
+                                                            <input type="submit" id="submit" value="Proceed" class="btn btn-accent">
+                                                        </form>
+                                                </div>
+                                            </div>
+                                            <div class="m-invoice__footer">
+                                                <div class="m-invoice__table  m-invoice__table--centered table-responsive">
+                                                    <table  id="table" class="table">
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

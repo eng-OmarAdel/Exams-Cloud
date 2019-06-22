@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Exam;
+use App\User;
 use App\Question;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -126,6 +127,18 @@ class ExamSolveController extends Controller
     public function destroy($id)
     {
         Question::where('_id', $id)->delete();
+    }
+    public function proceed(Request $request)
+    {
+        $user=User::find(Auth::user()->_id);
+        $exam = $user->UserExams()->where("exam_id", $request->exam_id)->first();
+        if(isset($exam->exam_id)){
+                $exam->count +=1;
+                $exam->save();
+        }else
+        {
+            $exam = $user->UserExams()->create(['exam_id' => $request->exam_id, "count"=> 1]);
+        }
     }
 
 

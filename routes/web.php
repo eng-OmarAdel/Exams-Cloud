@@ -44,4 +44,7 @@ Route::get('/activity', 'UsersController@activity');
 
 
 Route::resource('/ExamSolve', 'ExamSolveController');
+Route::GET('/UserProceededExams', 'UserProceededExamsController@UserProceededExams');
+Route::post('/proceed', 'ExamSolveController@proceed');
+Route::resource('/Exams', 'ExamController');
 
