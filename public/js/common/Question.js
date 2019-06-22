@@ -1,4 +1,6 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
+var cat_id=document.currentScript.getAttribute("cat_id"); //2
+var cat_type=document.currentScript.getAttribute("cat_type"); //3
 
 var DatatablesDataSourceAjaxServer = function() {
 
@@ -12,7 +14,7 @@ var DatatablesDataSourceAjaxServer = function() {
       processing: true,
 			serverSide: true,
 
-       ajax:{url:tablename, function (data, callback, settings) {
+       ajax:{url:"/"+tablename+"?cat_id="+cat_id+"&cat_type="+cat_type, function (data, callback, settings) {
        }
        },
 			columns: [
@@ -87,16 +89,17 @@ var DatatablesDataSourceAjaxServer = function() {
 var table_reload;
 jQuery(document).ready(function() {
 	table_reload=DatatablesDataSourceAjaxServer.init();
-                 validation( {});
-                 
-                 $.ajax({
-                  url: "/categoryOptions",
-          
-                  complete: function(jqXHR){
-                  var data = $.parseJSON(jqXHR.responseText);
-                  console.log(data);
-                  $("#Category").html(data);
-                  }});
+  validation( {});
+  handle_question_type();
+  //we no more need to get options
+  // $.ajax({
+  //   url: "/categoryOptions",
+  //   complete: function(jqXHR){
+  //   var data = $.parseJSON(jqXHR.responseText);
+  //   console.log(data);
+  //   $("#Category").html(data);
+  // }});
+
 });
     //////////////////////////////////////////////////////////////////////
     $(document).on('click', "#addanswer" , function(e) {
@@ -187,11 +190,29 @@ jQuery(document).ready(function() {
         $(".checkbox").prop('checked', false);
         $(this).prop('checked', true);
       });
-      $(document).on("change","#is_programming",function() {
-        type=$(this).val()
+      $(document).on("change","#is_programming", handle_question_type );
+      // ===================== Abdullah =====================
+      $(document).on('click', "#generate_tags" , function(e) {
+        e.preventDefault();
+        var quest_body = $("#question").val();
+        if ($.trim(quest_body).length == 0) {
+          alert("No question provided, idiot!");
+        }
+        else{
+          $.get( "http://134.209.204.108/tagmaker?target="+quest_body, function( data ) {
+            // alert(data);
+            if($("#is_programming").val()=="Yes"){ data+=", programming" }
+            $("#tags").val(data);
+          });
+        }
+      });
+
+
+      function handle_question_type(){
+        type=$("#is_programming").val()
         if(type=="no"){
+          $("#program_language_div").hide();
           $("#essay_answer").hide();
-          
           $("#answers1").show();
           $("#addanswer").show();
           $("#interactive").hide();
@@ -205,31 +226,15 @@ jQuery(document).ready(function() {
           })
           
         }else {
+          $("#program_language_div").show();
           $("#answers1").hide();
           $("#essay_answer").show();
           $("#interactive").hide();
           
           if(type=="complete")
           $("#question_label").html("statment");
-          
-        }
-        
-      });
-      // ===================== Abdullah =====================
-      $(document).on('click', "#generate_tags" , function(e) {
-        e.preventDefault();
-        var quest_body = $("#question").val();
-        if ($.trim(quest_body).length == 0) {
-          alert("No question provided, idiot!");
-        }
-        else{
-          $.get( "http://134.209.204.108/tagmaker?target="+quest_body, function( data ) {
-            // alert(data);
-            $("#tags").val(data);
-          });
-        }
-      });
-
+      }
+      }
       // =====================================================
 
 
@@ -247,4 +252,3 @@ jQuery(document).ready(function() {
        
 
   //      }});
-

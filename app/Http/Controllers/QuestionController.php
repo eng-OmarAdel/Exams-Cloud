@@ -19,10 +19,16 @@ class QuestionController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $questions = Question::orderBy("id")->with('tags')->get();
-
+        $cat_id = $request->cat_id;
+        $cat_type = $request->cat_type;
+        if ($cat_type == "1"){
+            $questions = Question::where("category",$cat_id)->orderBy("id")->with('tags')->get();
+        }
+        else if ($cat_type == "2") {
+            $questions = Question::where("track",$cat_id)->orderBy("id")->with('tags')->get();
+        }
         foreach ($questions as $key => &$value1) {
             foreach ($value1['tags'] as &$value) {
                 $value1['mytags'] .= $value['tag'] . ",";

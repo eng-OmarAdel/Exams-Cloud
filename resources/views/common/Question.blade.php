@@ -4,7 +4,6 @@
 {{$tablename}}
 @endsection
 @section("content")						
-
 						<div class="m-portlet m-portlet--mobile">
 							<div class="m-portlet__head">
 								<div class="m-portlet__head-caption">
@@ -70,6 +69,19 @@
 													            </select>
 													    </div>
 													</div>
+
+													<div class="form-group m-form__group" id="program_language_div">
+													        <label for="program_language" id="prog_lng_label">Programming Language</label>
+													            <select id="program_language" name="is_programming" class="form-control m-input" id="exampleSelect1">
+													            	
+													            	<option selected value="cpp">c++</option>
+													            	<option value="c">c</option>
+													            	<option value="php">PHP</option>
+													            	<option value="py">Python</option>
+													            </select>
+													    </div>
+													</div>
+
 											        <div class="form-group m-form__group">
 											            <label for="exampleInputEmail1" id="question_label">Question</label>
 											            <textarea class="ignoreField form-control m-input qbank" name="name" id="question"
@@ -161,7 +173,7 @@
 
 @endsection
 @section("script")
-<script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}" cat_type="{{$_GET['cat_type']}}" cat_id="{{$_GET['cat_id']}}" src="{{url("js/main.js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}" cat_type="{{$_GET['cat_type']}}" cat_id="{{$_GET['cat_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection
 
