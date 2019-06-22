@@ -3,6 +3,7 @@ var authid=document.currentScript.getAttribute("authid"); //1
 var authname=document.currentScript.getAttribute("authname");
 //Update the path
 $(updateBreadCrumb(authname,authid));
+
 var DatatablesDataSourceAjaxServer = function() {
 
 	var initTable1 = function() {
@@ -93,5 +94,6 @@ var table_reload;
 jQuery(document).ready(function() {
     table_reload=DatatablesDataSourceAjaxServer.init();
     validation( {});
+
 
 });

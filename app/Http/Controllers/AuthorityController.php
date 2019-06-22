@@ -69,6 +69,12 @@ class AuthorityController extends Controller
 
         $e->fill($request->all());
         $e->save();
+        $rootTrack= new Track();
+        $rootTrack['name'] = "root";
+        $rootTrack['auth_id'] = $e['_id'];
+        $rootTrack['level'] = -1;
+        $rootTrack['child_ids'] = [];
+        $rootTrack->save();
         return response()->json($e);
     }
 

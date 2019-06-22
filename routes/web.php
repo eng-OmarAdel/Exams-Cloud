@@ -24,6 +24,7 @@ Route::resource('Authority', 'AuthorityController');
 Route::resource('Track', 'TrackController');
 Route::get('Track_ordered', 'TrackController@tracks_ordered'); //json
 Route::get('emailcheck', 'UsersController@emailcheck');
+
 Route::get('trackOptions','TrackController@travesre_for_options');
 Route::get('categoryOptions','CategoryController@travesre_for_options');
 Route::get('AuthcategoryOptions','AuthProfileController@travesre_for_options');
@@ -40,3 +41,4 @@ Route::get('/profile', 'UsersController@showProfile');
 Route::get('/profile/update', 'UsersController@proUpdate');
 Route::post('/profile/edit','UsersController@update');
 Route::get('/activity','UsersController@activity');
+
