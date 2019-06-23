@@ -9,7 +9,7 @@ use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 class Authority extends Eloquent
 {
     protected $fillable = [
-        'name', 'created_at','updated_at',
+        'name', 'created_at','created_by','updated_at',
     ];
     
 }

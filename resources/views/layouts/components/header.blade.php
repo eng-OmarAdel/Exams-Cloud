@@ -33,7 +33,7 @@
 														<img src="assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless m--img-centered" alt="" />
 													</span>
 													<span class="m-topbar__welcome">Hello,&nbsp;</span>
-													<span class="m-topbar__username">Nick</span>
+													<span class="m-topbar__username">{{$user->full_name}}</span>
 												</a>
 												<div class="m-dropdown__wrapper">
 													<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
@@ -41,11 +41,11 @@
 														<div class="m-dropdown__header m--align-center" style="background: url(assets/app/media/img/misc/user_profile_bg.jpg); background-size: cover;">
 															<div class="m-card-user m-card-user--skin-dark">
 																<div class="m-card-user__pic">
-																	<img src="assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless" alt="" />
+																	<img src="/storage/profile_img/{{$user->profile_img}}" class="m--img-rounded m--marginless" alt="" />
 																</div>
 																<div class="m-card-user__details">
-																	<span class="m-card-user__name m--font-weight-500">Mark Andre</span>
-																	<a href="" class="m-card-user__email m--font-weight-300 m-link">mark.andre@gmail.com</a>
+																	<span class="m-card-user__name m--font-weight-500">{{$user->full_name}}</span>
+																	<a href="" class="m-card-user__email m--font-weight-300 m-link">{{$user->email}}</a>
 																</div>
 															</div>
 														</div>
@@ -92,6 +92,7 @@
 								<button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-light " id="m_aside_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
 								<div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-dark m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-light m-aside-header-menu-mobile--submenu-skin-light ">
 									<ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
+
 										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Question") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("?view=Question&cat_id=5cacb8709dfef715a06255b5&cat_type=1")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Questions</span></a></li>
 										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Users") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("?view=Users")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Users</span></a></li>
 										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Authority") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("?view=Authority")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Authorities</span></a></li>
