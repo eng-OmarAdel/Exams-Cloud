@@ -42,16 +42,8 @@ var DatatablesDataSourceAjaxServer = function() {
                         status = '<a id="view" href="/showAuth/' + full._id + '" class="dropdown-item" > View Authority</a>'
 
                         return `
-                        <span class="dropdown">
-                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
-                              <i class="la la-ellipsis-h"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                `+status+`
-                            </div>
-                        </span>
-                        <a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
-                          <i class="la la-edit"></i>
+                        <a href="#" onclick="delete_item('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Remove">
+                          <i class="la la-remove"></i>
                         </a>
                         `;
 					},

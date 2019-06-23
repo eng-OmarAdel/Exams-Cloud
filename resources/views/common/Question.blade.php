@@ -4,7 +4,6 @@
 {{$tablename}}
 @endsection
 @section("content")						
-
 						<div class="m-portlet m-portlet--mobile">
 							<div class="m-portlet__head">
 								<div class="m-portlet__head-caption">
@@ -70,12 +69,26 @@
 													            </select>
 													    </div>
 													</div>
+
+													<div class="form-group m-form__group" id="program_language_div">
+													        <label for="program_language" id="prog_lng_label">Programming Language</label>
+													            <select id="program_language" name="program_language" class="form-control m-input" id="exampleSelect1">
+													            	
+													            	<option selected value="cpp">c++</option>
+													            	<option value="c">c</option>
+													            	<option value="php">PHP</option>
+													            	<option value="py">Python</option>
+													            </select>
+													    </div>
+													</div>
+
 											        <div class="form-group m-form__group">
 											            <label for="exampleInputEmail1" id="question_label">Question</label>
 											            <textarea class="ignoreField form-control m-input qbank" name="name" id="question"
 											                      placeholder="Question"></textarea>
 											        </div>											        
-
+															<!-- in case of programming -->
+															<!-- programming_output -->
 													       <div id="essay_answer" style="display: none" class="form-group m-form__group">
 												            <label for="exampleInputEmail1">Answer</label>
 												            <textarea class="ignoreField form-control m-input qbank" name="answer_id" id="answer_id"
@@ -125,19 +138,18 @@
 
 											        <div class="form-group m-form__group">
 											            <label for="exampleInputEmail1">tags <small>comma separated</small></label>
-											            <textarea class="ignoreField form-control m-input" name="tags" id="tags"
+											            <a href="#" id="generate_tags" class="btn btn-success ">auto generate</a>
+																	<textarea class="ignoreField form-control m-input" name="tags" id="tags"
 											                      placeholder="tags"></textarea>
 															</div>
 															
-															<div class="form-group m-form__group">
-																<label for="exampleInputEmail1">Categories</label>
-																<select class="form-control" id="Category" name="Category">
-																</select>
-														</div>
 											    </div>
 											</div>
 
                                         </div>
+
+										<input type="hidden" name="cat_id" value="{{$_GET['cat_id']}}"/>
+       							<input type="hidden" name="cat_type" value="{{$_GET['cat_type']}}"/>
 
 						        <input style="display: none" type="reset" id="form_reset" class="btn btn-secondary">
 						      <div class="modal-footer">
@@ -160,7 +172,7 @@
 
 @endsection
 @section("script")
-<script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}" cat_type="{{$_GET['cat_type']}}" cat_id="{{$_GET['cat_id']}}" src="{{url("js/main.js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}" cat_type="{{$_GET['cat_type']}}" cat_id="{{$_GET['cat_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection
 

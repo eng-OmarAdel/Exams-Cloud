@@ -43,6 +43,7 @@ Question Solving
                                         <input name="_method" type="hidden" value="put"/>
                                         <input name="id" type="hidden" value="{{$_GET['id']}}"/>
                                         <div class="submit_exam m-invoice__items" >
+                                            <!-- QUESTION NAME AND ANSWER ITEMS FILLED BY JAVASCRIPT -->
                                             <!--begin::Portlet-->
                                         </div>
                                     </form>
@@ -50,12 +51,17 @@ Question Solving
                                 </div>
                             </div>
                             <div class="m-invoice__footer">
-                                <div class="m-invoice__table m-invoice__table--centered table-responsive">
-                                    <button class="submit_exam btn btn-info" id="submit_ex"  onclick="correct('{{$_GET['id']}}')"  type="button">
+                                <div class="m-invoice__table m-invoice__table--centered table-responsive" id="buttons_area">
+                                    <button class="submit_exam btn btn-success" id="submit_ex"  onclick="correct('{{$_GET['id']}}')"  type="button">
                                         Submit Answer
                                     </button>
 
                                 </div>
+                                <div style="display:none" class="m-invoice__table m-invoice__table--centered table-responsive mt-3" id="execution_result_container">
+                                    <h3>Result:</h3>
+                                    <h4 id="execution_result"></h4>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -68,113 +74,6 @@ Question Solving
 @endsection
 
 @section('script')
-<script>
-    //Table Name Variable
-
-
-
-    
-var reload;
-
-var exam= {
-    init:function() {
-          $.ajax({url: "Question/{{$_GET['id']}}",
-            beforeSubmit:function(){
-                mApp.block(".m-invoice__wrapper");
-
-
-          } ,complete: function(jqXHR, textStatus) {
-                var item = $.parseJSON(jqXHR.responseText);
-
-                    quiz=""
-                    back=""
-
-
-                    result="<div class=' m-portlet__body row'><div class='col-md-8 offset-2'><h3>"+item.name+"</h3><br><br><input type=\"hidden\"  name=\"question\" value=\""+item._id+"\">"
-                    //<input type=\"hidden\"  name=\"type\" value=\""+item.type+"\">
-                    if(item.is_programming="Yes"){
-                    result+='<div class="form-group m-form__group"><textarea class="form-control m-input" id="exampleTextarea" rows="20"  name=\"answer\" ></textarea></div><div class="form-group m-form__group"></div>';
-
-                    }else{
-                        result+="<div class='row'>"
-                        result+='<input type="hidden"  name=\"answer\">'
-                $.each(item.answers, function(i, item2) {
-                   item2.answer = item2.answer.toString().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&#39;").replace(/"/g, "&#34;");
-
-                      result+=  '<div class="col-md-12"><div class="m-invoice__item"><span class="m-invoice__subtitle " ><div class="m-radio-list"><label class="m-radio m-radio--success"><input type="radio"  name=\"answer\"   value="'+item2._id+'"> '+item2.answer+'<span></span></label></div></span></div></div>'
-                        });
-                        result+="</div>";
-
-                    }
-                        next=""
-
-
-                    result+='</div>'+next+'</div>';
-                    console.log(result)
-                $(".m-invoice__items").html(result)
-
-                mApp.unblock(".m-invoice__wrapper");
-
- 
-
-
-            }});
-           }};
-
-
-//////////////////////////////////////////////////////////////////////
-var correct =function(id){
-
-        $("#correct").ajaxSubmit({url: "http://localhost", type: 'post',
-                          beforeSubmit: function(arr, $form, options) {
-                    toastr.warning('Please wait!');
-                                    mApp.block(".m-invoice__wrapper");
-
-
-                },
-                                      success:function(e){
-
-                        $.ajax({url: "Correct/{{$_GET['id']}}", type: 'POST',
-                                                data: {_token: "{{ csrf_token() }}",answer:$("input[name='answer']:checked").val(), e:e,_method: "put"},
-
-                                      success:function(e){
-
-                                        if(e=="success"){
-                                                toastr.success("write answer");
-  
-                                        }else{
-                                                toastr.error(e,"wrong answer");
-
-                                        }
-
-                                    mApp.unblock(".m-invoice__wrapper");
-
-
-                                      }
- 
-                                  });
-                                    mApp.unblock(".m-invoice__wrapper");
-
-
-                                      },
-                                      error:function(e){
-
-                                    mApp.unblock(".m-invoice__wrapper");
-
-
-
-                                      }
-                                  });
-
-}
-
-    jQuery(document).ready(function() {
-        exam.init();
-
-
-        });
-
-
-</script>
+<script type="text/javascript" tablename="QuestionSolve" _id="{{$_GET['id']}}" csrf="{{csrf_token()}}"src="{{url("js/common/QuestionSolve.js")}}"></script>
 @endsection
 
