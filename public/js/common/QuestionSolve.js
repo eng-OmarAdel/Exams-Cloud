@@ -22,7 +22,7 @@ var exam= {
                 back=""
                 //div has the question title
                 //input: name = question , value = id
-                result="<div class=' m-portlet__body row'><div class='col-md-8 offset-2'><h3>"+item.name+"</h3><br><br><input type=\"hidden\"  name=\"question\" value=\""+item._id+"\">"
+                result="<div class=' m-portlet__body row'><div class='col-md-8 offset-2'><h3>"+item.name+"</h3>"
                 if(item.is_programming=="Yes"){
                     //code text area -> name = answer
                     result+=`<div class="form-group m-form__group">
@@ -30,7 +30,7 @@ var exam= {
                         </div><div class="form-group m-form__group"></div>
                     `;
                     // button to test code (execute)
-                    $(".m-invoice__table--centered").prepend(`
+                    $("#buttons_area").prepend(`
                                     <button class="btn btn-info" id="execute_code"  onclick="handle_execute()"  type="button">
                                         Execute Code
                                     </button>
@@ -58,25 +58,26 @@ var exam= {
 
 // ==========================correct ========================
 var correct =function(id){
-    $("#correct").ajaxSubmit({url: "http://localhost", type: 'post',
+    if(question.is_programming=="Yes"){
+        if($.trim($("#code").val()) == "") {
+            alert("please solve the question");
+            return;
+        }
+    }
+    $("#correct").ajaxSubmit({url: "Correct/"+id, type: 'post',
         beforeSubmit: function(arr, $form, options) {
         toastr.warning('Please wait!');
         mApp.block(".m-invoice__wrapper");
         },
+        data: {_token: csrf_token ,_method: "put"},
         success:function(e){
-            $.ajax({url: "Correct/"+id, type: 'POST',
-                data: {_token: csrf_token ,answer:$("input[name='answer']:checked").val(), e:e,_method: "put"},
-                success:function(e){
-
-                    if(e=="success"){
-                        toastr.success("ٌRight answer");
-                    }else{
-                        toastr.error(e,"wrong answer");
-                    }
-
-                    mApp.unblock(".m-invoice__wrapper");
-                }
-            });
+            e = $.parseJSON(e);
+            if(e.is_true==1){
+               toastr.success("Excelent!!");
+            }
+            else{
+               toastr.error("Try_again","Wrong answer!!");
+            }
             mApp.unblock(".m-invoice__wrapper");
         },
         error:function(e){
@@ -109,8 +110,10 @@ var execute_code = function(code , extension){
         },
         complete: function(jqXHR, textStatus) {
             var result = $.parseJSON(jqXHR.responseText).result;
-            alert("result of executed code is:\n"+result);
+            //alert("result of executed code is:\n"+result);
             mApp.unblock(".m-invoice__wrapper");
+            $("#execution_result_container").show();
+            $("#execution_result").html(result);
         }
     });
 }

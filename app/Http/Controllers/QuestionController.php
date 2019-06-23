@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Track;
+use App\SolvedQuestion;
 use App\Question;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Validator;
@@ -232,30 +235,37 @@ class QuestionController extends Controller
 
     public function Correct(Request $request, $id)
     {
+        // return response()->json($request->all());
         $e = Question::where("_id", $id)->first();
         if ($e->is_programming == "Yes") {
+            //my answer compiled:
+            $intrnal_req = new Request();
+            $intrnal_req->code = $request->answer;
+            $intrnal_req->extension = $e->programming_language;
+            $myanswer = json_decode(self::ExecuteCode( $intrnal_req))->result;
+            //true answer
             $true = (string)$e->answer_id;
-            $myanswer = (string)$request->e;
-
-            $result = strcmp($true, $myanswer);
-
-            if ($result == 0) {
-
-                return "success";
-            } else {
-                return $myanswer;
-            }
-
-        } else {
-            $myanswer = $request->answer;
-            $answer = $e->answers()->where("_id", $myanswer)->first();
-            if ($answer->is_true == "1") {
-                return "success";
-            } else {
-                return "you choosed the wrong answer";
-            }
+            $is_true = ($true == $myanswer)? 1:0;
         }
-        
+        else {
+            //not programming
+            $myanswer_id = $request->answer;
+            $myanswer_obj = $e->answers()->where("_id", $myanswer_id)->first();
+            $myanswer = $myanswer_obj->answer;
+            $true = $e->answers()->where("is_true", 1)->first()->answer;
+            $is_true = $myanswer_obj->is_true;
+        }
+        //saving to db
+        $me = User::find(auth()->user()->id);
+        $solved_question = [
+            'question_id' => $e->_id,
+            'user_answer' => $myanswer,
+            'true_answer' => $true,
+            'is_true' => $is_true
+        ];
+        $me->solved_questions()->create($solved_question);
+        // returning it back to front end
+        return json_encode($solved_question);
     }
     
     public function isDuplicate($target_question, $target_answer)
@@ -293,7 +303,7 @@ class QuestionController extends Controller
         $params['form_params'] = array('answer' => $code, 'extension' => $extension);
         $response = $client->post($URI, $params);
         $data = json_decode($response->getBody())->data;
-        return response()->json([
+        return json_encode([
             'result' => $data
         ]);
     }

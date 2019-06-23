@@ -51,12 +51,17 @@ Question Solving
                                 </div>
                             </div>
                             <div class="m-invoice__footer">
-                                <div class="m-invoice__table m-invoice__table--centered table-responsive">
+                                <div class="m-invoice__table m-invoice__table--centered table-responsive" id="buttons_area">
                                     <button class="submit_exam btn btn-success" id="submit_ex"  onclick="correct('{{$_GET['id']}}')"  type="button">
                                         Submit Answer
                                     </button>
 
                                 </div>
+                                <div style="display:none" class="m-invoice__table m-invoice__table--centered table-responsive mt-3" id="execution_result_container">
+                                    <h3>Result:</h3>
+                                    <h4 id="execution_result"></h4>
+                                </div>
+
                             </div>
                         </div>
                     </div>
