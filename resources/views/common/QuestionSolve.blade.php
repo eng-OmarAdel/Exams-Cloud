@@ -43,6 +43,7 @@ Question Solving
                                         <input name="_method" type="hidden" value="put"/>
                                         <input name="id" type="hidden" value="{{$_GET['id']}}"/>
                                         <div class="submit_exam m-invoice__items" >
+                                            <!-- QUESTION NAME AND ANSWER ITEMS FILLED BY JAVASCRIPT -->
                                             <!--begin::Portlet-->
                                         </div>
                                     </form>
@@ -51,7 +52,7 @@ Question Solving
                             </div>
                             <div class="m-invoice__footer">
                                 <div class="m-invoice__table m-invoice__table--centered table-responsive">
-                                    <button class="submit_exam btn btn-info" id="submit_ex"  onclick="correct('{{$_GET['id']}}')"  type="button">
+                                    <button class="submit_exam btn btn-success" id="submit_ex"  onclick="correct('{{$_GET['id']}}')"  type="button">
                                         Submit Answer
                                     </button>
 
@@ -68,6 +69,6 @@ Question Solving
 @endsection
 
 @section('script')
-<script type="text/javascript" tablename="QuestionSolve" _id="{{$_GET['id']}}" src="{{url("js/common/QuestionSolve.js")}}"></script>
+<script type="text/javascript" tablename="QuestionSolve" _id="{{$_GET['id']}}" csrf="{{csrf_token()}}"src="{{url("js/common/QuestionSolve.js")}}"></script>
 @endsection
 

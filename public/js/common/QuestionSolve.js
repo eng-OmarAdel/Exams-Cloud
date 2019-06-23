@@ -1,7 +1,11 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
 var id=document.currentScript.getAttribute("_id"); //2
+var question;
+var csrf_token = document.currentScript.getAttribute("csrf");
 
 var reload;
+
+// ============== load the question and complete front end ===============
 var exam= {
     init:function() {
           $.ajax({url: "Question/"+id,
@@ -9,15 +13,29 @@ var exam= {
                 mApp.block(".m-invoice__wrapper");
 
 
-          } ,complete: function(jqXHR, textStatus) {
+            } ,
+            complete: function(jqXHR, textStatus) {
                 var item = $.parseJSON(jqXHR.responseText); //question
-                console.log(item)
+                question = item;
+                //console.log(item)
                 quiz=""
                 back=""
+                //div has the question title
+                //input: name = question , value = id
                 result="<div class=' m-portlet__body row'><div class='col-md-8 offset-2'><h3>"+item.name+"</h3><br><br><input type=\"hidden\"  name=\"question\" value=\""+item._id+"\">"
-                //<input type=\"hidden\"  name=\"type\" value=\""+item.type+"\">
                 if(item.is_programming=="Yes"){
-                    result+='<div class="form-group m-form__group"><textarea class="form-control m-input" id="exampleTextarea" rows="20"  name=\"answer\" ></textarea></div><div class="form-group m-form__group"></div>';
+                    //code text area -> name = answer
+                    result+=`<div class="form-group m-form__group">
+                        <textarea class="form-control m-input" id="code" rows="20"  name=\"answer\" ></textarea>
+                        </div><div class="form-group m-form__group"></div>
+                    `;
+                    // button to test code (execute)
+                    $(".m-invoice__table--centered").prepend(`
+                                    <button class="btn btn-info" id="execute_code"  onclick="handle_execute()"  type="button">
+                                        Execute Code
+                                    </button>
+                        `
+                    )
                 }
                 else{
                     result+="<div class='row'>"
@@ -26,6 +44,7 @@ var exam= {
                         item2.answer = item2.answer.toString().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&#39;").replace(/"/g, "&#34;");
                         result+=  '<div class="col-md-12"><div class="m-invoice__item"><span class="m-invoice__subtitle " ><div class="m-radio-list"><label class="m-radio m-radio--success"><input type="radio"  name=\"answer\"   value="'+item2._id+'"> '+item2.answer+'<span></span></label></div></span></div></div>'
                     });
+                    //input (radio) -> name = answer
                     result+="</div>";
                 }
                 next=""
@@ -35,7 +54,7 @@ var exam= {
                 mApp.unblock(".m-invoice__wrapper");
             }});
         }};
-
+//=======================================================
 
 // ==========================correct ========================
 var correct =function(id){
@@ -46,7 +65,7 @@ var correct =function(id){
         },
         success:function(e){
             $.ajax({url: "Correct/"+id, type: 'POST',
-                data: {_token: "{{ csrf_token() }}",answer:$("input[name='answer']:checked").val(), e:e,_method: "put"},
+                data: {_token: csrf_token ,answer:$("input[name='answer']:checked").val(), e:e,_method: "put"},
                 success:function(e){
 
                     if(e=="success"){
@@ -65,6 +84,38 @@ var correct =function(id){
         }
     });
 }
+// ==============================execute code=====================
+var handle_execute = function(){
+    code = $("#code").val();
+    if($.trim(code) == ""){
+        alert("No code provided, idiot!");
+    }
+    else{
+        extension = question.programming_language;
+        execute_code(code, extension)
+    }
+}
+//======================================================
+var execute_code = function(code , extension){
+    $.post({url: "/ExecuteCode",
+        beforeSubmit:function(){
+            toastr.warning("please wait");
+            mApp.block(".m-invoice__wrapper");
+        } ,
+        data: {
+            extension: extension,
+            code: code,
+            _token: csrf_token
+        },
+        complete: function(jqXHR, textStatus) {
+            var result = $.parseJSON(jqXHR.responseText).result;
+            alert("result of executed code is:\n"+result);
+            mApp.unblock(".m-invoice__wrapper");
+        }
+    });
+}
+//=================================================================
+
 // ==============================on ready========================= 
 jQuery(document).ready(function() {
     exam.init();

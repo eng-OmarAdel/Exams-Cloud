@@ -235,8 +235,7 @@ class QuestionController extends Controller
         $e = Question::where("_id", $id)->first();
         if ($e->is_programming == "Yes") {
             $true = (string)$e->answer_id;
-            $myanswer = (string)$request->e;;
-
+            $myanswer = (string)$request->e;
 
             $result = strcmp($true, $myanswer);
 
@@ -248,7 +247,7 @@ class QuestionController extends Controller
             }
 
         } else {
-            $myanswer = $request->answer;;
+            $myanswer = $request->answer;
             $answer = $e->answers()->where("_id", $myanswer)->first();
             if ($answer->is_true == "1") {
                 return "success";
@@ -285,7 +284,22 @@ class QuestionController extends Controller
         return "duplicate";
     }
 
+    public function ExecuteCode(Request $request) {
+        $extension = $request->extension;
+        $code = $request->code;
+        $client = new \GuzzleHttp\Client();
+        $URI = 'http://134.209.204.108/testsob72.tk/compiler/index.php';
+        $params['headers'] =  ['Content-Type' => 'application/x-www-form-urlencoded'];
+        $params['form_params'] = array('answer' => $code, 'extension' => $extension);
+        $response = $client->post($URI, $params);
+        $data = json_decode($response->getBody())->data;
+        return response()->json([
+            'result' => $data
+        ]);
+    }
+
 }
+
 
 // save it for now (compiler)
         // function compiler($code,$language){

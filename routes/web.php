@@ -18,6 +18,7 @@ Route::get('/', 'ViewController@view');
 Route::resource('Users', 'UsersController');
 Route::get('category', 'QuestionController@category');
 Route::put('Correct/{id}', 'QuestionController@Correct');
+Route::post('ExecuteCode', 'QuestionController@ExecuteCode');
 Route::resource('Question', 'QuestionController');
 Route::resource('Answer', 'QuestionController@answer');
 Route::resource('Authority', 'AuthorityController');
