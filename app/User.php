@@ -42,6 +42,10 @@ class User extends Authenticatable
     {
       return   $this->embedsMany("App\UserExams");
     }
+    public function solved_questions()
+    {
+      return   $this->embedsMany("App\SolvedQuestion");
+    }
 
 
 }
