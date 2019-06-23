@@ -6,7 +6,7 @@
 @section("content")
 
         <!-- begin::Body -->
-
+            
             <div class="m-grid__item m-grid__item--fluid m-wrapper">
 
                 <div class="m-content">
@@ -21,6 +21,9 @@
                                                     <div class="m-invoice__logo">
                                                         <a style="float: left" href="#">
                                                             <h1 id="title"></h1>
+                                                        </a>
+                                                        <a style="float: right" href="#">
+                                                            <div id="timer" class="text-center" style="font-size:40px;"></div>
                                                         </a>
                                                     </div>
                                                     <span class="m-invoice__desc">
@@ -38,7 +41,7 @@
 
                                                             <div id="test">
                                                             </div>
-                                                            <input type="submit" class="btn btn-accent">
+                                                            <input type="submit" id="submitExam" class="btn btn-accent">
                                                         </form>
                                                 </div>
                                             </div>
