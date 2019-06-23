@@ -70,14 +70,21 @@
 													    </div>
 													</div>
 
-													<div class="form-group m-form__group" id="program_language_div">
+														<div class="form-group m-form__group" style="display: none" id="program_language_div">
 													        <label for="program_language" id="prog_lng_label">Programming Language</label>
-													            <select id="program_language" name="program_language" class="form-control m-input" id="exampleSelect1">
+													            <select id="program_language" name="programming_language" class="form-control m-input" id="exampleSelect1">
 													            	
 													            	<option selected value="cpp">c++</option>
 													            	<option value="c">c</option>
 													            	<option value="php">PHP</option>
 													            	<option value="py">Python</option>
+													            </select>
+													    </div>
+														<div class="form-group m-form__group" style="display: none" id="type_div">
+													        <label for="type" id="type-label">Question type</label>
+													            <select id="Question-type" name="type" class="form-control m-input" id="exampleSelect1">
+													            	<option value="choose">choose</option>
+													            	<option value="complete">complete</option>
 													            </select>
 													    </div>
 													</div>
@@ -86,6 +93,7 @@
 											            <label for="exampleInputEmail1" id="question_label">Question</label>
 											            <textarea class="ignoreField form-control m-input qbank" name="name" id="question"
 											                      placeholder="Question"></textarea>
+											             <button type="button" id="add_space_btn" class="btn-primary">Add missing data</button>
 											        </div>											        
 															<!-- in case of programming -->
 															<!-- programming_output -->
@@ -109,27 +117,11 @@
 											                                <input class="form-control m-input m-input--air answer" type="text" placeholder="answer"
 											                                       name="answer[0]">
 											                            </div>
-											                            <div class="col-md-2">
+											                            <div class="Question-type-checkboxes col-md-2">
 											                                <label for="is_true">true</label>
-											                                <input class="checkbox" value="1" type="checkbox"
+											                                <input class="checkbox"  value="1" type="checkbox"
 											                                       id="is_true" name="is_true[0]">
 											                            </div>
-											                        </div>
-											                    </div>
-											                </div>
-											                <div class="form-group m-form__group row">
-											                    <div class="col-lg-12 col-md-12 col-sm-12">
-											                        <div class="input-group pull-right ">
-											                            <div class="col-md-8">
-											                                <input class="form-control m-input m-input--air answer" type="text" placeholder="answer"
-											                                       name="answer[1]">
-											                            </div>
-											                            <div class="col-md-2">
-											                                <label for="is_true">true</label>
-											                                <input class="checkbox" value="1" type="checkbox"
-											                                       id="is_true" name="is_true[1]">
-											                            </div>
-
 											                        </div>
 											                    </div>
 											                </div>

@@ -61,33 +61,33 @@ class QuestionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-
         ]);
+
 
         if ($validator->fails()) {
             return response()->json($validator->errors()->all(), 422);
         }
         // dd($request->all());
         if ($request->is_programming == "no") {
-        //not programming
-            $is_dup = self::isDuplicate($request->name , $request->answer[array_keys($request->is_true)[0]]);
-            if($is_dup === "duplicate"){
-                return response()->json(["This question is a Duplicate"], 422);
-            }
+            //not programming validation code
             
+            if(Question::noneProgValidation($request)!=1){
+                return  response()->json(Question::noneProgValidation($request), 422);
+            }
+            $is_dup = self::isDuplicate($request->name , $request->answer[array_keys($request->is_true)[0]]);
+                if($is_dup === "duplicate"){
+                    return response()->json(["This question is a Duplicate"], 422);
+            }   
             //answer
             foreach ($request->answer as $key => $value) {
                 $answer[$key]['answer'] = $value;
                 if (isset($request->is_true[$key])) {
-                    $found_true_ans = 1 ;
                     $answer[$key]['is_true'] = 1;
                 } else {
                     $answer[$key]['is_true'] = 0;
                 }
             }
-            if (!isset($found_true_ans)) {
-                return response()->json(["Please enter at least one true answer."], 422);
-            }
+
             $e = new Question();
             if($request->cat_type == "1"){
                 $e->category = $request->cat_id;
@@ -128,7 +128,6 @@ class QuestionController extends Controller
                 $e->track = $request->cat_id;
             }
             $all['status'] = "approved";
-            $e->programming_language = $request->program_language;
             $e->fill($all);
             $e->save();
         }
@@ -168,8 +167,11 @@ class QuestionController extends Controller
         }
         // dd($request->all());
         if ($request->is_programming == "no") {
-        //not programming
+            //not programming validation code
             
+            if(Question::noneProgValidation($request)!=1){
+                return  response()->json(Question::noneProgValidation($request), 422);
+            }   
             //answer
             foreach ($request->answer as $key => $value) {
                 $answer[$key]['answer'] = $value;
@@ -179,9 +181,6 @@ class QuestionController extends Controller
                 } else {
                     $answer[$key]['is_true'] = 0;
                 }
-            }
-            if (!isset($found_true_ans)) {
-                return response()->json(["Please enter at least one true answer."], 422);
             }
             $e = Question::where("_id", $id)->first();
             if($request->cat_type == "1"){
@@ -214,7 +213,6 @@ class QuestionController extends Controller
                 $e->track = $request->cat_id;
             }
             $all['status'] = "approved";
-            $e->programming_language = $request->program_language;
             $e->fill($all);
             $e->save();
         }

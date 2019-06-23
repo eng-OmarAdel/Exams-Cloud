@@ -59,8 +59,13 @@ var DatatablesDataSourceAjaxServer = function() {
                     orderable: false,
                     render: function(data, type, full, meta) {
 
-                        if(data=="no"){
+                        if(full.is_programming=="no"){
+                          if(full.type=="choose"){
                             return "Choice"
+                          }else if(full.type=="complete"){
+                            return "complete"
+
+                          }
                         }else{
                             return "programming"
 
@@ -89,8 +94,9 @@ var DatatablesDataSourceAjaxServer = function() {
 var table_reload;
 jQuery(document).ready(function() {
 	table_reload=DatatablesDataSourceAjaxServer.init();
-  validation( {});
+  validation({});
   handle_question_type();
+  handle_not_prog_type()
   //we no more need to get options
   // $.ajax({
   //   url: "/categoryOptions",
@@ -107,8 +113,12 @@ jQuery(document).ready(function() {
       
       
       e.preventDefault();
-      
-      
+                type = $("#Question-type").val();
+                checkbox_html=``
+          if(type=="complete"){
+                checkbox_html=`style="display: none;"`
+                }
+
       $("#answer").append(`
       <div class="subdays subdays2 form-group m-form__group row"><div class="col-lg-12 col-md-12 col-sm-12"> <div class="input-group pull-right " > 
 
@@ -116,11 +126,10 @@ jQuery(document).ready(function() {
       <div class="col-md-8">
       
       <input class="form-control m-input m-input--air answer" type="text"  placeholder="answer"  name="answer[`+$(".answer").length+`]">
-      </div>
-      <div class="col-md-2">
-      <label for="is_true">true</label>
-      <input class="checkbox" value="1" type="checkbox"  id="is_true" name="is_true[`+$(".answer").length+`]">
-      </div>
+      </div><div ${checkbox_html} class="Question-type-checkboxes col-md-2">
+                <label for="is_true">true</label>
+                <input class="checkbox" value="1" type="checkbox"  id="is_true" name="is_true[`+$(".answer").length+`]">
+                </div>
       <div class="col-md-2">
       
       <a href="#" class="delete_answer btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill"> <i class="fa fa-close"></i> </a>
@@ -148,6 +157,7 @@ jQuery(document).ready(function() {
     var custom_after=  function(data){
       alert("welcome to edit")
         $("#is_programming").trigger("change");
+        $("#Question-type").trigger("change");
         is_programming=$("#is_programming").val();
         if(is_programming=="no"){
           $(".answer").each(function(index, value) {
@@ -191,6 +201,8 @@ jQuery(document).ready(function() {
         $(this).prop('checked', true);
       });
       $(document).on("change","#is_programming", handle_question_type );
+      $(document).on("change","#Question-type", handle_not_prog_type );
+      $(document).on("click","#add_space_btn", handle_add_space_btn );
       // ===================== Abdullah =====================
       $(document).on('click', "#generate_tags" , function(e) {
         e.preventDefault();
@@ -207,15 +219,34 @@ jQuery(document).ready(function() {
         }
       });
 
+      function handle_add_space_btn(){
+        var myTextArea = $('#question');
+        myTextArea.val(myTextArea.val() + '__(@$!)__');
+
+      }
+      function handle_not_prog_type(){
+
+          type = $("#Question-type").val();
+          if(type=="choose"){
+
+            $(".Question-type-checkboxes").show();
+            $("#add_space_btn").hide();
+          }else if(type=="complete"){
+            $(".Question-type-checkboxes").hide();
+            $("#add_space_btn").show();
+
+          }
+      }
 
       function handle_question_type(){
         type=$("#is_programming").val()
         if(type=="no"){
+          handle_not_prog_type();
           $("#program_language_div").hide();
+          $("#type_div").show();
           $("#essay_answer").hide();
           $("#answers1").show();
           $("#addanswer").show();
-          $("#interactive").hide();
           
           $(".answer").each(function(index, value) {
             $(this).val("")
@@ -224,15 +255,14 @@ jQuery(document).ready(function() {
             
             
           })
-          
+
         }else {
+          $("#type_div").hide();
           $("#program_language_div").show();
           $("#answers1").hide();
           $("#essay_answer").show();
-          $("#interactive").hide();
-          
-          if(type=="complete")
-          $("#question_label").html("statment");
+          $("#add_space_btn").hide();
+
       }
       }
       // =====================================================
