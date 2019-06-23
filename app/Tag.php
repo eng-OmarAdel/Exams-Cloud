@@ -11,4 +11,5 @@ class Tag extends Eloquent
     protected $fillable = [
         'tag'
     ];
+    
 }
