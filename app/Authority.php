@@ -11,4 +11,5 @@ class Authority extends Eloquent
     protected $fillable = [
         'name', 'created_at','updated_at',
     ];
+    
 }

@@ -83,7 +83,7 @@ class ExamSolveController extends Controller
                 }else{
                     $is_true="no";
                 }
-                $answer=$output;
+                $answer=$request["answer"][$question->_id]."";
             }
             array_push($answered,["question"=>$question->_id,"is_true"=> $is_true,"answer"=>$answer]);
 
@@ -93,7 +93,6 @@ class ExamSolveController extends Controller
         foreach ($answered as $key => $value) {
             $author->ExamCorrection()->create($value);
         }
-
 
     }
 

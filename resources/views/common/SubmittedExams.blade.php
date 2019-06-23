@@ -1,7 +1,7 @@
 @extends("layouts.index")
 @section("title")
-@php $tablename="UserProceededExams" @endphp
-User Proceeded Exams
+@php $tablename="SubmittedExams" @endphp
+Submitted Exams
 @endsection
 @section("content")						
 
@@ -10,7 +10,7 @@ User Proceeded Exams
 								<div class="m-portlet__head-caption">
 									<div class="m-portlet__head-title">
 										<h3 class="m-portlet__head-text">
-											User Proceeded Exams
+											Submitted Exams
 										</h3>
 									</div>
 								</div>
@@ -43,6 +43,6 @@ User Proceeded Exams
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}" _id="{{$_GET['_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection
 

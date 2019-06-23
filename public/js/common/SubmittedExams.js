@@ -1,4 +1,5 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
+var _id=document.currentScript.getAttribute("_id"); //1
 
 var DatatablesDataSourceAjaxServer = function() {
 
@@ -12,16 +13,13 @@ var DatatablesDataSourceAjaxServer = function() {
       processing: true,
 			serverSide: true,
 
-       ajax:{url:tablename, function (data, callback, settings) {
+       ajax:{url: "/"+tablename+"?_id="+_id , function (data, callback, settings) {
        }
        },
 			columns: [
 
-                {data: 'title' ,title: "title"},
-                {data: 'auth' ,title: "authority"},
-                {data: 'track' ,title: "track"},
-                {data: 'count' ,title: "no of tries"},
-                {data: 'submited' ,title: "no of tries with submited answers"},
+                {data: 'mark' ,title: "mark"},
+				{data: 'created_at',title: "submitted at"},
 				{data: 'Actions',title: "Actions"},
 			],
 			columnDefs: [
@@ -35,9 +33,7 @@ var DatatablesDataSourceAjaxServer = function() {
                               <i class="la la-ellipsis-h"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" target="_blank" href="?view=ExamSolve&_id=${full.exam_id}"><i class="la la-check-circle"></i> Solve again</a>
-                                <a class="dropdown-item" target="_blank" href="?view=SubmittedExams&_id=${full.exam_id}"><i class="la la-check-circle"></i> show submited tries</a>
-                                
+                                <a class="dropdown-item" target="_blank" href="?view=ViewAnswers&_id=${full._id}&exam_id=${_id}"><i class="la la-check-circle"></i> View my answers</a>  
                             </div>
                         </span>`
 					},

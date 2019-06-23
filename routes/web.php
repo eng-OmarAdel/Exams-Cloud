@@ -41,6 +41,8 @@ Route::post('/profile/edit', 'UsersController@update');
 Route::get('/activity', 'UsersController@activity');
 Route::resource('/ExamSolve', 'ExamSolveController');
 Route::GET('/UserProceededExams', 'UserProceededExamsController@UserProceededExams');
+Route::GET('/SubmittedExams', 'UserProceededExamsController@SubmittedExams');
+Route::GET('/ViewAnswers', 'UserProceededExamsController@ViewAnswers');
 Route::post('/proceed', 'ExamSolveController@proceed');
 // Route::get('/Category/{id?}','CategoryController@show');
 // Route::get('/?view=Category&id={id?}','CategoryController@index');

@@ -28,4 +28,5 @@ class Question extends Eloquent
         'answer_id', // programing output -> 120 (factroial of 5)
         'is_programming','status', 'created_at','updated_at',
     ];
+    
 }

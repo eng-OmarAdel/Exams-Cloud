@@ -13,4 +13,5 @@ class Answer extends Eloquent
     protected $fillable = [
         'answer', 'is_true', 'created_at','updated_at',
     ];
+    
 }
