@@ -27,6 +27,16 @@ var DatatablesDataSourceAjaxServer = function() {
 			],
 			columnDefs: [
 				{
+					targets: 0,
+					title: 'Title',
+					orderable: false,
+					render: function(data, type, full, meta) {
+												status = `<a id="view" href="?view=Exam&id=` + full._id + `" class="dropdown-item">`+full.title+`</a>`
+												return status;
+
+					},
+				},
+				{
 					targets: -1,
 					title: 'Actions',
 					orderable: false,
