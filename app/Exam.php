@@ -16,6 +16,10 @@ class Exam extends Eloquent
     {
         return $this->embedsMany('App\Question');
     }
+    public function Examtries()
+    {
+        return $this->embedsMany('App\ExamTries');
+    }
 
     public function tags()
     {
