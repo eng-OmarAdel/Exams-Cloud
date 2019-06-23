@@ -74,10 +74,14 @@ class QuestionController extends Controller
             if(Question::noneProgValidation($request)!=1){
                 return  response()->json(Question::noneProgValidation($request), 422);
             }
-            $is_dup = self::isDuplicate($request->name , $request->answer[array_keys($request->is_true)[0]]);
-                if($is_dup === "duplicate"){
-                    return response()->json(["This question is a Duplicate"], 422);
-            }   
+            if($request->type=="choose"){
+
+                $is_dup = self::isDuplicate($request->name , $request->answer[array_keys($request->is_true)[0]]);
+                    if($is_dup === "duplicate"){
+                        return response()->json(["This question is a Duplicate"], 422);
+                }  
+            }
+      
             //answer
             foreach ($request->answer as $key => $value) {
                 $answer[$key]['answer'] = $value;
