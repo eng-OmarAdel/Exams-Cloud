@@ -55,6 +55,8 @@ class ExamController extends Controller
                 'title'    => 'required',
                 'tags'    => 'required',
                 'Track'    => 'required',
+                'timeLimit' => 'required',
+                'Category' => 'required',
 
             ]);
 
@@ -69,8 +71,10 @@ class ExamController extends Controller
             $examToStore["authorityID"]=$request["Authority"];
             $examToStore["trackID"]=$request["Track"];
             $examToStore["title"]=$request["title"];
-            //$examToStore["ownerID"]=Auth::id();
-            $examToStore["ownerID"]="5c97ebff2ace521b10006e02";
+            $examToStore["ownerID"]=Auth::id();
+            //$examToStore["ownerID"]="5c97ebff2ace521b10006e02";
+            $examToStore["catID"]=$request["Category"];
+            $examToStore["timeLimit"]=$request["timeLimit"];
             $examToStore->save();
             $all = $request->all();
             $pieces = explode(",", $all['tags']);
@@ -97,14 +101,33 @@ class ExamController extends Controller
         }
             ])->find($id);
 
-        return response()->json($exam);
+        return datatables()->of($exams)->toJson();
 
     }
+
+    public function showQuestions($id)
+    {
+         $exam = Exam::with(['trackName' => function($q) {
+            $q->select('name');
+        },'authorityName' => function($q) {
+            $q->select('name');
+        }
+            ])->find($id);
+            $questions = $exam['questions'];
+        return datatables()->of($questions)->toJson();
+
+    }
+
     public function update(Request $request, $id)
     {
 
             $validator = Validator::make($request->all(), [
-                'name'    => 'required',
+              'Authority'    => 'required',
+              'title'    => 'required',
+              'tags'    => 'required',
+              'Track'    => 'required',
+              'timeLimit' => 'required',
+              'Category' => 'required',
 
             ]);
 
@@ -118,6 +141,7 @@ class ExamController extends Controller
             $examToStore=  Exam::where("_id",$id)->first();
             $examToStore["authorityID"]=$request["Authority"];
             $examToStore["trackID"]=$request["Track"];
+            $examToStore["timeLimit"]=$request["timeLimit"];
             $examToStore["catID"]=$request["Category"];
             $examToStore["title"]=$request["title"];
             $examToStore["ownerID"]=Auth::id();

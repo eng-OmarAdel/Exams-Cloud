@@ -9,7 +9,7 @@ class Exam extends Eloquent
 
 
     protected $fillable = [
-        'ownerID', 'authorityID', 'trackID', 'tags', 'duration', 'difficulty', 'questions', 'created_at', 'updated_at',
+        'ownerID', 'authorityID', 'trackID','catID', 'timeLimit', 'tags', 'duration', 'difficulty', 'questions', 'created_at', 'updated_at',
     ];
 
     public function questions()

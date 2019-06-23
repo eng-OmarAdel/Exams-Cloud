@@ -71,7 +71,7 @@ class QuestionController extends Controller
             if($is_dup === "duplicate"){
                 return response()->json(["This question is a Duplicate"], 422);
             }
-            
+
             //answer
             foreach ($request->answer as $key => $value) {
                 $answer[$key]['answer'] = $value;
@@ -104,6 +104,10 @@ class QuestionController extends Controller
             foreach ($pieces as $key => $value) {
                 $tags = $e->tags()->create(['tag' => $value]);
             }
+            if(isset($request->exam_id)){
+              $exam=Exam::where('_id',$request->exam_id]);
+              $exam->questions()->create($e);
+            }
 
         } else {
             // programming
@@ -128,6 +132,10 @@ class QuestionController extends Controller
             $e->programming_language = $request->program_language;
             $e->fill($all);
             $e->save();
+            if(isset($request->exam_id)){
+              $exam=Exam::where('_id',$request->exam_id);
+              $exam->questions()->create($e);
+            }
         }
     }
 
@@ -166,7 +174,7 @@ class QuestionController extends Controller
         // dd($request->all());
         if ($request->is_programming == "no") {
         //not programming
-            
+
             //answer
             foreach ($request->answer as $key => $value) {
                 $answer[$key]['answer'] = $value;
@@ -256,9 +264,9 @@ class QuestionController extends Controller
                 return "you choosed the wrong answer";
             }
         }
-        
+
     }
-    
+
     public function isDuplicate($target_question, $target_answer)
     {
         $URI = 'http://134.209.204.108/duplication?target='.$target_question."(@)".$target_answer;
@@ -292,9 +300,9 @@ class QuestionController extends Controller
         //     $client = new \GuzzleHttp\Client();
         //     $URI = 'http://134.209.204.108/testsob72.tk/compiler/index.php';
         //     $params['headers'] =  ['Content-Type' => 'application/x-www-form-urlencoded'];
-    
+
         //     $params['form_params'] = array('answer' => $code, 'extension' => $language);
         //      $response = $client->post($URI, $params);
-    
+
         //     return json_decode($response->getBody())->data;
         // }

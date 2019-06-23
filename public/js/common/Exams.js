@@ -31,7 +31,7 @@ var DatatablesDataSourceAjaxServer = function() {
 					title: 'Title',
 					orderable: false,
 					render: function(data, type, full, meta) {
-												status = `<a id="view" href="?view=Exam&id=` + full._id + `" class="dropdown-item">`+full.title+`</a>`
+												status = `<a id="view" href="?view=Exam&exam_id=` + full._id + `" class="dropdown-item">`+full.title+`</a>`
 												return status;
 
 					},

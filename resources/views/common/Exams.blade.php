@@ -66,6 +66,13 @@
 											            <!--<textarea class="ignoreField form-control m-input qbank" name="name" id="question"
 											                      placeholder="Question"></textarea>-->
 											        </div>
+															<div class="form-group m-form__group">
+											            <label for="exampleInputEmail1" id="question_label">Time limit in minutes</label>
+											            <textarea class="ignoreField form-control m-input" name="timeLimit" id="timeLimit"
+											                      placeholder="Eg. 30"></textarea>
+											            <!--<textarea class="ignoreField form-control m-input qbank" name="name" id="question"
+											                      placeholder="Question"></textarea>-->
+											        </div>
 											        <div class="form-group m-form__group">
 											            <label for="exampleInputEmail1">tags <small>comma separated</small></label>
 											            <textarea class="ignoreField form-control m-input" name="tags" id="tags"
@@ -81,6 +88,13 @@
 																<label for="exampleInputEmail1">Track</label>
 																<select class="form-control" id="Track" name="Track">
 																	<option value="5cbc7c2c76e7490450007418">Electrical</option>
+																</select>
+														  </div>
+															<div class="form-group m-form__group">
+																<label for="exampleInputEmail1">Category</label>
+																<select class="form-control" id="Category" name="Category">
+																	<option value="5cacb85a9dfef715a06255b4">Maths</option>
+																	<option value="5cacb8709dfef715a06255b5">Algebra</option>
 																</select>
 														  </div>
 											    </div>
