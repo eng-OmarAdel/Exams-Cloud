@@ -154,6 +154,7 @@ jQuery(document).ready(function() {
       $(".checkbox").prop('checked', false);
       $(this).prop('checked', true);
     });
+
     var custom_after=  function(data){
       alert("welcome to edit")
         $("#is_programming").trigger("change");
@@ -218,10 +219,13 @@ jQuery(document).ready(function() {
           });
         }
       });
-
       function handle_add_space_btn(){
-        var myTextArea = $('#question');
-        myTextArea.val(myTextArea.val() + '__(@$!)__');
+        var cursorPos = $('#question').prop('selectionStart');
+        var v = $('#question').val();
+        var textBefore = v.substring(0,  cursorPos);
+        var textAfter  = v.substring(cursorPos, v.length);
+
+        $('#question').val(textBefore + "______"+ textAfter);
 
       }
       function handle_not_prog_type(){
@@ -267,18 +271,3 @@ jQuery(document).ready(function() {
       }
       // =====================================================
 
-
-      // $.ajax({
-        //       url: "category",
-        
-        //      complete: function(jqXHR){
-          //   var data = $.parseJSON(jqXHR.responseText);
-  //   $("#category").chainedSelects({
-  //     data: data,
-  //     placeholder:'Other'
-  //   });
-
-
-       
-
-  //      }});

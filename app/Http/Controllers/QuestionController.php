@@ -198,6 +198,9 @@ class QuestionController extends Controller
             unset($all['answer_id']);// for only programming output
             $e->fill($all);
             $e->save();
+            $e->answers()->delete();
+            $e->tags()->delete();
+
             foreach ($answer as &$value) {
                 $Answers = $e->answers()->create(['answer' => $value['answer'], 'is_true' => $value['is_true']]);
             }

@@ -50,7 +50,7 @@ class Question extends Eloquent
 
             }else if($request->type=="complete"){
 
-                if(substr_count($request->name,"__(@$!)__")!=count($request->answer)){
+                if(substr_count($request->name,"______")!=count($request->answer)){
                     return ["Please make no of missing spaces equal to no of answers"];
                 }
             }
