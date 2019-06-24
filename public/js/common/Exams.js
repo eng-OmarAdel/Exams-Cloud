@@ -1,4 +1,6 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
+var cat_id=document.currentScript.getAttribute("cat_id"); //2
+var cat_type=document.currentScript.getAttribute("cat_type"); //3
 console.log(tablename);
 var DatatablesDataSourceAjaxServer = function() {
 
@@ -12,7 +14,7 @@ var DatatablesDataSourceAjaxServer = function() {
       processing: true,
 			serverSide: true,
 
-       ajax:{url:tablename, function (data, callback, settings) {
+       ajax:{url:"/"+tablename+"?cat_id="+cat_id+"&cat_type="+cat_type, function (data, callback, settings) {
        }
        },
 			columns: [
