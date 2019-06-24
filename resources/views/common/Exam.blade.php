@@ -170,6 +170,6 @@
 
 @endsection
 @section("script")
-<script type="text/javascript" tablename="Question" exam_id="{{$_GET['exam_id']}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" exam_id="{{$_GET['exam_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
+<script type="text/javascript" tablename="Question" examTable="{{$tablename}}" exam_id="{{$_GET['exam_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection

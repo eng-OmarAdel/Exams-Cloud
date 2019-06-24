@@ -1,4 +1,5 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
+var examTable=document.currentScript.getAttribute("examTable");
 var exam_id=document.currentScript.getAttribute("exam_id"); //2
 
 var DatatablesDataSourceAjaxServer = function() {
@@ -13,7 +14,7 @@ var DatatablesDataSourceAjaxServer = function() {
       processing: true,
 			serverSide: true,
 
-       ajax:{url:"/"+tablename+"/"+exam_id, function (data, callback, settings) {
+       ajax:{url:"/"+examTable+"/"+exam_id, function (data, callback, settings) {
        }
        },
 			columns: [

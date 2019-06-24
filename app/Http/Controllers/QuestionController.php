@@ -7,6 +7,7 @@ use App\Track;
 use App\SolvedQuestion;
 use App\Question;
 use App\User;
+use App\Exam;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Validator;
@@ -108,8 +109,23 @@ class QuestionController extends Controller
                 $tags = $e->tags()->create(['tag' => $value]);
             }
             if(isset($request->exam_id)){
-              $exam=Exam::where('_id',$request->exam_id]);
-              $exam->questions()->create($e);
+              $exam=Exam::where('_id',$request->exam_id)->first();
+              $examQuestions = $exam->questions()->create([
+                '_id' => $e['_id'],
+                'track'=> $e['track'],
+                'status'=> $e['status'],
+                'is_programming'=> $e['is_programming'],
+                'name'=> $e['name'],
+                'exam_id'=> $e['exam_id'],
+                'updated_at'=> $e['updated_at'],
+                'created_at'=> $e['created_at'],
+                'answers'=> $e['answers'],
+                'tag' => $e['tags']
+              ]);
+              //$examQuestions[] = $e;
+              //unset($exam->question);
+              //$exam->question = $examQuestions;
+              //$exam->save();
             }
 
         } else {
@@ -136,8 +152,12 @@ class QuestionController extends Controller
             $e->fill($all);
             $e->save();
             if(isset($request->exam_id)){
-              $exam=Exam::where('_id',$request->exam_id);
-              $exam->questions()->create($e);
+              $exam=Exam::where('_id',$request->exam_id)->first();
+              $examQuestions = $exam->questions()->create($e);
+              //$examQuestions[] = $e;
+              //unset($exam->question);
+              //$exam->question = $examQuestions;
+              //$exam->save();
             }
         }
     }
@@ -263,9 +283,7 @@ class QuestionController extends Controller
             $true = $e->answers()->where("is_true", 1)->first()->answer;
             $is_true = $myanswer_obj->is_true;
         }
-<<<<<<< HEAD
 
-=======
         //saving to db
         $me = User::find(auth()->user()->id);
         $solved_question = [
@@ -277,7 +295,6 @@ class QuestionController extends Controller
         $me->solved_questions()->create($solved_question);
         // returning it back to front end
         return json_encode($solved_question);
->>>>>>> 2c7bc8f0df8cd52a2e1bca8d5975dc03a223ed45
     }
 
     public function isDuplicate($target_question, $target_answer)
