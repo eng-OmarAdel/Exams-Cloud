@@ -42,7 +42,7 @@
                                                             <input type="hidden" name="_method" value="post" fillable="never"/>
                                                             <input name="exam_id" type="hidden" value="{{$_GET['_id']}}"/>
 
-                                                            <div id="test">
+                                                            <div id="test" style="margin-left:-200px">
                                                             </div>
                                                             <h2 class="text-center"><input type="submit" id="submitExam" class="btn btn-accent"></h2>
                                                         </form>
