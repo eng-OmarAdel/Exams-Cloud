@@ -254,11 +254,27 @@ class QuestionController extends Controller
         }
         else {
             //not programming
+            if($e->type=="choose"){
             $myanswer_id = $request->answer;
             $myanswer_obj = $e->answers()->where("_id", $myanswer_id)->first();
             $myanswer = $myanswer_obj->answer;
             $true = $e->answers()->where("is_true", 1)->first()->answer;
             $is_true = $myanswer_obj->is_true;
+            }else if($e->type=="complete"){
+                    $answers=$e->answers()->get();
+                    $myanswer="";
+                    $true="";
+                    $count = 0;
+                    foreach ($request->complete as  $value) {
+
+                        $myanswer.=$answers[$value]->answer.",";
+                        $true.=$answers[$count]->answer.",";
+                        $count++;
+
+                    }
+                    $is_true = ($myanswer == $true)? 1:0;
+
+            }
         }
         //saving to db
         $me = User::find(auth()->user()->id);
