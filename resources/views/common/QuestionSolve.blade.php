@@ -11,14 +11,6 @@ Question Solving
               float: left;
             }
 
-    .droptarget {
-      float: left; 
-      width: 300px; 
-      height: 35px;
-      margin: 15px;
-      padding: 10px;
-      border: 1px solid #aaaaaa;
-    }
 
 </style>
 <div class="m-content">
@@ -30,24 +22,8 @@ Question Solving
                         <div class="m-invoice__wrapper">
                             <div class="m-invoice__head" style="background-image: url(./assets/app/media/img//logos/bg-6.jpg);">
                                 <div class="m-invoice__container m-invoice__container--centered">
-                                    <div class="row">
-
-                                        <div class="col-md-6">
-                                        </div>
-                                    
-                                        <div class="proceed_exam proceed_exam2 m-section__content">
-                                            <blockquote class="blockquote">
-                                                <div class="mb-0" id="welcome">
-                                                </div>
-                                            </blockquote>
-                                        </div>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="lead" id="clock">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                    </div>
+        
+                
                                     <form id="correct"  method="post">
                                         {{csrf_field()}}
                                         <input name="_method" type="hidden" value="put"/>
