@@ -62,33 +62,38 @@ class QuestionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-
         ]);
+
 
         if ($validator->fails()) {
             return response()->json($validator->errors()->all(), 422);
         }
         // dd($request->all());
         if ($request->is_programming == "no") {
-        //not programming
-            $is_dup = self::isDuplicate($request->name , $request->answer[array_keys($request->is_true)[0]]);
-            if($is_dup === "duplicate"){
-                return response()->json(["This question is a Duplicate"], 422);
-            }
 
+            //not programming validation code
+            
+            if(Question::noneProgValidation($request)!=1){
+                return  response()->json(Question::noneProgValidation($request), 422);
+            }
+            if($request->type=="choose"){
+
+                $is_dup = self::isDuplicate($request->name , $request->answer[array_keys($request->is_true)[0]]);
+                    if($is_dup === "duplicate"){
+                        return response()->json(["This question is a Duplicate"], 422);
+                }  
+            }
+      
             //answer
             foreach ($request->answer as $key => $value) {
                 $answer[$key]['answer'] = $value;
                 if (isset($request->is_true[$key])) {
-                    $found_true_ans = 1 ;
                     $answer[$key]['is_true'] = 1;
                 } else {
                     $answer[$key]['is_true'] = 0;
                 }
             }
-            if (!isset($found_true_ans)) {
-                return response()->json(["Please enter at least one true answer."], 422);
-            }
+
             $e = new Question();
             if($request->cat_type == "1"){
                 $e->category = $request->cat_id;
@@ -147,7 +152,6 @@ class QuestionController extends Controller
                 $e->track = $request->cat_id;
             }
             $all['status'] = "approved";
-            $e->programming_language = $request->program_language;
             $e->fill($all);
             $e->save();
             if(isset($request->exam_id)){
@@ -206,8 +210,12 @@ class QuestionController extends Controller
         }
         // dd($request->all());
         if ($request->is_programming == "no") {
-        //not programming
 
+            //not programming validation code
+            
+            if(Question::noneProgValidation($request)!=1){
+                return  response()->json(Question::noneProgValidation($request), 422);
+            }   
             //answer
             foreach ($request->answer as $key => $value) {
                 $answer[$key]['answer'] = $value;
@@ -217,9 +225,6 @@ class QuestionController extends Controller
                 } else {
                     $answer[$key]['is_true'] = 0;
                 }
-            }
-            if (!isset($found_true_ans)) {
-                return response()->json(["Please enter at least one true answer."], 422);
             }
             $e = Question::where("_id", $id)->first();
             if($request->cat_type == "1"){
@@ -233,6 +238,9 @@ class QuestionController extends Controller
             unset($all['answer_id']);// for only programming output
             $e->fill($all);
             $e->save();
+            $e->answers()->delete();
+            $e->tags()->delete();
+
             foreach ($answer as &$value) {
                 $Answers = $e->answers()->create(['answer' => $value['answer'], 'is_true' => $value['is_true']]);
             }
@@ -272,7 +280,6 @@ class QuestionController extends Controller
                 $e->track = $request->cat_id;
             }
             $all['status'] = "approved";
-            $e->programming_language = $request->program_language;
             $e->fill($all);
             $e->save();
             if(isset($request->exam_id)){
@@ -326,11 +333,27 @@ class QuestionController extends Controller
         }
         else {
             //not programming
+            if($e->type=="choose"){
             $myanswer_id = $request->answer;
             $myanswer_obj = $e->answers()->where("_id", $myanswer_id)->first();
             $myanswer = $myanswer_obj->answer;
             $true = $e->answers()->where("is_true", 1)->first()->answer;
             $is_true = $myanswer_obj->is_true;
+            }else if($e->type=="complete"){
+                    $answers=$e->answers()->get();
+                    $myanswer="";
+                    $true="";
+                    $count = 0;
+                    foreach ($request->complete as  $value) {
+
+                        $myanswer.=$answers[$value]->answer.",";
+                        $true.=$answers[$count]->answer.",";
+                        $count++;
+
+                    }
+                    $is_true = ($myanswer == $true)? 1:0;
+
+            }
         }
 
         //saving to db
