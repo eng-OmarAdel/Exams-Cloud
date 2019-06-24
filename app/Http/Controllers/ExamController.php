@@ -120,18 +120,22 @@ class ExamController extends Controller
     public function addQuestionToExam($request){
       $e=Question::where('_id',$request->question_id)->first();
       $exam=Exam::where('_id',$request->exam_id)->first();
-      $examQuestions = $exam->questions()->create([
-        '_id' => $e['_id'],
-        'track'=> $e['track'],
-        'status'=> $e['status'],
-        'is_programming'=> $e['is_programming'],
-        'name'=> $e['name'],
-        'exam_id'=> $e['exam_id'],
-        'updated_at'=> $e['updated_at'],
-        'created_at'=> $e['created_at'],
-        'answers'=> $e['answers'],
-        'tag' => $e['tags']
-      ]);
+
+        $examQuestions = $exam->questions()->create([
+          'track'=> $e['track'],
+          'status'=> $e['status'],
+          'is_programming'=> $e['is_programming'],
+          'name'=> $e['name'],
+          'exam_id'=> $e['exam_id'],
+          'updated_at'=> $e['updated_at'],
+          'created_at'=> $e['created_at'],
+        ]);
+        foreach ($e['answers'] as &$value) {
+            $exam->questions()->last()->answers()->create(['answer' => $value['answer'], 'is_true' => $value['is_true']]);
+        }
+        foreach ($e['tags'] as $key => $value) {
+            $exam->questions()->last()->tags()->create(['tag' => $value]);
+        }
     }
     public function update(Request $request, $id)
     {
