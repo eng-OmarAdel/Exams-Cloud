@@ -22,7 +22,8 @@ var exam= {
                 back=""
                 //div has the question title
                 //input: name = question , value = id
-                result="<div class=' m-portlet__body row'><div class='col-md-8 offset-2'><h3>"+item.name+"</h3>"
+                //
+                result="<div class=' m-portlet__body row'><div class='col-md-8 offset-2'><h3>"+item.name.replace("______", '<div class="droptarget"></div>');+"</h3>"
                 if(item.is_programming=="Yes"){
                     //code text area -> name = answer
                     result+=`<div class="form-group m-form__group">
@@ -38,11 +39,21 @@ var exam= {
                     )
                 }
                 else{
+
+
+
+
+
                     result+="<div class='row'>"
                     result+='<input type="hidden"  name=\"answer\">'
                     $.each(item.answers, function(i, item2) {
                         item2.answer = item2.answer.toString().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&#39;").replace(/"/g, "&#34;");
+                        if(item.type=="choose"){
                         result+=  '<div class="col-md-12"><div class="m-invoice__item"><span class="m-invoice__subtitle " ><div class="m-radio-list"><label class="m-radio m-radio--success"><input type="radio"  name=\"answer\"   value="'+item2._id+'"> '+item2.answer+'<span></span></label></div></span></div></div>'
+                   }else if(item.type=="complete"){
+                        result+=  '<div class="col-md-12"><div class="m-invoice__item"><span class="m-invoice__subtitle " ><div class="m-radio-list"> <div class="droptarget"><p draggable="true" id="dragtarget'+i+'">'+item2.answer+'</p></div><span></span></label></div></span></div></div>'
+
+                   }
                     });
                     //input (radio) -> name = answer
                     result+="</div>";
@@ -123,3 +134,24 @@ var execute_code = function(code , extension){
 jQuery(document).ready(function() {
     exam.init();
 });
+
+
+
+/* Event fired on the drag target */
+document.addEventListener("dragstart", function(event) {
+  event.dataTransfer.setData("Text", event.target.id);
+  document.getElementById("demo").innerHTML = "Started to drag the p element.";
+});
+
+/* Events fired on the drop target */
+document.addEventListener("dragover", function(event) {
+  event.preventDefault();
+});
+
+document.addEventListener("drop", function(event) {
+  event.preventDefault();
+  var data = event.dataTransfer.getData("Text");
+  event.target.appendChild(document.getElementById(data));
+  document.getElementById("demo").innerHTML = "The p element was dropped";
+});
+
