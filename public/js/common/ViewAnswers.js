@@ -7,13 +7,13 @@ jQuery(document).ready(function() {
 
                  $.ajax({
                   url: `/${tablename}?_id=${_id}&exam_id=${exam_id}`,
-          
+
                   complete: function(jqXHR){
                   var data = $.parseJSON(jqXHR.responseText);
 
                       $('#title').html(data.data.title);
-                      $('#authority_name').append(data.data.authority_name.name);
-                      $('#track_name').append(data.data.track_name.name);
+                    //  $('#authority_name').append(data.data.authority_name.name);
+                      //$('#track_name').append(data.data.track_name.name);
 
                       var quiz='';
                       var back='';
@@ -43,7 +43,7 @@ jQuery(document).ready(function() {
                           		style ="style='border-style: solid;color: green;'"
 
                           	}
-                      		
+
                           	  result+=`<div ${style} class='row'>`
 
                               item2.answer = item2.answer.toString().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&#39;").replace(/"/g, "&#34;");

@@ -6,13 +6,13 @@ jQuery(document).ready(function() {
 
                  $.ajax({
                   url: '/'+tablename+'?_id='+_id,
-          
+
                   complete: function(jqXHR){
                   var data = $.parseJSON(jqXHR.responseText);
 
                       $('#title').html(data.title);
-                      $('#authority_name').append(data.authority_name.name);
-                      $('#track_name').append(data.track_name.name);
+                      //$('#authority_name').append(data.authority_name.name);
+                      //$('#track_name').append(data.track_name.name);
 
                       var quiz='';
                       var back='';
@@ -44,12 +44,12 @@ jQuery(document).ready(function() {
                       });
 
                       $("#test").html(result);
-                      // 
+                      //
                   }});
 
 $('#submit').click(function(e){
 
-                 $("#proceed").ajaxSubmit({url: '/proceed', type: 'post',      
+                 $("#proceed").ajaxSubmit({url: '/proceed', type: 'post',
                       success: function (data) {
                     $("#block-view").show();
                     $("#proceed-view").hide();
