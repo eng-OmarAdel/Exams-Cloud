@@ -11,9 +11,10 @@
 
                 <div class="m-content">
                     <div class="row">
-                        <div id="block-view" style="display: none;" class="col-lg-12">
+                        <div class="col-lg-1"></div>
+                        <div id="block-view" style="display: none;" class="col-lg-10">
                             <div class="m-portlet">
-                                <div class="m-portlet__body m-portlet__body--no-padding">
+                                <div class="m-portlet__body m-portlet__body--no-padding" style="background-color:rgba(234, 234, 234,0.5)">
                                     <div class="m-invoice-2">
                                         <div class="m-invoice__wrapper">
                                             <div class="m-invoice__head">
