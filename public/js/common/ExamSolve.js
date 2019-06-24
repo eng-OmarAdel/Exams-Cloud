@@ -40,7 +40,7 @@ jQuery(document).ready(function() {
                     countdown(data.duration);
                     setTimeout(function() {
                         //$('#submitExam').click();
-                        alert("One minute left");
+                        swal("One minute left");
                     }, (data.duration-1)*60*1000);
                     setTimeout(function() {
                         $('#submitExam').click();

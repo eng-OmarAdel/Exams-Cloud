@@ -219,6 +219,7 @@ jQuery(document).ready(function() {
           });
         }
       });
+      
       function handle_add_space_btn(){
         var cursorPos = $('#question').prop('selectionStart');
         var v = $('#question').val();

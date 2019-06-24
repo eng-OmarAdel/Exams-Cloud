@@ -10,6 +10,16 @@ Question Solving
               width: 0;
               float: left;
             }
+
+    .droptarget {
+      float: left; 
+      width: 300px; 
+      height: 35px;
+      margin: 15px;
+      padding: 10px;
+      border: 1px solid #aaaaaa;
+    }
+
 </style>
 <div class="m-content">
     <div class="row">
