@@ -153,7 +153,18 @@ class QuestionController extends Controller
             $e->save();
             if(isset($request->exam_id)){
               $exam=Exam::where('_id',$request->exam_id)->first();
-              $examQuestions = $exam->questions()->create($e);
+              $examQuestions = $exam->questions()->create([
+                '_id' => $e['_id'],
+                'track'=> $e['track'],
+                'status'=> $e['status'],
+                'is_programming'=> $e['is_programming'],
+                'name'=> $e['name'],
+                'exam_id'=> $e['exam_id'],
+                'updated_at'=> $e['updated_at'],
+                'created_at'=> $e['created_at'],
+                'answers'=> $e['answers'],
+                'tag' => $e['tags']
+              ]);
               //$examQuestions[] = $e;
               //unset($exam->question);
               //$exam->question = $examQuestions;
