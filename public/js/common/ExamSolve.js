@@ -68,7 +68,7 @@ jQuery(document).ready(function() {
                           $.each(item.answers, function(i, item2) {
                               item2.answer = item2.answer.toString().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&#39;").replace(/"/g, "&#34;");
 
-                              result+=  `<div class="col-md-12"><div class="m-invoice__item"><span class="m-invoice__subtitle " ><div class="m-radio-list"><label class="m-radio m-radio--success"><input type="radio"  name="answer[${item._id.$oid}]"   value="${item2._id.$oid}"> ${item2.answer}<span></span></label></div></span></div></div>`
+                              result+=  `<div class="col-md-12"><div class="m-invoice__item"><span class="m-invoice__subtitle " ><div class="m-radio-list"><label style="font-size:20px" class="m-radio m-radio--success"><input type="radio"  name="answer[${item._id.$oid}]"   value="${item2._id.$oid}"> ${item2.answer}<span></span></label></div></span></div></div>`
                           });
                           result+="</div>";
 

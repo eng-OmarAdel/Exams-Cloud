@@ -17,22 +17,24 @@
                                     <div class="m-invoice-2">
                                         <div class="m-invoice__wrapper">
                                             <div class="m-invoice__head">
-                                                <div class="m-invoice__container m-invoice__container--centered">
+                                                <div class="container m-invoice__container--centered">
+                                                    <br><br>
                                                     <div class="m-invoice__logo">
-                                                        <a style="float: left" href="#">
-                                                            <h1 id="title"></h1>
-                                                        </a>
+                                                        {{--  --}}
+                                                        <span style="float:left">
+															<h4 id="authority_name"><b>authority : </b></h4>
+                                                        <h4 id="track_name"><b>track : </b></h4>
+														</span>
                                                         <a style="float: right" href="#">
                                                             <div id="timer" class="text-center" style="font-size:40px;"></div>
                                                         </a>
-                                                    </div>
-                                                    <span class="m-invoice__desc">
-															<span id="authority_name"><b>authority : </b></span>
-                                                        <span id="track_name"><b>track : </b></span>
-														</span>
+                                                    </div><br><br><br><br><br><br>
+                                                    <a style="" href="#">
+                                                        <h1 class="text-center" id="title"></h1>
+                                                    </a>
                                                 </div>
                                             </div>
-                                            <div class="m-invoice__body m-invoice__body--centered">
+                                            {{-- <div class="m-invoice__body m-invoice__body--centered"> --}}
                                                 <div >
                                                         <form action="{{$tablename}}" method="post"  id="form_add">
                                                             {{csrf_field()}}
@@ -41,16 +43,17 @@
 
                                                             <div id="test">
                                                             </div>
-                                                            <input type="submit" id="submitExam" class="btn btn-accent">
+                                                            <h2 class="text-center"><input type="submit" id="submitExam" class="btn btn-accent"></h2>
                                                         </form>
+                                                        <br><br>
                                                 </div>
-                                            </div>
-                                            <div class="m-invoice__footer">
+                                            {{-- </div> --}}
+                                            {{-- <div class="m-invoice__footer">
                                                 <div class="m-invoice__table  m-invoice__table--centered table-responsive">
                                                     <table  id="table" class="table">
                                                     </table>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -74,14 +77,15 @@
                                                             </div>
                                                             <input type="submit" id="submit" value="Proceed" class="btn btn-accent">
                                                         </form>
+                                                        <br><br>
                                                 </div>
                                             </div>
-                                            <div class="m-invoice__footer">
+                                            {{-- <div class="m-invoice__footer">
                                                 <div class="m-invoice__table  m-invoice__table--centered table-responsive">
                                                     <table  id="table" class="table">
                                                     </table>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
