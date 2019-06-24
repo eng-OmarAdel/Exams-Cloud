@@ -23,12 +23,22 @@ class ExamController extends Controller
 
     public function index()
     {
+      if($request['cat_type']=="1"){
         $exams = Exam::orderBy("updated_at")->with(['trackName' => function($q) {
            $q->select('name');
        },'authorityName' => function($q) {
            $q->select('name');
        }
-           ])->get();
+           ])->where('catID',$request['cat_id'])->get();
+      }else{
+        $exams = Exam::orderBy("updated_at")->with(['trackName' => function($q) {
+           $q->select('name');
+       },'authorityName' => function($q) {
+           $q->select('name');
+       }
+           ])->where('trackID',$request['cat_id'])->get();
+      }
+
         return datatables()->of($exams)->toJson();
     }
 
@@ -51,12 +61,12 @@ class ExamController extends Controller
     public function store(Request $request)
     {
             $validator = Validator::make($request->all(), [
-                'Authority'    => 'required',
-                'title'    => 'required',
-                'tags'    => 'required',
-                'Track'    => 'required',
-                'timeLimit' => 'required',
-                'Category' => 'required',
+                // 'Authority'    => 'required',
+                // 'title'    => 'required',
+                // 'tags'    => 'required',
+                // 'Track'    => 'required',
+                // 'timeLimit' => 'required',
+                // 'Category' => 'required',
 
             ]);
 
@@ -68,13 +78,15 @@ class ExamController extends Controller
 
 ////////////////////////////////////////////////////////////////////////////
             $examToStore= new Exam();
-            $examToStore["authorityID"]=$request["Authority"];
-            $examToStore["trackID"]=$request["Track"];
+            //$examToStore["authorityID"]=$request["Authority"];
             $examToStore["title"]=$request["title"];
             $examToStore["ownerID"]=Auth::id();
-            //$examToStore["ownerID"]="5c97ebff2ace521b10006e02";
-            $examToStore["catID"]=$request["Category"];
             $examToStore["timeLimit"]=$request["timeLimit"];
+            if($request['cat_type'] == '1'){
+                $examToStore["catID"]=$request["cat_id"];
+            }else{
+                $examToStore["trackID"]=$request["cat_id"];
+            }
             $examToStore->save();
             $all = $request->all();
             $pieces = explode(",", $all['tags']);
@@ -141,12 +153,12 @@ class ExamController extends Controller
     {
 
             $validator = Validator::make($request->all(), [
-              'Authority'    => 'required',
-              'title'    => 'required',
-              'tags'    => 'required',
-              'Track'    => 'required',
-              'timeLimit' => 'required',
-              'Category' => 'required',
+              // 'Authority'    => 'required',
+              // 'title'    => 'required',
+              // 'tags'    => 'required',
+              // 'Track'    => 'required',
+              // 'timeLimit' => 'required',
+              // 'Category' => 'required',
 
             ]);
 
@@ -158,14 +170,19 @@ class ExamController extends Controller
 
 ////////////////////////////////////////////////////////////////////////////
             $examToStore=  Exam::where("_id",$id)->first();
-            $examToStore["authorityID"]=$request["Authority"];
-            $examToStore["trackID"]=$request["Track"];
-            $examToStore["timeLimit"]=$request["timeLimit"];
-            $examToStore["catID"]=$request["Category"];
+            //Check if the size of ExamTries[0] isset else return edit is closed because exam is published
+
+            //$examToStore["authorityID"]=$request["Authority"];
             $examToStore["title"]=$request["title"];
             $examToStore["ownerID"]=Auth::id();
-            $examToStore->tags()->delete();
+            $examToStore["timeLimit"]=$request["timeLimit"];
+            if($request['cat_type'] == '1'){
+                $examToStore["catID"]=$request["cat_id"];
+            }else{
+                $examToStore["trackID"]=$request["cat_id"];
+            }
             $examToStore->save();
+            $all = $request->all();
             $pieces = explode(",", $all['tags']);
             foreach ($pieces as $key => $value) {
              $tags = $examToStore->tags()->create(['tag' =>$value]);

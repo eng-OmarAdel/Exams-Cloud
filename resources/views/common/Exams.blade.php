@@ -78,30 +78,12 @@
 											            <textarea class="ignoreField form-control m-input" name="tags" id="tags"
 											                      placeholder="tags"></textarea>
 															</div>
-															<div class="form-group m-form__group">
-																<label for="exampleInputEmail1">Authority</label>
-																<select class="form-control" id="Authority" name="Authority">
-																	<option value="5cb8a6dc76e7492510007032">Faculty of Engineering</option>
-																</select>
-														  </div>
-                              <div class="form-group m-form__group">
-																<label for="exampleInputEmail1">Track</label>
-																<select class="form-control" id="Track" name="Track">
-																	<option value="5cbc7c2c76e7490450007418">Electrical</option>
-																</select>
-														  </div>
-															<div class="form-group m-form__group">
-																<label for="exampleInputEmail1">Category</label>
-																<select class="form-control" id="Category" name="Category">
-																	<option value="5cacb85a9dfef715a06255b4">Maths</option>
-																	<option value="5cacb8709dfef715a06255b5">Algebra</option>
-																</select>
-														  </div>
 											    </div>
 											</div>
 
                                         </div>
-
+																				<input type="hidden" name="cat_id" value="{{$_GET['cat_id']}}"/>
+										       							<input type="hidden" name="cat_type" value="{{$_GET['cat_type']}}"/>
 						        <input style="display: none" type="reset" id="form_reset" class="btn btn-secondary">
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
