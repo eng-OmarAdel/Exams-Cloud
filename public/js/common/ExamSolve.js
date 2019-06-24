@@ -24,12 +24,6 @@ current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
     }
     tick();
 }
- 
-
-
-
-
-
 
 
 jQuery(document).ready(function() {
@@ -44,6 +38,10 @@ jQuery(document).ready(function() {
 
                   $("#submit").click(function(){
                     countdown(data.duration);
+                    setTimeout(function() {
+                        //$('#submitExam').click();
+                        alert("One minute left");
+                    }, (data.duration-1)*60*1000);
                     setTimeout(function() {
                         $('#submitExam').click();
                         //alert("Hello");
