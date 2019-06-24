@@ -101,7 +101,7 @@ class ExamController extends Controller
         }
             ])->find($id);
 
-        return datatables()->of($exams)->toJson();
+        return response()->json($exam);
 
     }
 
