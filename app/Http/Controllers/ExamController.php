@@ -51,11 +51,8 @@ class ExamController extends Controller
     public function store(Request $request)
     {
             $validator = Validator::make($request->all(), [
-                'Authority'    => 'required',
                 'title'    => 'required',
                 'tags'    => 'required',
-                'Track'    => 'required',
-
             ]);
 
             if ($validator->fails()) {
@@ -66,7 +63,11 @@ class ExamController extends Controller
 
 ////////////////////////////////////////////////////////////////////////////
             $examToStore= new Exam();
+
+
             $examToStore["authorityID"]=$request["Authority"];
+            $examToStore["page_type"]=$request["page_type"];
+            $examToStore["is_published"]=0;
             $examToStore["trackID"]=$request["Track"];
             $examToStore["title"]=$request["title"];
             //$examToStore["ownerID"]=Auth::id();
@@ -104,23 +105,19 @@ class ExamController extends Controller
     {
 
             $validator = Validator::make($request->all(), [
-                'name'    => 'required',
-
+                'title'    => 'required',
+                'tags'    => 'required',
             ]);
 
             if ($validator->fails()) {
                 return response()->json($validator->errors()->all(), 422);
 
             }
-
-
 ////////////////////////////////////////////////////////////////////////////
+            $all=$request->all();
             $examToStore=  Exam::where("_id",$id)->first();
-            $examToStore["authorityID"]=$request["Authority"];
-            $examToStore["trackID"]=$request["Track"];
-            $examToStore["catID"]=$request["Category"];
             $examToStore["title"]=$request["title"];
-            $examToStore["ownerID"]=Auth::id();
+            $examToStore["page_type"]=$request["page_type"];
             $examToStore->tags()->delete();
             $examToStore->save();
             $pieces = explode(",", $all['tags']);

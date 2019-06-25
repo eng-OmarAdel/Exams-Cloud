@@ -21,6 +21,7 @@ var DatatablesDataSourceAjaxServer = function() {
 			columns: [
 
                 {data: 'title' ,title: "Title"},
+                {data: 'page_type' ,title: "Page type"},
                 {data: 'tags[, ].tag' ,title: "Tags"},
 								{data: 'Actions',title: "Actions"},
 				// {data: 'created_at' ,title: "Creation date"},
@@ -37,6 +38,22 @@ var DatatablesDataSourceAjaxServer = function() {
 
 					},
 				},
+                {
+          targets: 1,
+          title: 'Page type',
+          orderable: false,
+          render: function(data, type, full, meta) {
+                if(data=="one_page"){
+                    return "Exam in one page";
+
+                }else if(data=="wizard"){
+                    return "wizard"
+                }else{
+                  return ""
+                }
+
+          },
+        },
 				{
 					targets: -1,
 					title: 'Actions',

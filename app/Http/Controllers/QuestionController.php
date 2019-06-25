@@ -162,7 +162,7 @@ class QuestionController extends Controller
                     $e =Question::create($all);
 
                 }
-                        $pieces = explode(",", $all['tags']);
+            $pieces = explode(",", $all['tags']);
             foreach ($pieces as $key => $value) {
                 $tags = $e->tags()->create(['tag' => $value]);
             }
@@ -251,11 +251,13 @@ class QuestionController extends Controller
             $e->save();
 
             $e->answers()->delete();
+            foreach ($e->tags()->get() as $key => $value) {
+                 $value->delete();
+            }
             foreach ($answer as &$value) {
                 $Answers = $e->answers()->create(['answer' => $value['answer'], 'is_true' => $value['is_true']]);
             }
             $pieces = explode(",", $all['tags']);
-                        $e->tags()->delete();
 
             foreach ($pieces as $key => $value) {
                 $tags = $e->tags()->create(['tag' => $value]);
@@ -333,8 +335,8 @@ class QuestionController extends Controller
                     $count = 0;
                     foreach ($request->complete as  $value) {
 
-                        $myanswer.=$answers[$value]->answer.",";
-                        $true.=$answers[$count]->answer.",";
+                        $myanswer.=$answers[$value]->answer."(@)";
+                        $true.=$answers[$count]->answer."(@)";
                         $count++;
 
                     }

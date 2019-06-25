@@ -1,5 +1,5 @@
 			<!-- begin::Header -->
-			<header id="m_header" class="m-grid__item m-header " m-minimize="minimize" m-minimize-offset="200" m-minimize-mobile-offset="200">
+			<header style="zoom: 85%;"  id="m_header" class="m-grid__item m-header " >
 				<div class="m-header__top">
 					<div class="m-container m-container--responsive m-container--xxl m-container--full-height m-page__container">
 						<div class="m-stack m-stack--ver m-stack--desktop">

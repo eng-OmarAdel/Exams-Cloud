@@ -72,17 +72,13 @@
 											                      placeholder="tags"></textarea>
 															</div>
 															<div class="form-group m-form__group">
-																<label for="exampleInputEmail1">Authority</label>
-																<select class="form-control" id="Authority" name="Authority">
-																	<option value="5cb8a6dc76e7492510007032">Faculty of Engineering</option>
+																<label for="exampleInputEmail1">Page Type</label>
+																<select class="form-control" id="page_type" name="page_type">
+																	<option value="one_page">Exam in one page</option>
+																	<option value="wizard">wizard</option>
 																</select>
 														  </div>
-                              <div class="form-group m-form__group">
-																<label for="exampleInputEmail1">Track</label>
-																<select class="form-control" id="Track" name="Track">
-																	<option value="5cbc7c2c76e7490450007418">Electrical</option>
-																</select>
-														  </div>
+
 											    </div>
 											</div>
 
