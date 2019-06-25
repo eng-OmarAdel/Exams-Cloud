@@ -51,7 +51,8 @@ var DatatablesDataSourceAjaxServer = function() {
                         //     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\' )" href="javascript:;"><i class="la la-check-circle"></i> approve</a>'
                         // }
           status = '<a class="dropdown-item" target="_blank" href="?view=QuestionSolve&id=' + full._id + '"><i class="la la-check-circle"></i> Solve the question</a>'
-
+            var publishTglState='publish';
+            if(full.published == 1){publishTglState='unpublish';}
 						return `
                         <span class="dropdown">
                             <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
@@ -63,7 +64,9 @@ var DatatablesDataSourceAjaxServer = function() {
                         </span>
                         <a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
                           <i class="la la-edit"></i>
-                        </a>`;
+                        </a>
+                        <button class="` + full._id + `" onclick="tglPublish('` + full._id + `')">` + publishTglState + `</button>
+                        `;
 					},
 				}
 			],
@@ -82,7 +85,28 @@ var DatatablesDataSourceAjaxServer = function() {
 
 }();
 
+function tglPublish(s){
+  
 
+c='.'+s;
+$(c).prop('disabled', true);
+   $.ajax({
+    url: 'Exam/togglepublish/'+s,
+    type: 'get',
+    
+     
+       success: function(response){
+       $(c).text(function(i, text){
+        $(c).prop('disabled', false);
+          return text === "publish" ? "unpublish" : "publish";
+
+      })
+   
+    }
+   });
+
+}
+   
 
 
 var table_reload;
