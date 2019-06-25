@@ -25,6 +25,8 @@
 												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
 														<a onclick="actions()" id="modal_button" data-toggle="modal" data-target="#m_modal_4" class="dropdown-item" href="#">Track</a>
 														<a id="modal_button1" data-toggle="modal" data-target="#m_modal_5" class="dropdown-item" href="#">Category</a>
+														<a id="modal_button" href="?view=Question&cat_id={{$_GET['id']}}&cat_type=2" class="dropdown_item">Question</a>
+
 												</div>
 										</div>
 										</li>
