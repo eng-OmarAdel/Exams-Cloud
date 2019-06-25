@@ -22,8 +22,23 @@ var exam= {
                 back=""
                 //div has the question title
                 //input: name = question , value = id
-                //
-                result="<div class=' m-portlet__body row'><div class='col-md-8 offset-2'><h3>"+item.name.replace("______", '<div class="droptarget"></div>');+"</h3>"
+                        select=""
+                        options=[];
+                    if(item.type=="complete" && item.is_programming=="no"){
+                       $.each(item.answers, function(i, item2) {
+                        options[i]=`<option value="${i}">${item2.answer}</option>`
+                            })
+
+                        options =shuffle(options);
+                            select+=`<select style="display: inline;" name="complete[]">`
+
+                       $.each(options, function(i, item2) {
+                           select+= item2;
+                       })
+                            select+=`</select>`
+                           item.name= item.name.replace(/______/g, select)
+                    }
+                result="<div style='display: inline;' class=' m-portlet__body row'><div style='display: inline;'  class='col-md-8'><h3 >"+item.name+"</h3>"
                 if(item.is_programming=="Yes"){
                     //code text area -> name = answer
                     result+=`<div class="form-group m-form__group">
@@ -50,9 +65,6 @@ var exam= {
                         item2.answer = item2.answer.toString().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&#39;").replace(/"/g, "&#34;");
                         if(item.type=="choose"){
                         result+=  '<div class="col-md-12"><div class="m-invoice__item"><span class="m-invoice__subtitle " ><div class="m-radio-list"><label class="m-radio m-radio--success"><input type="radio"  name=\"answer\"   value="'+item2._id+'"> '+item2.answer+'<span></span></label></div></span></div></div>'
-                   }else if(item.type=="complete"){
-                        result+=  '<div class="col-md-12"><div class="m-invoice__item"><span class="m-invoice__subtitle " ><div class="m-radio-list"> <div class="droptarget"><p draggable="true" id="dragtarget'+i+'">'+item2.answer+'</p></div><span></span></label></div></span></div></div>'
-
                    }
                     });
                     //input (radio) -> name = answer
@@ -128,30 +140,18 @@ var execute_code = function(code , extension){
         }
     });
 }
+//======================================================
+
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
 //=================================================================
 
 // ==============================on ready========================= 
 jQuery(document).ready(function() {
     exam.init();
 });
-
-
-
-/* Event fired on the drag target */
-document.addEventListener("dragstart", function(event) {
-  event.dataTransfer.setData("Text", event.target.id);
-  document.getElementById("demo").innerHTML = "Started to drag the p element.";
-});
-
-/* Events fired on the drop target */
-document.addEventListener("dragover", function(event) {
-  event.preventDefault();
-});
-
-document.addEventListener("drop", function(event) {
-  event.preventDefault();
-  var data = event.dataTransfer.getData("Text");
-  event.target.appendChild(document.getElementById(data));
-  document.getElementById("demo").innerHTML = "The p element was dropped";
-});
-

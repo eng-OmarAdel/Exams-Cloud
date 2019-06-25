@@ -19,6 +19,7 @@
         </script>
 
 		<!--end::Web font -->
+		<script src="{{url('')}}/vendors/jquery/dist/jquery.js" type="text/javascript"></script>
 
 		<!--begin:: Global Mandatory Vendors -->
 		<link href="{{url('')}}/vendors/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
@@ -26,6 +27,8 @@
 		<!--end:: Global Mandatory Vendors -->
 
 		<!--begin:: Global Optional Vendors -->
+		<link href="{{url('')}}/SmartWizard-master/src/css/smart_wizard.css" rel="stylesheet" type="text/css" />
+		<link href="{{url('')}}/SmartWizard-master/src/css/smart_wizard_theme_arrows.css" rel="stylesheet" type="text/css" />
 		<link href="{{url('')}}/vendors/tether/dist/css/tether.css" rel="stylesheet" type="text/css" />
 		<link href="{{url('')}}/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
 		<link href="{{url('')}}/vendors/bootstrap-datetime-picker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />

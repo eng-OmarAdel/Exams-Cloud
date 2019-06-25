@@ -1,7 +1,13 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
 var cat_id=document.currentScript.getAttribute("cat_id"); //2
 var cat_type=document.currentScript.getAttribute("cat_type"); //3
+var exam_id=document.currentScript.getAttribute("exam_id"); //4
 
+if(exam_id){
+  exam_id="&exam_id="+exam_id
+}else{
+  exam_id="";
+}
 var DatatablesDataSourceAjaxServer = function() {
 
 	var initTable1 = function() {
@@ -14,7 +20,7 @@ var DatatablesDataSourceAjaxServer = function() {
       processing: true,
 			serverSide: true,
 
-       ajax:{url:"/"+tablename+"?cat_id="+cat_id+"&cat_type="+cat_type, function (data, callback, settings) {
+       ajax:{url:"/"+tablename+"?cat_id="+cat_id+"&cat_type="+cat_type+exam_id, function (data, callback, settings) {
        }
        },
 			columns: [
@@ -49,7 +55,7 @@ var DatatablesDataSourceAjaxServer = function() {
                                 `+status+`
                             </div>
                         </span>
-                        <a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
+                        <a href="#" onclick="fill_portlet('` + full._id +exam_id+`')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
                           <i class="la la-edit"></i>
                         </a>`;
 					},
@@ -232,6 +238,7 @@ jQuery(document).ready(function() {
       function handle_not_prog_type(){
 
           type = $("#Question-type").val();
+          if($("#is_programming").val()=="no"){
           if(type=="choose"){
 
             $(".Question-type-checkboxes").show();
@@ -239,6 +246,9 @@ jQuery(document).ready(function() {
           }else if(type=="complete"){
             $(".Question-type-checkboxes").hide();
             $("#add_space_btn").show();
+
+          }}else{
+            $("#add_space_btn").hide();
 
           }
       }

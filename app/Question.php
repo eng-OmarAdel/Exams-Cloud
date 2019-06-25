@@ -26,6 +26,7 @@ class Question extends Eloquent
         'category',
         'track' , 
         'type',
+        'programming_language',
         'user_id',  'weight','exam_id',
         'answer_id', // programing output -> 120 (factroial of 5)
         'is_programming','status', 'created_at','updated_at',

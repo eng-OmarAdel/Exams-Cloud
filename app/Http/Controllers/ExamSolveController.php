@@ -60,7 +60,7 @@ class ExamSolveController extends Controller
         foreach($Exam['questions'] as $question){
 
             if ($question->is_programming=="no"){
-
+            if($question->type=="choose"){
                 if(isset($request["answer"][$question["_id"]])){
                         $true_answer= $question->answers()->where("is_true",1)->first();
                     if($request["answer"][$question->_id]==$true_answer->_id){
@@ -74,8 +74,23 @@ class ExamSolveController extends Controller
                     $is_true="no";
                     $answer=""; 
                 }
+            }else if($question->type=="complete"){
+
+                    $answers=$question->answers()->get();
+                    $answer="";
+                    $true="";
+                    $count = 0;
+                    foreach ($request->complete[$question["_id"]] as  $value) {
+
+                        $answer.=$answers[$value]->answer."(@)";
+                        $true.=$answers[$count]->answer."(@)";
+                        $count++;
+
+                    }
+                    $is_true = ($answer == $true)? "yes":"no";
+            }
             }else{
-                $output = $this->compiler($request["answer"][$question->_id]."","php");
+                $output = $this->compiler($request["answer"][$question->_id]."",$question->programming_language);
                 $true_answer= $question->answer_id;
                 if($output==$true_answer){
 

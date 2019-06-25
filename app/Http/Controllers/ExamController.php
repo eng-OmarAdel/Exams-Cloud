@@ -8,8 +8,8 @@ use App\Authority;
 use App\Track;
 use Illuminate\Http\Request;
 use Validator;
-use Jenssegers\Mongodb\Auth\PasswordResetServiceProvider;
-use Jenssegers\Mongodb\Auth;
+use Auth;
+
 class ExamController extends Controller
 {
 
@@ -21,7 +21,7 @@ class ExamController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
         $exams = Exam::orderBy("updated_at")->with(['trackName' => function($q) {
            $q->select('name');
@@ -51,11 +51,8 @@ class ExamController extends Controller
     public function store(Request $request)
     {
             $validator = Validator::make($request->all(), [
-                'Authority'    => 'required',
                 'title'    => 'required',
                 'tags'    => 'required',
-                'Track'    => 'required',
-
             ]);
 
             if ($validator->fails()) {
@@ -66,7 +63,11 @@ class ExamController extends Controller
 
 ////////////////////////////////////////////////////////////////////////////
             $examToStore= new Exam();
+
+
             $examToStore["authorityID"]=$request["Authority"];
+            $examToStore["page_type"]=$request["page_type"];
+            $examToStore["is_published"]=0;
             $examToStore["trackID"]=$request["Track"];
             $examToStore["title"]=$request["title"];
             //$examToStore["ownerID"]=Auth::id();
@@ -104,23 +105,19 @@ class ExamController extends Controller
     {
 
             $validator = Validator::make($request->all(), [
-                'name'    => 'required',
-
+                'title'    => 'required',
+                'tags'    => 'required',
             ]);
 
             if ($validator->fails()) {
                 return response()->json($validator->errors()->all(), 422);
 
             }
-
-
 ////////////////////////////////////////////////////////////////////////////
+            $all=$request->all();
             $examToStore=  Exam::where("_id",$id)->first();
-            $examToStore["authorityID"]=$request["Authority"];
-            $examToStore["trackID"]=$request["Track"];
-            $examToStore["catID"]=$request["Category"];
             $examToStore["title"]=$request["title"];
-            $examToStore["ownerID"]=Auth::id();
+            $examToStore["page_type"]=$request["page_type"];
             $examToStore->tags()->delete();
             $examToStore->save();
             $pieces = explode(",", $all['tags']);
@@ -136,8 +133,7 @@ class ExamController extends Controller
         Exam::where('_id', $id)->delete();
     }
 
-    //You need to add questions to the exam
-
+ 
 
 
 
