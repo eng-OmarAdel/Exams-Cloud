@@ -81,6 +81,7 @@ class ExamController extends Controller
             $examToStore["title"]=$request["title"];
             $examToStore["ownerID"]=Auth::id();
             $examToStore["timeLimit"]=$request["timeLimit"];
+            $examToStore["published"]=0;
             if($request['cat_type'] == '1'){
                 $examToStore["catID"]=$request["cat_id"];
             }else{
@@ -148,6 +149,20 @@ class ExamController extends Controller
             $exam->questions()->last()->tags()->create(['tag' => $value]);
         }
     }
+    
+    public function togglepublish($id){
+     
+      $exam=Exam::where('_id',$id)->first();
+
+
+  if($exam['published']==1) $exam['published']=0;
+  else  $exam['published']=1;
+
+  $exam->save();
+
+    }
+    
+    
     public function update(Request $request, $id)
     {
 
