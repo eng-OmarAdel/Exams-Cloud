@@ -49,6 +49,9 @@
 						      </div>
 						      <div class="modal-body">
 						        <form action="{{$tablename}}" method="post" enctype="multipart/form-data" id="form_add">
+						        	@if(isset($_GET['exam_id']))
+										<input type="hidden" name="exam_id" value="{{$_GET['exam_id']}}">
+						        	@endif
                                     {{csrf_field()}}
                                     <input type="hidden" name="_method" value="post" fillable="never"/>
 
@@ -165,6 +168,6 @@
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" cat_type="{{$_GET['cat_type']}}" cat_id="{{$_GET['cat_id']}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" cat_type="{{$_GET['cat_type']}}" cat_id="{{$_GET['cat_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}" cat_type="{{$_GET['cat_type']}}"	@if(isset($_GET['exam_id'])) exam_id="{{$_GET['exam_id']}}" @endif cat_id="{{$_GET['cat_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection
 

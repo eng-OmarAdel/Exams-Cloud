@@ -8,8 +8,8 @@ use App\Authority;
 use App\Track;
 use Illuminate\Http\Request;
 use Validator;
-use Jenssegers\Mongodb\Auth\PasswordResetServiceProvider;
-use Jenssegers\Mongodb\Auth;
+use Auth;
+
 class ExamController extends Controller
 {
 
@@ -21,7 +21,7 @@ class ExamController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
         $exams = Exam::orderBy("updated_at")->with(['trackName' => function($q) {
            $q->select('name');
@@ -136,8 +136,7 @@ class ExamController extends Controller
         Exam::where('_id', $id)->delete();
     }
 
-    //You need to add questions to the exam
-
+ 
 
 
 

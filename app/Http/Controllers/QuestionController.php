@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Exam;
 use App\Track;
 use App\SolvedQuestion;
 use App\Question;
@@ -27,16 +28,32 @@ class QuestionController extends Controller
         $cat_id = $request->cat_id;
         $cat_type = $request->cat_type;
         if ($cat_type == "1"){
-            $questions = Question::where("category",$cat_id)->orderBy("id")->with('tags')->get();
+                if(isset($request->exam_id)){
+                    $exam = Exam::find($request->exam_id);
+                    $questions= $exam->questions()->toArray();
+                }else{
+                    $questions = Question::where("category",$cat_id)->orderBy("id")->with('tags')->get();
+
+                }
         }
         else if ($cat_type == "2") {
-            $questions = Question::where("track",$cat_id)->orderBy("id")->with('tags')->get();
+                            if(isset($request->exam_id)){
+                    $exam = Exam::find($request->exam_id);
+                    $questions= $exam->questions()->toArray();
+                }else{
+                    $questions = Question::where("track",$cat_id)->orderBy("id")->with('tags')->get();
+
+                }
+            
         }
         foreach ($questions as $key => &$value1) {
+                $value1['mytags']="";
+                if(isset($value1['tags'])){
             foreach ($value1['tags'] as &$value) {
                 $value1['mytags'] .= $value['tag'] . ",";
             }
             $value1['mytags'] = rtrim($value1['mytags'], ",");
+}
         }
         return datatables()->of($questions)->toJson();
     }
@@ -91,19 +108,25 @@ class QuestionController extends Controller
                     $answer[$key]['is_true'] = 0;
                 }
             }
+     
 
-            $e = new Question();
+            $all = $request->all();
             if($request->cat_type == "1"){
-                $e->category = $request->cat_id;
+                $all['category'] = $request->cat_id;
             }
             else{
-                $e->track = $request->cat_id;
+                $all['track'] = $request->cat_id;
             }
-            $e->status = "approved";
-            $all = $request->all();
+            $all['status'] = "approved";
             unset($all['answer_id']);// for only programming output
-            $e->fill($all);
-            $e->save();
+            
+            if(isset($request->exam_id)){
+                $exam = Exam::find($request->exam_id);
+                $e= $exam->questions()->create($all);
+                }else{
+                    $e =Question::create($all);
+
+                }
             foreach ($answer as &$value) {
                 $Answers = $e->answers()->create(['answer' => $value['answer'], 'is_true' => $value['is_true']]);
             }
@@ -124,16 +147,25 @@ class QuestionController extends Controller
              * correct answer will be in answer_id directly
              */
             $all = $request->all();
-            $e = new Question();
             if($request->cat_type == "1"){
-                $e->category = $request->cat_id;
+                $all['category'] = $request->cat_id;
             }
             else{
-                $e->track = $request->cat_id;
+                $all['track'] = $request->cat_id;
             }
             $all['status'] = "approved";
-            $e->fill($all);
-            $e->save();
+            
+            if(isset($request->exam_id)){
+                $exam = Exam::find($request->exam_id);
+                $e= $exam->questions()->create($all);
+                }else{
+                    $e =Question::create($all);
+
+                }
+                        $pieces = explode(",", $all['tags']);
+            foreach ($pieces as $key => $value) {
+                $tags = $e->tags()->create(['tag' => $value]);
+            }
         }
     }
 
@@ -146,7 +178,18 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        $Question = Question::where('_id', $id)->with("answers")->with("tags")->first();
+            $pos = strpos($id, "&exam_id=");
+            if(!$pos){
+                $Question = Question::where('_id', $id)->with("answers")->with("tags")->first();
+
+            }else{
+                $exam_id= substr($id, $pos+9);
+                $id=substr($id,0,$pos);
+                $exam= Exam::find($exam_id);
+                $Question=$exam->questions()->where('_id', $id)->first();
+            }
+
+
         $tags = "";
         foreach ($Question['tags'] as $value) {
             $tags .= $value['tag'] . ",";
@@ -186,7 +229,15 @@ class QuestionController extends Controller
                     $answer[$key]['is_true'] = 0;
                 }
             }
-            $e = Question::where("_id", $id)->first();
+            if(isset($request->exam_id)){
+                $exam = Exam::find($request->exam_id);
+                $pos = strpos($id, "&exam_id=");
+                $id=substr($id,0,$pos);
+                $e= $exam->questions()->where("_id", $id)->first();
+                }else{
+                    $e = Question::where("_id", $id)->first();
+
+                }
             if($request->cat_type == "1"){
                 $e->category = $request->cat_id;
             }
@@ -198,13 +249,14 @@ class QuestionController extends Controller
             unset($all['answer_id']);// for only programming output
             $e->fill($all);
             $e->save();
-            $e->answers()->delete();
-            $e->tags()->delete();
 
+            $e->answers()->delete();
             foreach ($answer as &$value) {
                 $Answers = $e->answers()->create(['answer' => $value['answer'], 'is_true' => $value['is_true']]);
             }
             $pieces = explode(",", $all['tags']);
+                        $e->tags()->delete();
+
             foreach ($pieces as $key => $value) {
                 $tags = $e->tags()->create(['tag' => $value]);
             }
@@ -212,7 +264,15 @@ class QuestionController extends Controller
         } else {
             // programming
             $all = $request->all();
-            $e = Question::where("_id", $id)->first();
+            if(isset($request->exam_id)){
+                $exam = Exam::find($request->exam_id);
+                $pos = strpos($id, "&exam_id=");
+                $id=substr($id,0,$pos);
+                $e= $exam->questions()->where("_id", $id)->first();
+                }else{
+                    $e = Question::where("_id", $id)->first();
+
+                }
             if($request->cat_type == "1"){
                 $e->category = $request->cat_id;
             }
@@ -222,6 +282,12 @@ class QuestionController extends Controller
             $all['status'] = "approved";
             $e->fill($all);
             $e->save();
+            $e->tags()->delete();
+
+            $pieces = explode(",", $all['tags']);
+            foreach ($pieces as $key => $value) {
+                $tags = $e->tags()->create(['tag' => $value]);
+            }
         }
     }
 

@@ -1,4 +1,7 @@
-var tablename=document.currentScript.getAttribute("tablename"); //1
+var tablename=document.currentScript.getAttribute("tablename");
+var cat_id=document.currentScript.getAttribute("cat_id"); //2
+var cat_type=document.currentScript.getAttribute("cat_type"); //3
+ //1
 console.log(tablename);
 var DatatablesDataSourceAjaxServer = function() {
 
@@ -12,15 +15,13 @@ var DatatablesDataSourceAjaxServer = function() {
       processing: true,
 			serverSide: true,
 
-       ajax:{url:tablename, function (data, callback, settings) {
+       ajax:{url:"/"+tablename+"?cat_id="+cat_id+"&cat_type="+cat_type, function (data, callback, settings) {
        }
        },
 			columns: [
 
                 {data: 'title' ,title: "Title"},
                 {data: 'tags[, ].tag' ,title: "Tags"},
-                {data: 'authority_name.name' ,title: "Authority"},
-								{data: 'track_name.name' ,title: "Track"},
 								{data: 'Actions',title: "Actions"},
 				// {data: 'created_at' ,title: "Creation date"},
 				// {data: 'Actions',title: "Actions"},
@@ -48,7 +49,9 @@ var DatatablesDataSourceAjaxServer = function() {
                         // } else {
                         //     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\' )" href="javascript:;"><i class="la la-check-circle"></i> approve</a>'
                         // }
-          status = '<a class="dropdown-item" target="_blank" href="?view=QuestionSolve&id=' + full._id + '"><i class="la la-check-circle"></i> Solve the question</a>'
+                        // 
+
+          status = `<a class="dropdown-item" target="_blank" href="?view=Question&cat_id=${cat_id}&cat_type=${cat_type}&exam_id=${full._id}"><i class="la la-check-circle"></i> Solve the question</a>`
 
 						return `
                         <span class="dropdown">
