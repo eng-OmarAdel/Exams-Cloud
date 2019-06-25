@@ -55,7 +55,7 @@ class AuthorityController extends Controller
             return response()->json($validator->errors()->all(), 422);
 
         }
-
+        $user = \Auth::user();
         // $track = Track::where('_id', $request['track'])->first();
         // $category = Category::where('_id', $request['category'])->first();
 
@@ -64,6 +64,7 @@ class AuthorityController extends Controller
         // $request['track'] = $track['name'];
         // $request['category'] = $category['name'];
         // $request['status'] = "approved";
+        $request['created_by'] = $user['email'];
 
 
         $e->fill($request->all());
@@ -108,7 +109,12 @@ class AuthorityController extends Controller
 
     public function destroy($id)
     {
-        Authority::where('id', $id)->delete();
+        $user = \Auth::user();
+        $Authority = Authority::where('_id', $id)->first();
+        if($user['email'] == $Authority['created_by'])
+        {
+            Authority::where('_id', $id)->delete();
+        }
     }
 
     public function Correct(Request $request,$id) {

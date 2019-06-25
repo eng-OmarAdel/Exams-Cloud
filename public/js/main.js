@@ -43,7 +43,15 @@ function fill_portlet(id, form_id="#form_add", reset_id="#form_reset", modal_but
 
 function delete_item(id, form_id="#delete_form", table_id="#m_table_1", status = null) {
     //tablename="Category";
-    //  alert(tablename);
+    //tablename=document.currentScript.getAttribute("tablename"); //1
+    if(tablename.includes('?'))
+    {
+        tablename = tablename.substr(0, tablename.indexOf('?'));  
+    }
+    //alert(tablename);
+    // tablename = tablename.substr(0, tablename.indexOf('?')); 
+    // alert(tablename);
+
     //  return;
     //alert("Delete");
     //alert(id);

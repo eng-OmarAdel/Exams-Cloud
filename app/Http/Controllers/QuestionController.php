@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Track;
+use App\SolvedQuestion;
 use App\Question;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Validator;
@@ -19,10 +22,16 @@ class QuestionController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $questions = Question::orderBy("id")->with('tags')->get();
-
+        $cat_id = $request->cat_id;
+        $cat_type = $request->cat_type;
+        if ($cat_type == "1"){
+            $questions = Question::where("category",$cat_id)->orderBy("id")->with('tags')->get();
+        }
+        else if ($cat_type == "2") {
+            $questions = Question::where("track",$cat_id)->orderBy("id")->with('tags')->get();
+        }
         foreach ($questions as $key => &$value1) {
             foreach ($value1['tags'] as &$value) {
                 $value1['mytags'] .= $value['tag'] . ",";
@@ -52,82 +61,79 @@ class QuestionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-
         ]);
+
 
         if ($validator->fails()) {
             return response()->json($validator->errors()->all(), 422);
-
         }
-
-
-////////////////////////////////////////////////////////////////////////////
+        // dd($request->all());
         if ($request->is_programming == "no") {
-            foreach ($request->answer as $key => $value) {
+            //not programming validation code
+            
+            if(Question::noneProgValidation($request)!=1){
+                return  response()->json(Question::noneProgValidation($request), 422);
+            }
+            if($request->type=="choose"){
 
+                $is_dup = self::isDuplicate($request->name , $request->answer[array_keys($request->is_true)[0]]);
+                    if($is_dup === "duplicate"){
+                        return response()->json(["This question is a Duplicate"], 422);
+                }  
+            }
+      
+            //answer
+            foreach ($request->answer as $key => $value) {
                 $answer[$key]['answer'] = $value;
                 if (isset($request->is_true[$key])) {
-
-                    // $isDuplicate=$this->isDuplicate( $request->name , $value );
-                    // if($isDuplicate==1)
-                    // return response()->json(["This question is a Duplicate"], 422);
-
-                    $true = 1;
-                    $answer[$key]['is_true'] = $request->is_true[$key];
+                    $answer[$key]['is_true'] = 1;
                 } else {
-
                     $answer[$key]['is_true'] = 0;
                 }
             }
-            foreach ($answer as $key => $value) {
-
-                $validator = Validator::make($value, [
-                    'answer' => 'required|max:255',
-
-                ]);
-
-                if ($validator->fails()) {
-                    return response()->json($validator->errors()->all(), 422);
-
-                }
-
-            }
-            if (!isset($true)) {
-                return response()->json(["Please enter at least one true answer."], 422);
-
-            }
-
-            $catID = $request->category;
-
-
-            $all = $request->all();
-//////////////////////////////////////////////////////////////////////////
-            if (isset($request->answer)) {
-                $e = new Question();
-                $all['status'] = "approved";
-
-                $e->fill($all);
-                $e->save();
-                foreach ($answer as &$value) {
-                    $Answers = $e->answers()->create(['answer' => $value['answer'], 'is_true' => $value['is_true']]);
-                }
-                $pieces = explode(",", $all['tags']);
-                foreach ($pieces as $key => $value) {
-                    $tags = $e->tags()->create(['tag' => $value]);
-                }
-
-
-            }
-        } else {
-
-            $all = $request->all();
 
             $e = new Question();
-            $all['status'] = "approved";
-
+            if($request->cat_type == "1"){
+                $e->category = $request->cat_id;
+            }
+            else{
+                $e->track = $request->cat_id;
+            }
+            $e->status = "approved";
+            $all = $request->all();
+            unset($all['answer_id']);// for only programming output
             $e->fill($all);
             $e->save();
-            //return view('admin.profile',);
+            foreach ($answer as &$value) {
+                $Answers = $e->answers()->create(['answer' => $value['answer'], 'is_true' => $value['is_true']]);
+            }
+            $pieces = explode(",", $all['tags']);
+            foreach ($pieces as $key => $value) {
+                $tags = $e->tags()->create(['tag' => $value]);
+            }
+
+        } else {
+            // programming
+            // $is_dup = self::isDuplicate($request->name , $request->answer_id);
+            // if($is_dup === "duplicate"){
+            //     return response()->json(["This question is a Duplicate"], 422);
+            // }
+            /** Not working
+             * api need to be smarter to detect a programming question
+             * programming_language -> (php | py | cpp | c)
+             * correct answer will be in answer_id directly
+             */
+            $all = $request->all();
+            $e = new Question();
+            if($request->cat_type == "1"){
+                $e->category = $request->cat_id;
+            }
+            else{
+                $e->track = $request->cat_id;
+            }
+            $all['status'] = "approved";
+            $e->fill($all);
+            $e->save();
         }
     }
 
@@ -162,67 +168,58 @@ class QuestionController extends Controller
 
         if ($validator->fails()) {
             return response()->json($validator->errors()->all(), 422);
-
         }
-
-
-////////////////////////////////////////////////////////////////////////////
+        // dd($request->all());
         if ($request->is_programming == "no") {
-
+            //not programming validation code
+            
+            if(Question::noneProgValidation($request)!=1){
+                return  response()->json(Question::noneProgValidation($request), 422);
+            }   
+            //answer
             foreach ($request->answer as $key => $value) {
-
                 $answer[$key]['answer'] = $value;
                 if (isset($request->is_true[$key])) {
-                    $true = 1;
-                    $answer[$key]['is_true'] = $request->is_true[$key];
+                    $found_true_ans = 1 ;
+                    $answer[$key]['is_true'] = 1;
                 } else {
-
                     $answer[$key]['is_true'] = 0;
                 }
             }
-            foreach ($answer as $key => $value) {
-
-                $validator = Validator::make($value, [
-                    'answer' => 'required|max:255',
-
-                ]);
-
-                if ($validator->fails()) {
-                    return response()->json($validator->errors()->all(), 422);
-
-                }
-
-            }
-            if (!isset($true)) {
-                return response()->json(["Please enter at least one true answer."], 422);
-
-            }
-
-
-            $all = $request->all();
-//////////////////////////////////////////////////////////////////////////
-            if (isset($request->answer)) {
-                $e = Question::where("_id", $id)->first();
-                $e->answers()->delete();
-                $e->tags()->delete();
-                $e->fill($all);
-                $e->save();
-                foreach ($answer as &$value) {
-                    $Answers = $e->answers()->create(['answer' => $value['answer'], 'is_true' => $value['is_true']]);
-                }
-                $pieces = explode(",", $all['tags']);
-                foreach ($pieces as $key => $value) {
-                    $tags = $e->tags()->create(['tag' => $value]);
-                }
-
-
-            }
-        } else {
-            $all = $request->all();
-
             $e = Question::where("_id", $id)->first();
-            $all['status'] = "approved";
+            if($request->cat_type == "1"){
+                $e->category = $request->cat_id;
+            }
+            else{
+                $e->track = $request->cat_id;
+            }
+            $e->status = "approved";
+            $all = $request->all();
+            unset($all['answer_id']);// for only programming output
+            $e->fill($all);
+            $e->save();
+            $e->answers()->delete();
+            $e->tags()->delete();
 
+            foreach ($answer as &$value) {
+                $Answers = $e->answers()->create(['answer' => $value['answer'], 'is_true' => $value['is_true']]);
+            }
+            $pieces = explode(",", $all['tags']);
+            foreach ($pieces as $key => $value) {
+                $tags = $e->tags()->create(['tag' => $value]);
+            }
+
+        } else {
+            // programming
+            $all = $request->all();
+            $e = Question::where("_id", $id)->first();
+            if($request->cat_type == "1"){
+                $e->category = $request->cat_id;
+            }
+            else{
+                $e->track = $request->cat_id;
+            }
+            $all['status'] = "approved";
             $e->fill($all);
             $e->save();
         }
@@ -243,97 +240,90 @@ class QuestionController extends Controller
 
     public function Correct(Request $request, $id)
     {
+        // return response()->json($request->all());
         $e = Question::where("_id", $id)->first();
         if ($e->is_programming == "Yes") {
+            //my answer compiled:
+            $intrnal_req = new Request();
+            $intrnal_req->code = $request->answer;
+            $intrnal_req->extension = $e->programming_language;
+            $myanswer = json_decode(self::ExecuteCode( $intrnal_req))->result;
+            //true answer
             $true = (string)$e->answer_id;
-            $myanswer = (string)$request->e;;
-
-
-            $result = strcmp($true, $myanswer);
-
-            if ($result == 0) {
-
-                return "success";
-            } else {
-                return $myanswer;
-            }
-
-        } else {
-            $myanswer = $request->answer;;
-            $answer = $e->answers()->where("_id", $myanswer)->first();
-            if ($answer->is_true == "1") {
-                return "success";
-            } else {
-                return "you choosed the wrong answer";
-            }
+            $is_true = ($true == $myanswer)? 1:0;
         }
-
+        else {
+            //not programming
+            $myanswer_id = $request->answer;
+            $myanswer_obj = $e->answers()->where("_id", $myanswer_id)->first();
+            $myanswer = $myanswer_obj->answer;
+            $true = $e->answers()->where("is_true", 1)->first()->answer;
+            $is_true = $myanswer_obj->is_true;
+        }
+        //saving to db
+        $me = User::find(auth()->user()->id);
+        $solved_question = [
+            'question_id' => $e->_id,
+            'user_answer' => $myanswer,
+            'true_answer' => $true,
+            'is_true' => $is_true
+        ];
+        $me->solved_questions()->create($solved_question);
+        // returning it back to front end
+        return json_encode($solved_question);
     }
-
+    
     public function isDuplicate($target_question, $target_answer)
     {
-
-
-        $fp = fopen('C:/Users/Leno/Desktop/examCloud/duplicateInput.txt', 'w');
-        $count = Question::where("is_programming", "no")->count();
-
-        $rem = $count;
-        $limit = 5;
-        $sssss = "";
-        for ($i = 0; $i < $count; $i = $i + 5) {
-
-
-            $skip = $i;
-            if ($rem < $limit) {
-                $limit = $rem;
-            }
-            $rem -= $limit;
-            $data = Question::skip($skip)->take($limit)->where("is_programming", "no")->get();
-            //             return $data."\r\n";
-
-            // $count222 = Question::skip($skip)->take($limit)->count();
-            // return $count222."\r\n";
-            //This variable containe n of row
-
-            for ($a = 0; $a < $limit; $a++) {
-
-                $question = $data[$a]['name'];
-                for ($k = 0; $k < 4; $k++) {
-                    if (isset($data[$a]['answers'][$k]['is_true'])) {
-                        if ($data[$a]['answers'][$k]['is_true'] == 1) {
-                            $answer = $data[$a]['answers'][$k]['answer'];
-                        }
-
-                    }
-                }
-                $sssss .= $question . "(@)" . $answer . "(@)";
-
-
-            }
-            $sssss = $target_question . "(@)" . $target_answer . "(@)" . $sssss;
-
-            fwrite($fp, $sssss);
-            fclose($fp);
-
-            $result = "C:/Users/Leno/AppData/Local/Programs/Python/Python37/python C:/Users/Leno/Desktop/examCloud/presentation.py 2>&1";
-            exec($result, $output, $return_var);
-            return $result = $output[2];
-            // return view("welcome " , compact('data'));
-            if ($result == 1) {
-
-                return "true";
-                //return view("welcome " , compact('data'));
-            }
-
-            // $fp = fopen('C:/Users/Leno/Desktop/examCloud/duplicateInput.txt', 'w');
-            // fwrite($fp, $target_question."(@)");
-            //      fwrite($fp, $target_answer."(@)");
-            // fclose($fp);
+        $URI = 'http://134.209.204.108/duplication?target='.$target_question."(@)".$target_answer;
+        $URI = preg_replace("/ /", "%20", $URI); //very fucking important
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $URI,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache"
+            ),
+        ));
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+        // "true" -> not duplicate
+        // "duplicated entry" -> duplicate
+        if($response === "true"){
+            return "not_duplicate";
         }
+        return "duplicate";
+    }
 
-
-        return "false";
-        //return view("welcome " , compact('data'));
+    public function ExecuteCode(Request $request) {
+        $extension = $request->extension;
+        $code = $request->code;
+        $client = new \GuzzleHttp\Client();
+        $URI = 'http://134.209.204.108/testsob72.tk/compiler/index.php';
+        $params['headers'] =  ['Content-Type' => 'application/x-www-form-urlencoded'];
+        $params['form_params'] = array('answer' => $code, 'extension' => $extension);
+        $response = $client->post($URI, $params);
+        $data = json_decode($response->getBody())->data;
+        return json_encode([
+            'result' => $data
+        ]);
     }
 
 }
+
+
+// save it for now (compiler)
+        // function compiler($code,$language){
+        //     $client = new \GuzzleHttp\Client();
+        //     $URI = 'http://134.209.204.108/testsob72.tk/compiler/index.php';
+        //     $params['headers'] =  ['Content-Type' => 'application/x-www-form-urlencoded'];
+    
+        //     $params['form_params'] = array('answer' => $code, 'extension' => $language);
+        //      $response = $client->post($URI, $params);
+    
+        //     return json_decode($response->getBody())->data;
+        // }

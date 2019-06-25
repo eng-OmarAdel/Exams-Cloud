@@ -32,38 +32,20 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function student()
-    {
-
-        return $this->hasOne('App\Student', 'user_id');
-
-    }
-
-    public function school()
-    {
-
-        return $this->hasOne('App\Organization', 'user_id');
-
-    }
-
-    public function company()
-    {
-
-        return $this->hasOne('App\Organization', 'user_id');
-
-    }
-
-    public function organization()
-    {
-
-        return $this->hasOne('App\Organization', 'user_id');
-
-    }
 
     public function sendPasswordResetNotification($token)
 {
     $this->notify(new PasswordReset($token));
 }
+
+    public function UserExams()
+    {
+      return   $this->embedsMany("App\UserExams");
+    }
+    public function solved_questions()
+    {
+      return   $this->embedsMany("App\SolvedQuestion");
+    }
 
 
 }
