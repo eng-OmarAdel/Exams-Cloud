@@ -32,6 +32,7 @@ Route::get('AuthtrackOptions','AuthProfileController@travesre_for_options1');
 Route::get('Exams','ExamController@index');
 Route::get('Exams/{id}','ExamController@show');
 Route::get('Exam/{id}','ExamController@showQuestions');
+Route::get('Exam/togglepublish/{id}','ExamController@togglepublish');
 Route::post('Exam','ExamController@addQuestionToExam');
 Route::post('Exams','ExamController@store');
 Route::post('AuthProfile','AuthProfileController@addTrack');
