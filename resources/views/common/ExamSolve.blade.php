@@ -27,7 +27,7 @@
                                                         <h4 id="track_name"><b>track : </b></h4>
 														</span>
                                                         <a style="float: right" href="#">
-                                                            <div id="timer" class="text-center" style="font-size:40px;"></div>
+                                                            <div id="timer" class="text-center" style="font-size:40px;position:fixed;margin-left:-100px;"></div>
                                                         </a>
                                                     </div><br><br><br><br><br><br>
                                                     <a style="" href="#">
