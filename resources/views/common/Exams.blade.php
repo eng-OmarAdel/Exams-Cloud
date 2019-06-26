@@ -63,26 +63,27 @@
 											            <label for="exampleInputEmail1" id="question_label">Title</label>
 											            <textarea class="ignoreField form-control m-input" name="title" id="title"
 											                      placeholder="Exam title"></textarea>
-											            <!--<textarea class="ignoreField form-control m-input qbank" name="name" id="question"
-											                      placeholder="Question"></textarea>-->
 											        </div>
+											        <div class="form-group m-form__group">
+											            <label for="exampleInputEmail1" id="question_label">duration</label>
+											            <input type="number" class="ignoreField form-control m-input" name="duration" id="duration"
+											                      placeholder="duration">
+											        </div>
+											        <input type="hidden" name="cat_type" value="{{$_GET['cat_type']}}">
+											        <input type="hidden" name="cat_id" value="{{$_GET['cat_id']}}">
 											        <div class="form-group m-form__group">
 											            <label for="exampleInputEmail1">tags <small>comma separated</small></label>
 											            <textarea class="ignoreField form-control m-input" name="tags" id="tags"
 											                      placeholder="tags"></textarea>
 															</div>
 															<div class="form-group m-form__group">
-																<label for="exampleInputEmail1">Authority</label>
-																<select class="form-control" id="Authority" name="Authority">
-																	<option value="5cb8a6dc76e7492510007032">Faculty of Engineering</option>
+																<label for="exampleInputEmail1">Page Type</label>
+																<select class="form-control" id="page_type" name="page_type">
+																	<option value="one_page">Exam in one page</option>
+																	<option value="wizard">wizard</option>
 																</select>
 														  </div>
-                              <div class="form-group m-form__group">
-																<label for="exampleInputEmail1">Track</label>
-																<select class="form-control" id="Track" name="Track">
-																	<option value="5cbc7c2c76e7490450007418">Electrical</option>
-																</select>
-														  </div>
+
 											    </div>
 											</div>
 
@@ -110,5 +111,5 @@
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}" cat_type="{{$_GET['cat_type']}}" cat_id="{{$_GET['cat_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection

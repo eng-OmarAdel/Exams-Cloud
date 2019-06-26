@@ -66,7 +66,7 @@ class UserProceededExamsController extends Controller
     {
         $exam = Exam::with(['trackName' => function($q) {
             $q->select('name');
-        },'authorityName' => function($q) {
+        },'categoryName' => function($q) {
             $q->select('name');
         }
             ])->find($request->exam_id);

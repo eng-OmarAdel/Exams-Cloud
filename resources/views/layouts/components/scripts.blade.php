@@ -2,7 +2,6 @@
 
 		<!--begin:: Global Mandatory Vendors -->
 
-		<script src="{{url('')}}/vendors/jquery/dist/jquery.js" type="text/javascript"></script>
 		<script src="{{url('')}}/vendors/popper.js/dist/umd/popper.js" type="text/javascript"></script>
 		<script src="{{url('')}}/vendors/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 		<script src="{{url('')}}/vendors/js-cookie/src/js.cookie.js" type="text/javascript"></script>
@@ -10,6 +9,7 @@
 		<script src="{{url('')}}/vendors/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
 		<script src="{{url('')}}/vendors/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
 		<script src="{{url('')}}/vendors/wnumb/wNumb.js" type="text/javascript"></script>
+		<script src="{{url('')}}/SmartWizard-master/src/js/jquery.smartWizard.js" type="text/javascript"></script>
         <script type="text/javascript" src="{{url("")}}/plugins/DataTables/datatables.min.js"></script>
 		<!--end:: Global Mandatory Vendors -->
 		<script src="{{url('')}}/plugins\Cascading-Dependent-Dropdown-Chained-Selects\jquery.chained.selects.js" type="text/javascript"></script>
