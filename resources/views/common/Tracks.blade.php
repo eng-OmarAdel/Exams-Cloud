@@ -39,6 +39,7 @@
 														<a class="dropdown-item" href="{{url('/?view=Question&cat_id='.$_GET['track_id'].'&cat_type=2')}}">Questions</a>
 														<a class="dropdown-item" href="{{url('/?view=Exams&cat_id='.$_GET['track_id'].'&cat_type=2')}}">Exams</a>
 
+
 												</div>
 										</div>
 
