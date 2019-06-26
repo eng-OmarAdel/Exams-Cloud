@@ -126,6 +126,7 @@ jQuery(document).ready(function() {
                         $('#smartwizard').smartWizard({
                           selected: 0,  // Initial selected step, 0 = first step 
                             contentCache:false, 
+                            keyNavigation:false,
                           transitionEffect: 'fade',
                           toolbarSettings: {
 

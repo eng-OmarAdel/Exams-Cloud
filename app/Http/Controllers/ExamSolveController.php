@@ -9,6 +9,7 @@ use App\Question;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Validator;
+use Redirect;
 
 class ExamSolveController extends Controller
 {
@@ -108,6 +109,7 @@ class ExamSolveController extends Controller
         foreach ($answered as $key => $value) {
             $author->ExamCorrection()->create($value);
         }
+        return Redirect::to('/?view=UserProceededExams');
 
     }
 

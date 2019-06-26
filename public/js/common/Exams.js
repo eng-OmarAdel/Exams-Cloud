@@ -62,7 +62,8 @@ var DatatablesDataSourceAjaxServer = function() {
 					orderable: false,
 					render: function(data, type, full  , meta) {
 
-          status = `<a id="view" href="?view=Question&cat_id=${cat_id}&cat_type=${cat_type}&exam_id=${full._id}" class="dropdown-item">Manage Questions</a>`
+          showQuestions = `<a id="view" href="?view=Question&cat_id=${cat_id}&cat_type=${cat_type}&exam_id=${full._id}" class="dropdown-item">Manage Questions</a>`
+          Solve = `<a id="view" href="?view=ExamSolve&_id=${full._id}" class="dropdown-item">Solve Exam</a>`
 
 						return `
                         <span class="dropdown">
@@ -70,7 +71,7 @@ var DatatablesDataSourceAjaxServer = function() {
                               <i class="la la-ellipsis-h"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                `+status+`
+                                ${showQuestions}${Solve}
                             </div>
                         </span>
                         <a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
