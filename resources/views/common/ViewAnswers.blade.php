@@ -23,8 +23,8 @@ My answer
                                                         </a>
                                                     </div>
                                                     <span class="m-invoice__desc">
-															<span id="authority_name"><b>authority : </b></span>
-                                                        <span id="track_name"><b>track : </b></span>
+                                                        <h6 style="display: none" id="track_name"><b>track : </b></h6>
+                                                        <h6 style="display: none" id="category_name"><b>category : </b></h6>
 														</span>
                                                 </div>
                                             </div>

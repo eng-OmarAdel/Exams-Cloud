@@ -23,6 +23,7 @@ var DatatablesDataSourceAjaxServer = function() {
                 {data: 'title' ,title: "Title"},
                 {data: 'page_type' ,title: "Page type"},
                 {data: 'tags[, ].tag' ,title: "Tags"},
+                {data: 'duration' ,title: "Duration"},
 								{data: 'Actions',title: "Actions"},
 				// {data: 'created_at' ,title: "Creation date"},
 				// {data: 'Actions',title: "Actions"},
@@ -33,7 +34,8 @@ var DatatablesDataSourceAjaxServer = function() {
 					title: 'Title',
 					orderable: false,
 					render: function(data, type, full, meta) {
-												status = `<a id="view" href="?view=Exam&id=` + full._id + `" class="dropdown-item">`+full.title+`</a>`
+
+												status = `<a id="view" href="?view=Question&cat_id=${cat_id}&cat_type=${cat_type}&exam_id=${full._id}" class="dropdown-item">`+full.title+`</a>`
 												return status;
 
 					},
@@ -59,16 +61,8 @@ var DatatablesDataSourceAjaxServer = function() {
 					title: 'Actions',
 					orderable: false,
 					render: function(data, type, full  , meta) {
-                        // if (full.status == "approved") {
 
-                        //     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\')" href="javascript:;"><i class="la la-ban"></i> suspend</a>'
-
-                        // } else {
-                        //     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\' )" href="javascript:;"><i class="la la-check-circle"></i> approve</a>'
-                        // }
-                        // 
-
-          status = `<a class="dropdown-item" target="_blank" href="?view=Question&cat_id=${cat_id}&cat_type=${cat_type}&exam_id=${full._id}"><i class="la la-check-circle"></i> Solve the question</a>`
+          status = `<a id="view" href="?view=Question&cat_id=${cat_id}&cat_type=${cat_type}&exam_id=${full._id}" class="dropdown-item">Manage Questions</a>`
 
 						return `
                         <span class="dropdown">
@@ -117,135 +111,11 @@ jQuery(document).ready(function() {
                   $("#Category").html(data);
                   }});
 });
-    //////////////////////////////////////////////////////////////////////
-    $(document).on('click', "#addanswer" , function(e) {
-     //add a new day
 
 
-      e.preventDefault();
-
-
-     $("#answer").append(`
-    <div class="subdays subdays2 form-group m-form__group row"><div class="col-lg-12 col-md-12 col-sm-12"> <div class="input-group pull-right " >
-
-
-    <div class="col-md-8">
-
-    <input class="form-control m-input m-input--air answer" type="text"  placeholder="answer"  name="answer[`+$(".answer").length+`]">
-    </div>
-    <div class="col-md-2">
-    <label for="is_true">true</label>
-    <input class="checkbox" value="1" type="checkbox"  id="is_true" name="is_true[`+$(".answer").length+`]">
-    </div>
-    <div class="col-md-2">
-
-                    <a href="#" class="delete_answer btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill"> <i class="fa fa-close"></i> </a>
-    </div>
-       </div> </div></div>`);
-     // delete_day();
-
-
-
-    });
-
-    //Delete day
-    $(document).on('click', ".delete_answer" , function(e) {
-
-      e.preventDefault();
-       //remove day
-      $(this).parent().parent().parent().parent().remove();
-
-    });
-
-    $(document).on("change",".checkbox",function() {
-        $(".checkbox").prop('checked', false);
-        $(this).prop('checked', true);
-    });
 var custom_after=  function(data){
   alert("welcome to edit")
-        $("#is_programming").trigger("change");
-        is_programming=$("#is_programming").val();
-        if(is_programming=="no"){
-        $(".answer").each(function(index, value) {
-                 $(this).val("")
-
-               value.readOnly = false;
-
-
-        })
-            answers=data.answers;
-            var count=0
-
-            $(".subdays2").remove();
-            var numItems = $('.answer').length
-
-            $.each( answers, function( key, value ) {
-                count++;
-
-                if (count>numItems) {
-                    $("#addanswer").trigger('click');
-              }
-            });
-
-            $(".answer").each(function( key, value ) {
-
-               $(this).val(answers[key].answer);
-               if(answers[key].is_true==1){
-               $(this).parent().parent().find(".checkbox").prop("checked",true)
-           }
-           else{
-
-               $(this).parent().parent().find(".checkbox").prop("checked",false)
-            }
-              });
-            }
-
+      $("#tags").val(data.mytags);
+     
 
 }
-    $(document).on("change",".checkbox",function() {
-        $(".checkbox").prop('checked', false);
-        $(this).prop('checked', true);
-    });
-        $(document).on("change","#is_programming",function() {
-            type=$(this).val()
-                if(type=="no"){
-        $("#essay_answer").hide();
-
-        $("#answers1").show();
-        $("#addanswer").show();
-                $("#interactive").hide();
-
-        $(".answer").each(function(index, value) {
-                 $(this).val("")
-
-               value.readOnly = false;
-
-
-        })
-
-     }else {
-        $("#answers1").hide();
-        $("#essay_answer").show();
-        $("#interactive").hide();
-
-            if(type=="complete")
-                $("#question_label").html("statment");
-
-     }
-
-    });
-
-  // $.ajax({
-  //       url: "category",
-
-  //      complete: function(jqXHR){
-  //   var data = $.parseJSON(jqXHR.responseText);
-  //   $("#category").chainedSelects({
-  //     data: data,
-  //     placeholder:'Other'
-  //   });
-
-
-
-
-  //      }});

@@ -26,7 +26,7 @@ class ExamSolveController extends Controller
 
         $Exam = Exam::with(['trackName' => function($q) {
             $q->select('name');
-        },'authorityName' => function($q) {
+        },'categoryName' => function($q) {
             $q->select('name');
         }
             ])->find($request->_id)    ;

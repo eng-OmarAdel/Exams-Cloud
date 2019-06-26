@@ -63,9 +63,14 @@
 											            <label for="exampleInputEmail1" id="question_label">Title</label>
 											            <textarea class="ignoreField form-control m-input" name="title" id="title"
 											                      placeholder="Exam title"></textarea>
-											            <!--<textarea class="ignoreField form-control m-input qbank" name="name" id="question"
-											                      placeholder="Question"></textarea>-->
 											        </div>
+											        <div class="form-group m-form__group">
+											            <label for="exampleInputEmail1" id="question_label">duration</label>
+											            <input type="number" class="ignoreField form-control m-input" name="duration" id="duration"
+											                      placeholder="duration">
+											        </div>
+											        <input type="hidden" name="cat_type" value="{{$_GET['cat_type']}}">
+											        <input type="hidden" name="cat_id" value="{{$_GET['cat_id']}}">
 											        <div class="form-group m-form__group">
 											            <label for="exampleInputEmail1">tags <small>comma separated</small></label>
 											            <textarea class="ignoreField form-control m-input" name="tags" id="tags"

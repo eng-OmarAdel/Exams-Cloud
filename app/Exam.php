@@ -9,7 +9,7 @@ class Exam extends Eloquent
 
 
     protected $fillable = [
-        'ownerID', 'authorityID', 'trackID', 'tags', 'duration', 'difficulty','is_published','page_type', 'questions', 'created_at', 'updated_at',
+        'ownerID', 'category', 'track', 'tags', 'duration', 'difficulty','is_published','page_type', 'questions', 'created_at', 'updated_at',
     ];
 
     public function questions()
@@ -31,7 +31,10 @@ class Exam extends Eloquent
     }
     public function trackName()
     {
-        return $this->belongsTo('App\Track',"trackID");
+        return $this->belongsTo('App\Track',"track");
     }
-
+    public function categoryName()
+    {
+        return $this->belongsTo('App\Category',"category");
+    }
 }

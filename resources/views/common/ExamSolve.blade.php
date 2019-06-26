@@ -23,8 +23,8 @@
                                                     <div class="m-invoice__logo">
                                                         {{--  --}}
                                                         <span   style="float:left">
-															<h6 id="authority_name"><b>authority : </b></h6>
-                                                        <h6 id="track_name"><b>track : </b></h6>
+                                                        <h6 style="display: none" id="track_name"><b>track : </b></h6>
+                                                        <h6 style="display: none" id="category_name"><b>category : </b></h6>
 														</span>
                                                         <a style="float: right" href="#">
                                                             <div id="timer" class="text-center" style="font-size:40px;"></div>
