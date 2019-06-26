@@ -27,13 +27,22 @@ class UserProceededExamsController extends Controller
        foreach ($r as $key => &$value) {
         $exam = Exam::with(['trackName' => function($q) {
             $q->select('name');
-        },'authorityName' => function($q) {
+        },'categoryName' => function($q) {
             $q->select('name');
         }
             ])->find($value->exam_id);
         $value['title']=$exam->title;
-        $value['auth']=$exam->authorityName->name;
-        $value['track']=$exam->trackName->name;
+
+        if(isset($exam->categoryName->name)){
+                $value['cat']=$exam->categoryName->name;
+        }else{
+                $value['cat']="";
+        }
+        if(isset($exam->trackName->name)){
+                $value['track']=$exam->trackName->name;
+        }else{
+                $value['track']="";
+        }
         $value['submited']=$exam->Examtries()->where("user_id",Auth::id())->count();
 
        }   
