@@ -54,8 +54,8 @@ var DatatablesDataSourceAjaxServer = function() {
 												//     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\' )" href="javascript:;"><i class="la la-check-circle"></i> approve</a>'
 												// }
 												// status = '<a class="dropdown-item" target="_blank" href="?view=AuthProfile&id='` + full._id + `'"><i class="la la-check-circle"></i> Solve the question</a>'
-												status = `<a id="view" href="?view=Tracks&id=` + full._id + `&name=`+full.name+`" class="dropdown-item">`+full.name+`</a>`
-												return status;
+						status = `<a id="view" href="?view=Tracks&auth_id=` + full._id + `&auth_name=`+full.name+`&track_id=-1" class="dropdown-item">`+full.name+`</a>`
+						return status;
 
 					},
 				},
