@@ -356,6 +356,18 @@ class CategoryController extends Controller
         }
     }
 
-    
+    public function CategoryParents($id)
+    {
+        $items = [];
+        $item = Category::find($id);
+        $items[] = $item;
+        while($item->name !== "root"){
+            $id = $item->parent_id;
+            $item = Category::find($id);
+            $items[] = $item;
+        }
+        $items = array_reverse($items);
+        return json_encode($items);
+    }
 
 }
