@@ -33,8 +33,10 @@
 														Train
 												</button>
 												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+
 														<a class="dropdown-item" href="{{url('/?view=Question&cat_id='.$_GET['id'].'&cat_type=1')}}">Questions</a>
 														<a class="dropdown-item" href="{{url('/?view=Exams&cat_id='.$_GET['id'].'&cat_type=1')}}">Exams</a>
+
 												</div>
 										</div>
 
