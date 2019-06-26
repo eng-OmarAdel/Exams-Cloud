@@ -24,7 +24,6 @@
 												</button>
 												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
 														<a onclick="actions()" id="modal_button" data-toggle="modal" data-target="#m_modal_4" class="dropdown-item" href="#">Track</a>
-														<a id="modal_button1" data-toggle="modal" data-target="#m_modal_5" class="dropdown-item" href="#">Category</a>
 												</div>
 										</div>
 										</li>
@@ -126,8 +125,8 @@
 											<input type="hidden" name="_method" value="post" fillable="never"/>
 											<div class="m-portlet__body">
 											    <div id="test">
-														<input style="display: none" type="text" id="parentCategory" name="parentCategory" value="{{$_GET['id']}}">
-														<input style="display: none" type="text" id="type" name="type" value="category">
+
+
 														<input style="display: none" type="text" id="parentTrack" name="parentTrack" value="{{$_GET['id']}}">
 
 
@@ -143,9 +142,9 @@
 											            <label for="exampleInputEmail1" id="question_label">Category Name</label>
 											            <input class="ignoreField form-control m-input qbank" name="name" id="name"
 											                      placeholder="Name">
-															</div>	
-															
-		
+															</div>
+
+
 
 											    </div>
 											</div>
@@ -174,5 +173,5 @@
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" authname="{{$_GET['name']}}" authid="{{$_GET['id']}}" tablename="{{$tablename}}?id={{$_GET['id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" authname="{{$_GET['name']}}" authid="{{$_GET['id']}}" tablename="{{$tablename}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection
