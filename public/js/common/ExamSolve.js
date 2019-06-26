@@ -50,8 +50,15 @@ jQuery(document).ready(function() {
 
                     $('#timer').html(data.duration+':00');
                       $('#title').html(data.title);
-                      $('#authority_name').append(data.authority_name.name);
+                      if (!(typeof  data.category_name == "undefined" ||  data.category_name == null)) {
+
+                      $('#category_name').append(data.category_name.name);
+                      $('#category_name').show();
+                    }else{
                       $('#track_name').append(data.track_name.name);
+                      $('#track_name').show();
+
+                    }
 
                       if(data.page_type=="wizard"){
                         page_type_div=`<div style="zoom: 75%;" id="smartwizard"><ul>`
@@ -91,7 +98,7 @@ jQuery(document).ready(function() {
                       result+=`<div id="step-${key+1}" class=' m-portlet__body row'><div class='col-md-8 offset-2'><h3>${item.name}</h3><br><br><input type="hidden"  name="question" value="${item._id.$oid}">`
                       if(item.is_programming=="Yes"){
                           result+=`<div class="form-group m-form__group"><textarea class="form-control m-input" id="code-${item._id.$oid}" rows="20"  name="answer[${item._id.$oid}]" ></textarea></div><div class="form-group m-form__group"></div>`;
-                          result+=`<div id="result_code-${item._id.$oid}"></div><button class="btn btn-info" id="execute_code-${item._id.$oid}"  onclick="handle_execute('${item._id.$oid}','${item.programming_language}')"  type="button">
+                          result+=`<div id="result_code-${item._id.$oid}"></div><button class="btn btn-info" onclick="handle_execute('${item._id.$oid}','${item.programming_language}')"  type="button">
                                         Execute Code
                                     </button>`;
                       }else{

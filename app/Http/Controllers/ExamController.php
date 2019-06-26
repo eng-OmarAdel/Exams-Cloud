@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Question;
 use App\Exam;
+use App\Category;
 use App\Authority;
 use App\Track;
 use Illuminate\Http\Request;
@@ -28,7 +29,13 @@ class ExamController extends Controller
        },'authorityName' => function($q) {
            $q->select('name');
        }
-           ])->get();
+           ]);
+        if($request->cat_type=="1"){
+            $exams=$exams->where("category",$request->cat_id)->get();
+        }else{
+            $exams=$exams->where("track",$request->cat_id)->get();
+
+        }
         return datatables()->of($exams)->toJson();
     }
 
@@ -53,6 +60,7 @@ class ExamController extends Controller
             $validator = Validator::make($request->all(), [
                 'title'    => 'required',
                 'tags'    => 'required',
+                'duration'    => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -65,13 +73,28 @@ class ExamController extends Controller
             $examToStore= new Exam();
 
 
-            $examToStore["authorityID"]=$request["Authority"];
             $examToStore["page_type"]=$request["page_type"];
+            $examToStore["duration"]=$request["duration"];
             $examToStore["is_published"]=0;
-            $examToStore["trackID"]=$request["Track"];
+            if($request->cat_type == "1"){
+               $cat=  Category::find($request->cat_id);
+               if(isset($cat->_id)){
+                $examToStore['category'] = $request->cat_id;
+            }else{
+                return response()->json(["the category is invalid"], 422);
+            }
+            }
+            else{
+
+                $track= Track::find($request->cat_id);
+               if(isset($track->_id)){
+                $examToStore['track'] = $request->cat_id;
+                }else{
+                    return response()->json(["the track is invalid"], 422);
+                }
+            }
             $examToStore["title"]=$request["title"];
-            //$examToStore["ownerID"]=Auth::id();
-            $examToStore["ownerID"]="5c97ebff2ace521b10006e02";
+            $examToStore["ownerID"]=Auth::id();
             $examToStore->save();
             $all = $request->all();
             $pieces = explode(",", $all['tags']);
@@ -91,13 +114,19 @@ class ExamController extends Controller
      */
     public function show($id)
     {
-         $exam = Exam::with(['trackName' => function($q) {
+        $exam  = Exam::with(['trackName' => function($q) {
             $q->select('name');
         },'authorityName' => function($q) {
             $q->select('name');
         }
             ])->find($id);
-
+                if(isset($exam['tags'])){
+            foreach ($exam['tags'] as &$value) {
+                $exam['mytags'] .= $value['tag'] . ",";
+            }
+            $exam['mytags'] = rtrim($exam['mytags'], ",");
+}
+        
         return response()->json($exam);
 
     }
@@ -107,6 +136,7 @@ class ExamController extends Controller
             $validator = Validator::make($request->all(), [
                 'title'    => 'required',
                 'tags'    => 'required',
+                'duration'    => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -117,6 +147,7 @@ class ExamController extends Controller
             $all=$request->all();
             $examToStore=  Exam::where("_id",$id)->first();
             $examToStore["title"]=$request["title"];
+            $examToStore["duration"]=$request["duration"];
             $examToStore["page_type"]=$request["page_type"];
             $examToStore->tags()->delete();
             $examToStore->save();

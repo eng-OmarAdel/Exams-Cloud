@@ -12,9 +12,15 @@ jQuery(document).ready(function() {
                   var data = $.parseJSON(jqXHR.responseText);
 
                       $('#title').html(data.data.title);
-                      $('#authority_name').append(data.data.authority_name.name);
-                      $('#track_name').append(data.data.track_name.name);
+                      if (!(typeof  data.data.category_name == "undefined" ||  data.data.category_name == null)) {
 
+                      $('#category_name').append(data.data.category_name.name);
+                      $('#category_name').show();
+                    }else{
+                      $('#track_name').append(data.data.track_name.name);
+                      $('#track_name').show();
+
+                    }
                       var quiz='';
                       var back='';
                       var result='';
@@ -27,12 +33,18 @@ jQuery(document).ready(function() {
                       		qIs="false"
 
                       	}
+                                              if(item.is_programming=="no" && item.type=="complete"){
+                                                answerArr = data.r[key].answer.split("(@)");
+                                                for (var i =0; i <answerArr.length; i++) {
+                                                    item.name = item.name.toString().replace('______', `<div  style='display:inline;color:black'>${answerArr[i]}</div>`);
+                                                }
+                                              }
+
                       result+=`<div class=' m-portlet__body row'><div class='col-md-8 offset-2'><h3 ${qstyle}>${item.name} (${qIs})</h3><br><br><input type="hidden"  name="question" value="${item._id.$oid}">`
                       if(item.is_programming=="Yes"){
                           result+='<pre><code>'+data.r[key].answer.toString().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&#39;").replace(/"/g, "&#34;")+'</code></pre>';
 
                       }else{
-                          result+=`<input type="hidden"  name="answer[${item._id.$oid}]">`
                           $.each(item.answers, function(i, item2) {
                           	style =""
                           	if(data.r[key].answer==item2._id.$oid){
@@ -43,12 +55,14 @@ jQuery(document).ready(function() {
                           		style ="style='border-style: solid;color: green;'"
 
                           	}
-                      		
+                      		  if(item.type=="choose"){
                           	  result+=`<div ${style} class='row'>`
 
                               item2.answer = item2.answer.toString().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&#39;").replace(/"/g, "&#34;");
 
                               result+=  `${item2.answer}</div>`
+
+                            }
                           });
                           result+="</div>";
 

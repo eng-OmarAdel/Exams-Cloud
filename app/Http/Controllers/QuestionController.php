@@ -112,10 +112,20 @@ class QuestionController extends Controller
 
             $all = $request->all();
             if($request->cat_type == "1"){
+            $cat=  Category::find($request->cat_id);
+               if(isset($cat->_id)){
                 $all['category'] = $request->cat_id;
+            }else{
+                return response()->json(["the category is invalid"], 422);
+            }
             }
             else{
+                $track= Track::find($request->cat_id);
+               if(isset($track->_id)){
                 $all['track'] = $request->cat_id;
+                }else{
+                    return response()->json(["the track is invalid"], 422);
+                }
             }
             $all['status'] = "approved";
             unset($all['answer_id']);// for only programming output
@@ -148,10 +158,20 @@ class QuestionController extends Controller
              */
             $all = $request->all();
             if($request->cat_type == "1"){
+            $cat=  Category::find($request->cat_id);
+               if(isset($cat->_id)){
                 $all['category'] = $request->cat_id;
+            }else{
+                return response()->json(["the category is invalid"], 422);
+            }
             }
             else{
+                $track= Track::find($request->cat_id);
+               if(isset($track->_id)){
                 $all['track'] = $request->cat_id;
+                }else{
+                    return response()->json(["the track is invalid"], 422);
+                }
             }
             $all['status'] = "approved";
             
