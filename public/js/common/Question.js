@@ -41,29 +41,25 @@ var DatatablesDataSourceAjaxServer = function() {
 					title: 'Actions',
 					orderable: false,
 					render: function(data, type, full  , meta) {
-                        // if (full.status == "approved") {
 
-                        //     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\')" href="javascript:;"><i class="la la-ban"></i> suspend</a>'
-
-                        // } else {
-                        //     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\' )" href="javascript:;"><i class="la la-check-circle"></i> approve</a>'
-                        // }
           status = '<a class="dropdown-item" target="_blank" href="?view=QuestionSolve&id=' + full._id + '"><i class="la la-check-circle"></i> Solve the question</a>'
-
-						return `
-                        <span class="dropdown">
-                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
-                              <i class="la la-ellipsis-h"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                `+status+`
-                            </div>
-                        </span>
-                        <a href="#" onclick="fill_portlet('` + full._id +exam_id+`')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
+          if(exam_id==""){
+            dropdown = `<span class="dropdown">
+                              <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
+                                <i class="la la-ellipsis-h"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                  `+status+`
+                              </div>
+                          </span>`
+          }else{
+            dropdown=``;
+          }
+						return `${dropdown}<a href="#" onclick="fill_portlet('` + full._id +exam_id+`')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
                           <i class="la la-edit"></i>
                         </a>`;
-					},
-				},{
+          }
+  				},{
                     targets: -3,
                     title: 'Type',
                     orderable: false,
@@ -125,6 +121,7 @@ jQuery(document).ready(function() {
       // }});
       
     });
+
     //////////////////////////////////////////////////////////////////////
     $(document).on('click', "#addanswer" , function(e) {
       //add a new day

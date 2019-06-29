@@ -15,7 +15,7 @@ var DatatablesDataSourceAjaxServer = function() {
       processing: true,
 			serverSide: true,
 
-       ajax:{url:"/"+tablename+"?cat_id="+cat_id+"&cat_type="+cat_type, function (data, callback, settings) {
+       ajax:{url:"/"+tablename, function (data, callback, settings) {
        }
        },
 			columns: [
@@ -35,8 +35,13 @@ var DatatablesDataSourceAjaxServer = function() {
 					orderable: false,
 					render: function(data, type, full, meta) {
 
-												status = `<a id="view" href="?view=Question&cat_id=${cat_id}&cat_type=${cat_type}&exam_id=${full._id}" class="dropdown-item">`+full.title+`</a>`
-												return status;
+            if (typeof full.category !== 'undefined') {
+                    status = `<a id="view" href="?view=Question&cat_id=${full.category}&cat_type=1&exam_id=${full._id}" class="dropdown-item">${full.title}</a>`;
+            }else if (typeof full.track !== 'undefined'){
+                    status = `<a id="view" href="?view=Question&cat_id=${full.track}&cat_type=2&exam_id=${full._id}" class="dropdown-item">${full.title}</a>`;
+            }
+						
+            return status;
 
 					},
 				},
@@ -62,7 +67,12 @@ var DatatablesDataSourceAjaxServer = function() {
 					orderable: false,
 					render: function(data, type, full  , meta) {
 
-          showQuestions = `<a id="view" href="?view=Question&cat_id=${cat_id}&cat_type=${cat_type}&exam_id=${full._id}" class="dropdown-item">Manage Questions</a>`
+            if (typeof full.category !== 'undefined') {
+                    showQuestions = `<a id="view" href="?view=Question&cat_id=${full.category}&cat_type=1&exam_id=${full._id}" class="dropdown-item">Manage Questions</a>`;
+            }else if (typeof full.track !== 'undefined'){
+                    showQuestions = `<a id="view" href="?view=Question&cat_id=${full.track}&cat_type=2&exam_id=${full._id}" class="dropdown-item">Manage Questions</a>`;
+
+            }
           Solve = `<a id="view" href="?view=ExamSolve&_id=${full._id}" class="dropdown-item">Solve Exam</a>`
 
 						return `
