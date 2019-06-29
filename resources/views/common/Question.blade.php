@@ -197,7 +197,7 @@
 											<div class="m-portlet__body">
 											  	<div class="form-group m-form__group">
 													        <label for="exampleInputEmail1" id="question_label">choose multiple questions</label>
-													            <select id="existing_questions" name="existing_questions[]" class="form-control m-input" id="existing_questions" multiple="multiple" style="height:50%;">
+													            <select id="existing_questions" required name="existing_questions[]" class="form-control m-input" id="existing_questions" multiple="multiple" style="height:50%;">
 													            	
 													            </select>
 													    </div>
