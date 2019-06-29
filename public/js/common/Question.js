@@ -107,12 +107,14 @@ jQuery(document).ready(function() {
   validation({});
   handle_question_type();
   handle_not_prog_type();
-  $.get("/Exams/"+raw_exam_id, function(data){
-    //add any thing depending on exam object here
-    exam_obj = data;
-    handle_publish_button();
-  });
-  
+  if(exam_id){
+    $.get("/Exams/"+raw_exam_id, function(data){
+      //add any thing depending on exam object here
+      exam_obj = data;
+      handle_publish_button();
+      fill_existing_questions();
+    });
+  }
   //we no more need to get options
   // $.ajax({
     //   url: "/categoryOptions",
@@ -317,5 +319,21 @@ jQuery(document).ready(function() {
             handle_publish_button();
           })
 
+        }
+
+        function fill_existing_questions(){
+          $.get("/"+tablename+"?cat_id="+cat_id+"&cat_type="+cat_type, function(data){
+              qs = data.data;
+              options = '';
+              $.each(qs , function (key, q){
+                if(q.exam_id != raw_exam_id){
+                  // console.log(q)
+                  options = options + `
+                  <option value="`+q._id+`">`+q.name+`</option>
+                  `
+                }
+              });
+              $("#existing_questions").html(options);
+          })
         }
 //================================================

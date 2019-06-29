@@ -31,6 +31,7 @@ Route::get('AuthcategoryOptions','AuthProfileController@travesre_for_options');
 Route::get('AuthtrackOptions','AuthProfileController@travesre_for_options1');
 Route::resource('Exams','ExamController');
 Route::get('Exam_publish_unpublish/{id}','ExamController@publish_unpublish');
+Route::post('Exam/add_existing_question','ExamController@add_existing_question');
 Route::post('AuthProfile','AuthProfileController@addTrack');
 Route::resource('Tracks','TracksController1');
 Route::get('TrackParents/{id}','TracksController1@TrackParents');
