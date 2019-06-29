@@ -163,8 +163,15 @@ class ExamController extends Controller
     {
         Exam::where('_id', $id)->delete();
     }
-
- 
+    
+    
+    public function publish_unpublish($id)
+    {
+        $exam = Exam::find($id);
+        $exam->is_published = 1 - $exam->is_published;
+        $exam->save();
+        return json_encode(['is_published'=>$exam->is_published]);
+    }
 
 
 

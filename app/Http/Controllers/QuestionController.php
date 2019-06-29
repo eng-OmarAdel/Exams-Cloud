@@ -187,6 +187,11 @@ class QuestionController extends Controller
                 $tags = $e->tags()->create(['tag' => $value]);
             }
         }
+        // saving question to the bank in case of exam
+        if(isset($request->exam_id)){
+            $new_q = $e->replicate();
+            $new_q->save();
+        }
     }
 
 

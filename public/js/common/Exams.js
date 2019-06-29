@@ -71,7 +71,13 @@ var DatatablesDataSourceAjaxServer = function() {
               showQuestions = ``
               edit = ``
             }
-          Solve = `<a id="view" href="?view=ExamSolve&_id=${full._id}" class="dropdown-item">Solve Exam</a>`
+            if(full.is_published == 0){
+
+              Solve = `<a id="view" href="#" class="dropdown-item">Can't be Solved (under construction)</a>`
+            }
+            else{
+              Solve = `<a id="view" href="?view=ExamSolve&_id=${full._id}" class="dropdown-item">Solve Exam</a>`
+            }
 
 						return `
                         <span class="dropdown">
