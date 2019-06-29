@@ -1,7 +1,6 @@
 var tablename=document.currentScript.getAttribute("tablename");
 var cat_id=document.currentScript.getAttribute("cat_id"); //2
 var cat_type=document.currentScript.getAttribute("cat_type"); //3
-var user_id=document.currentScript.getAttribute("user_id"); //3
  //1
 console.log(tablename);
 var DatatablesDataSourceAjaxServer = function() {
@@ -62,15 +61,8 @@ var DatatablesDataSourceAjaxServer = function() {
 					title: 'Actions',
 					orderable: false,
 					render: function(data, type, full  , meta) {
-            if(user_id==full.ownerID){
-              showQuestions = `<a id="view" href="?view=Question&cat_id=${cat_id}&cat_type=${cat_type}&exam_id=${full._id}" class="dropdown-item">Manage Questions</a>`
-              edit=`<a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
-                          <i class="la la-edit"></i>
-                        </a>`
-            }else{
-              showQuestions = ``
-              edit = ``
-            }
+
+          showQuestions = `<a id="view" href="?view=Question&cat_id=${cat_id}&cat_type=${cat_type}&exam_id=${full._id}" class="dropdown-item">Manage Questions</a>`
           Solve = `<a id="view" href="?view=ExamSolve&_id=${full._id}" class="dropdown-item">Solve Exam</a>`
 
 						return `
@@ -81,8 +73,10 @@ var DatatablesDataSourceAjaxServer = function() {
                             <div class="dropdown-menu dropdown-menu-right">
                                 ${showQuestions}${Solve}
                             </div>
-                        </span>${edit}
-                        `;
+                        </span>
+                        <a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
+                          <i class="la la-edit"></i>
+                        </a>`;
 					},
 				}
 			],
