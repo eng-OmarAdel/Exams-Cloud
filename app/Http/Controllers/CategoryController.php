@@ -58,7 +58,7 @@ class CategoryController extends Controller
         // echo $id;
         // return;
         $categories = [];
-        $questions = Question::where('category', $id)->get();
+        //commented temporary $questions = Question::where('category', $id)->get();
         // dd(count($questions));
         // dd($questions);
         // return;
@@ -76,8 +76,9 @@ class CategoryController extends Controller
                 $cats[] = $track;
             }
             // $cats[] = $questions;
-            $quests = $questions->toArray();
-            $result = array_merge($cats, $quests);
+            //commented temporary $quests = $questions->toArray();
+            //commented temporary $result = array_merge($cats, $quests);
+            $result = $cats;
             }
     }
         return datatables()->of($result)->toJson();

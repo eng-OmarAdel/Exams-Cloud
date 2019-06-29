@@ -18,7 +18,7 @@ var DatatablesDataSourceAjaxServer = function() {
 			columns: [
 
                 {data: 'title' ,title: "title"},
-                {data: 'auth' ,title: "authority"},
+                {data: 'cat' ,title: "Category"},
                 {data: 'track' ,title: "track"},
                 {data: 'count' ,title: "no of tries"},
                 {data: 'submited' ,title: "no of tries with submited answers"},

@@ -1,7 +1,7 @@
 @extends("layouts.index")
 @section("title")
-@php $tablename="Exams" @endphp
-{{$tablename}}
+@php $tablename="MyExams" @endphp
+My Exams
 @endsection
 @section("content")
 
@@ -10,13 +10,13 @@
 								<div class="m-portlet__head-caption">
 									<div class="m-portlet__head-title">
 										<h3 class="m-portlet__head-text">
-											{{$tablename}}
+											My Exams
 										</h3>
 									</div>
 								</div>
 								<div class="m-portlet__head-tools">
 									<ul class="m-portlet__nav">
-										<li class="m-portlet__nav-item">
+											<li style="display: none" class="m-portlet__nav-item">
 											<a href="#" onclick="actions()" class="btn btn-primary m-btn m-btn--pill m-btn--custom m-btn--icon m-btn--air" id="modal_button" data-toggle="modal" data-target="#m_modal_4">
 												<span>
 													<i class="la la-cart-plus"></i>
@@ -37,7 +37,6 @@
 							</div>
 
 						<!-- END EXAMPLE TABLE PORTLET-->
-
 						<!-- Start::modal form-->
 						<div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
 						  <div class="modal-dialog modal-lg" role="document">
@@ -50,7 +49,6 @@
 						      </div>
 						      <div class="modal-body">
 						        <form action="{{$tablename}}" method="post" enctype="multipart/form-data" id="form_add">
-                                    {{csrf_field()}}
                                     <input type="hidden" name="_method" value="post" fillable="never"/>
 
 										<div id="test">
@@ -69,8 +67,6 @@
 											            <input type="number" class="ignoreField form-control m-input" name="duration" id="duration"
 											                      placeholder="duration">
 											        </div>
-											        <input type="hidden" name="cat_type" value="{{$_GET['cat_type']}}">
-											        <input type="hidden" name="cat_id" value="{{$_GET['cat_id']}}">
 											        <div class="form-group m-form__group">
 											            <label for="exampleInputEmail1">tags <small>comma separated</small></label>
 											            <textarea class="ignoreField form-control m-input" name="tags" id="tags"
@@ -102,6 +98,7 @@
 						</div>
 
 						<!-- End::modal form-->
+
 						</div>
     <form method="post" id="delete_form">
         {{csrf_field()}}
@@ -111,5 +108,5 @@
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" user_id="{{Auth::id()}}" tablename="{{$tablename}}" cat_type="{{$_GET['cat_type']}}" cat_id="{{$_GET['cat_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/backend/".$tablename.".js")}}"></script>
 @endsection
