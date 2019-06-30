@@ -62,21 +62,38 @@ var DatatablesDataSourceAjaxServer = function() {
 					title: 'Actions',
 					orderable: false,
 					render: function(data, type, full  , meta) {
-            if(user_id==full.ownerID){
-              showQuestions = `<a id="view" href="?view=Question&cat_id=${cat_id}&cat_type=${cat_type}&exam_id=${full._id}" class="dropdown-item">Manage Questions</a>`
-              edit=`<a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
-                          <i class="la la-edit"></i>
-                        </a>`
-            }else{
-              showQuestions = ``
-              edit = ``
-            }
-            if(full.is_published == 0){
+            edit_ok= `<a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
+            <i class="la la-edit"></i>
+          </a>`
+            edit_not_ok = ``
+            //-----
+            showQuestions_ok = `<a id="view" href="?view=Question&cat_id=${cat_id}&cat_type=${cat_type}&exam_id=${full._id}" class="dropdown-item">Manage Questions</a>`
+            showQuestions_not_ok =``
+            //------
+            Solve_ok = `<a id="view" href="?view=ExamSolve&_id=${full._id}" class="dropdown-item">Solve Exam</a>`
+            Solve_not_ok = `<a id="view" href="#" class="dropdown-item">Can't be Solved (under construction)</a>`
 
-              Solve = `<a id="view" href="#" class="dropdown-item">Can't be Solved (under construction)</a>`
+            
+            edit =edit_not_ok;
+            showQuestions =showQuestions_not_ok;
+            if(user_id==full.ownerID ){
+                if(full.hasOwnProperty('is_editable')){
+                  if(full.is_editable == 1){
+                    edit = edit_ok;
+                    showQuestions = showQuestions_ok;
+                  }
+                }
+                else{
+                  //owner and exam not yet solved
+                  edit = edit_ok;
+                  showQuestions = showQuestions_ok;
+                }
             }
-            else{
-              Solve = `<a id="view" href="?view=ExamSolve&_id=${full._id}" class="dropdown-item">Solve Exam</a>`
+
+            Solve = Solve_not_ok;
+            if(full.is_published == 1){
+
+              Solve = Solve_ok;
             }
 
 						return `

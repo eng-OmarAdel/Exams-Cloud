@@ -109,6 +109,8 @@ class ExamSolveController extends Controller
         foreach ($answered as $key => $value) {
             $author->ExamCorrection()->create($value);
         }
+        $Exam->is_editable=0;
+        $Exam->save();
         return Redirect::to('/?view=UserProceededExams');
 
     }
