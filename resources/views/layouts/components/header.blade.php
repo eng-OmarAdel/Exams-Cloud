@@ -92,11 +92,9 @@
 								<button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-light " id="m_aside_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
 								<div id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-dark m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-light m-aside-header-menu-mobile--submenu-skin-light ">
 									<ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
-
-									{{--	<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Question") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("?view=Question&cat_id=5cacb8709dfef715a06255b5&cat_type=1")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Questions</span></a></li> --}}
+									{{--
 										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Users") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("?view=Users")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Users</span></a></li>
 										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Authority") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("?view=Authority")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Authorities</span></a></li>
-										{{-- <li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Track") m-menu__item--active @endif @endif" aria-haspopup="true"><a href="{{url("Track")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Tracks</span></a></li> --}}
 										<li class="m-menu__item @if(isset($_GET['view']))  @if($_GET['view']=="Category") m-menu__item--active @endif @endif" aria-haspopup="true"><a id="link" href="{{url("?view=Category&id=5cacb5fcf34cdb15b5657de9")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">Categories</span></a></li>
                                         
                                         <li class="m-menu__item m-menu__item--submenu m-menu__item--rel" m-menu-submenu-toggle="click" aria-haspopup="true"><a href="javascript:;" class="m-menu__link m-menu__toggle" title="Non functional dummy link"><span class="m-menu__item-here"></span><span class="m-menu__link-text">Exams</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a>
@@ -107,6 +105,9 @@
                                                 </ul>
                                             </div>
                                         </li>
+									--}}
+									<!-- امتحان الدفعة -->
+									<li class="m-menu__item m-menu__item--active " aria-haspopup="true"><a href="{{url("?view=ExamSolve&_id=5d18fd6b28863101580016e2#step-1")}}" class="m-menu__link "><span class="m-menu__item-here"></span><span class="m-menu__link-text">CSE Exam</span></a></li>
 									</ul>
 								</div>
 							</div>
