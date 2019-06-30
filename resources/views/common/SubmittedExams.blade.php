@@ -43,6 +43,6 @@ Submitted Exams
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" _id="{{$_GET['_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}" website_url="{{url("")}}" _id="{{$_GET['_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection
 

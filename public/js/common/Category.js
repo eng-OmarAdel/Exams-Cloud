@@ -1,5 +1,6 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
 var authid=document.currentScript.getAttribute("authid"); //1
+var website_url=document.currentScript.getAttribute("website_url"); //1
 //alert(authid)
 var DatatablesDataSourceAjaxServer = function() {
 
@@ -16,7 +17,7 @@ var DatatablesDataSourceAjaxServer = function() {
 			// 	ajaxTracks();
 
 			// },
-			ajax: tablename,
+			ajax: website_url+tablename,
 			columns: [
 
 				{data: 'name' ,title: "Name"},

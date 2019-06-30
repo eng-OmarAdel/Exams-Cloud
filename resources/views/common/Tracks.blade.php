@@ -118,5 +118,5 @@
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" authname="{{$_GET['auth_name']}}" authid="{{$_GET['auth_id']}}" tablename="{{$tablename}}" trackid="{{$_GET['track_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" authname="{{$_GET['auth_name']}}" authid="{{$_GET['auth_id']}}" tablename="{{url("$tablename")}}"  trackid="{{$_GET['track_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection

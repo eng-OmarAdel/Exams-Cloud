@@ -1,12 +1,13 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
 var _id=document.currentScript.getAttribute('_id'); //1
 var exam_id=document.currentScript.getAttribute('exam_id'); //1
+var website_url=document.currentScript.getAttribute('website_url'); //1
 
 
 jQuery(document).ready(function() {
 
                  $.ajax({
-                  url: `/${tablename}?_id=${_id}&exam_id=${exam_id}`,
+                  url: website_url+`/${tablename}?_id=${_id}&exam_id=${exam_id}`,
           
                   complete: function(jqXHR){
                   var data = $.parseJSON(jqXHR.responseText);

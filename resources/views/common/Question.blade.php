@@ -168,6 +168,6 @@
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" cat_type="{{$_GET['cat_type']}}" cat_id="{{$_GET['cat_id']}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" cat_type="{{$_GET['cat_type']}}"	@if(isset($_GET['exam_id'])) exam_id="{{$_GET['exam_id']}}" @endif cat_id="{{$_GET['cat_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{url("$tablename")}}" cat_type="{{$_GET['cat_type']}}"	@if(isset($_GET['exam_id'])) exam_id="{{$_GET['exam_id']}}" @endif cat_id="{{$_GET['cat_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection
 

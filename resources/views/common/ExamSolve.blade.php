@@ -105,6 +105,6 @@
 @section("script")
     <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
 
-    <script type="text/javascript" tablename="{{$tablename}}" csrf_token="{{ csrf_token() }}" _id="{{$_GET['_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+    <script type="text/javascript" tablename="{{$tablename}}" website_url="{{url("")}}" csrf_token="{{ csrf_token() }}" _id="{{$_GET['_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection
 

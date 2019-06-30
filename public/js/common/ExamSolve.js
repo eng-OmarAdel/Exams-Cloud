@@ -1,5 +1,6 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
 var _id=document.currentScript.getAttribute('_id'); //1
+var website_url=document.currentScript.getAttribute('website_url'); //1
 var csrf_token=document.currentScript.getAttribute('csrf_token'); //1
 function countdown(minutes) {
     var seconds = 60;
@@ -31,7 +32,7 @@ jQuery(document).ready(function() {
     
 
                  $.ajax({
-                  url: '/'+tablename+'?_id='+_id,
+                  url: website_url+'/'+tablename+'?_id='+_id,
           
                   complete: function(jqXHR){
                   var data = $.parseJSON(jqXHR.responseText);
@@ -146,7 +147,7 @@ jQuery(document).ready(function() {
 
 $('#submit').click(function(e){
 
-                 $("#proceed").ajaxSubmit({url: '/proceed', type: 'post',      
+                 $("#proceed").ajaxSubmit({url: website_url+'/proceed', type: 'post',      
                       success: function (data) {
                     $("#block-view").show();
                     $("#proceed-view").hide();
@@ -171,7 +172,7 @@ var handle_execute = function(id,lang){
 }
 //======================================================
 var execute_code = function(code , extension,id){
-    $.post({url: "/ExecuteCode",
+    $.post({url: website_url+"/ExecuteCode",
         beforeSubmit:function(){
             toastr.warning("please wait");
             mApp.block(".m-invoice__wrapper");

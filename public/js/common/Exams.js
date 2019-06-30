@@ -16,7 +16,7 @@ var DatatablesDataSourceAjaxServer = function() {
       processing: true,
 			serverSide: true,
 
-       ajax:{url:"/"+tablename+"?cat_id="+cat_id+"&cat_type="+cat_type, function (data, callback, settings) {
+       ajax:{url:tablename+"?cat_id="+cat_id+"&cat_type="+cat_type, function (data, callback, settings) {
        }
        },
 			columns: [

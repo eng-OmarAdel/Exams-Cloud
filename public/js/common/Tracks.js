@@ -15,7 +15,7 @@ var DatatablesDataSourceAjaxServer = function() {
 			searchDelay: 500,
             processing: true,
             "ordering": false,
-			ajax: "/"+tablename+"?authority="+authid+"&parent_track="+trackid,
+			ajax: tablename+"?authority="+authid+"&parent_track="+trackid,
 			columns: [
 
         {data: 'name' ,title: "name"},
