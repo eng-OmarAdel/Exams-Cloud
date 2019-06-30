@@ -27,7 +27,7 @@
                                                         <h4 id="track_name"><b>track : </b></h4>
 														</span>
                                                         <a style="float: right" href="#">
-                                                            <div id="timer" class="text-center" style="font-size:40px;position:fixed;margin-left:-100px;"></div>
+                                                            <div id="timer" class="text-center" style="font-size:40px;position:fixed;margin-left:-100px;z-index:99;"></div>
                                                         </a>
                                                     </div><br><br><br><br><br><br>
                                                     <a style="" href="#">
@@ -44,7 +44,7 @@
 
                                                             <div id="test" style="margin-left:-200px">
                                                             </div>
-                                                            <h2 class="text-center"><input type="submit" id="submitExam" class="btn btn-accent"></h2>
+                                                            <!-- <h2 class="text-center"><input type="submit" id="submitExam" class="btn btn-accent"></h2> -->
                                                         </form>
                                                         <br><br>
                                                 </div>
