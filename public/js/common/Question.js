@@ -2,6 +2,7 @@ var tablename=document.currentScript.getAttribute("tablename"); //1
 var cat_id=document.currentScript.getAttribute("cat_id"); //2
 var cat_type=document.currentScript.getAttribute("cat_type"); //3
 var exam_id=document.currentScript.getAttribute("exam_id"); //4
+var website_url=document.currentScript.getAttribute("website_url"); //4
 var exam_obj;
 var raw_exam_id = exam_id;
 
@@ -104,7 +105,7 @@ jQuery(document).ready(function() {
   handle_question_type();
   handle_not_prog_type();
   if(exam_id){
-    $.get("/Exams/"+raw_exam_id, function(data){
+    $.get(website_url+"/Exams/"+raw_exam_id, function(data){
       //add any thing depending on exam object here
       exam_obj = data;
       handle_publish_button();
@@ -311,7 +312,7 @@ jQuery(document).ready(function() {
 
         function go_publish(){
           // can publish and unpublish
-          $.get("/Exam_publish_unpublish/"+raw_exam_id, function(response){
+          $.get(website_url+"/Exam_publish_unpublish/"+raw_exam_id, function(response){
             exam_obj.is_published = $.parseJSON(response).is_published;
             handle_publish_button();
           })
@@ -319,7 +320,7 @@ jQuery(document).ready(function() {
         }
 
         function fill_existing_questions(){
-          $.get("/"+tablename+"?cat_id="+cat_id+"&cat_type="+cat_type, function(data){
+          $.get(tablename+"?cat_id="+cat_id+"&cat_type="+cat_type, function(data){
               qs = data.data;
               options = '';
               $.each(qs , function (key, q){

@@ -10,7 +10,7 @@
 									<div class="m-portlet__head-title">
 										<h3 class="m-portlet__head-text">
 											<ol id="authorityTableBreadcrumb" class="breadcrumb">
-												<li class="breadcrumb-item active" aria-current="page"><a href="/?view=Tracks&auth_id={{$_GET['auth_id']}}&auth_name={{$_GET['auth_name']}}&track_id=-1">{{$_GET["auth_name"]}}</a></li>
+												<li class="breadcrumb-item active" aria-current="page"><a href="{{url("")}}/?view=Tracks&auth_id={{$_GET['auth_id']}}&auth_name={{$_GET['auth_name']}}&track_id=-1">{{$_GET["auth_name"]}}</a></li>
 												<!-- tree -->
 											</ol>
 										</h3>			
@@ -118,5 +118,5 @@
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" authname="{{$_GET['auth_name']}}" authid="{{$_GET['auth_id']}}" tablename="{{url("$tablename")}}"  trackid="{{$_GET['track_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" authname="{{$_GET['auth_name']}}" authid="{{$_GET['auth_id']}}" website_url="{{url("")}}" tablename="{{url("$tablename")}}"  trackid="{{$_GET['track_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection

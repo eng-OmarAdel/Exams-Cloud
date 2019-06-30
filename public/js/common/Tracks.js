@@ -2,6 +2,7 @@ var tablename=document.currentScript.getAttribute("tablename"); //1
 var authid=document.currentScript.getAttribute("authid"); //1
 var authname=document.currentScript.getAttribute("authname");
 var trackid=document.currentScript.getAttribute("trackid");
+var website_url=document.currentScript.getAttribute("website_url"); //1
 
 var DatatablesDataSourceAjaxServer = function() {
 
@@ -86,13 +87,13 @@ jQuery(document).ready(function() {
     table_reload=DatatablesDataSourceAjaxServer.init();
     validation( {});
 // ================= add the tree ============================
-$.get( "/TrackParents/"+trackid, function( data ) {
+$.get( website_url+"/TrackParents/"+trackid, function( data ) {
 	//alert(data);
 	var cats = $.parseJSON(data);
 	// console.log(cats)
 	$.each(cats , function(index, cat){
 		$("#authorityTableBreadcrumb").append(
-			`<li class="breadcrumb-item active" aria-current="page">`+"<a href='/?view=Tracks&auth_id="+cat.auth_id+"&auth_name="+authname+"&track_id="+cat._id+"'>"+cat.name+"</a>"+`</li>`
+			`<li class="breadcrumb-item active" aria-current="page">`+"<a href='"+website_url+"?view=Tracks&auth_id="+cat.auth_id+"&auth_name="+authname+"&track_id="+cat._id+"'>"+cat.name+"</a>"+`</li>`
 		)
 	});
 });

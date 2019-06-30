@@ -17,7 +17,7 @@ var DatatablesDataSourceAjaxServer = function() {
 			// 	ajaxTracks();
 
 			// },
-			ajax: website_url+tablename,
+			ajax: website_url+"/"+tablename,
 			columns: [
 
 				{data: 'name' ,title: "Name"},
@@ -111,13 +111,13 @@ jQuery(document).ready(function() {
 									validation({},form=$("#form_add2"));
 
 	 // ================= add the tree ============================
-	 $.get( "/CategoryParents/"+authid, function( data ) {
+	 $.get( website_url+"/CategoryParents/"+authid, function( data ) {
       //alert(data);
 			var cats = $.parseJSON(data);
 			// console.log(cats)
 			$.each(cats , function(index, cat){
 				$("#tree").append(
-					"<a href='/?view=Category&id="+cat._id+"'>"+cat.name+"</a>"+" / "
+					"<a href='"+website_url+"/?view=Category&id="+cat._id+"'>"+cat.name+"</a>"+" / "
 				)
 			});
   });
