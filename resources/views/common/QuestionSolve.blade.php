@@ -60,6 +60,6 @@ Question Solving
 @endsection
 
 @section('script')
-<script type="text/javascript" tablename="QuestionSolve" _id="{{$_GET['id']}}" csrf="{{csrf_token()}}"src="{{url("js/common/QuestionSolve.js")}}"></script>
+<script type="text/javascript" tablename="QuestionSolve" _id="{{$_GET['id']}}" website_url="{{url("")}}" csrf="{{csrf_token()}}"src="{{url("js/common/QuestionSolve.js")}}"></script>
 @endsection
 

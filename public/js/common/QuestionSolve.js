@@ -1,5 +1,6 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
 var id=document.currentScript.getAttribute("_id"); //2
+var website_url=document.currentScript.getAttribute("website_url"); //2
 var question;
 var csrf_token = document.currentScript.getAttribute("csrf");
 
@@ -8,7 +9,7 @@ var reload;
 // ============== load the question and complete front end ===============
 var exam= {
     init:function() {
-          $.ajax({url: "Question/"+id,
+          $.ajax({url: website_url+"/Question/"+id,
             beforeSubmit:function(){
                 mApp.block(".m-invoice__wrapper");
 
@@ -87,7 +88,7 @@ var correct =function(id){
             return;
         }
     }
-    $("#correct").ajaxSubmit({url: "Correct/"+id, type: 'post',
+    $("#correct").ajaxSubmit({url: website_url+"/Correct/"+id, type: 'post',
         beforeSubmit: function(arr, $form, options) {
         toastr.warning('Please wait!');
         mApp.block(".m-invoice__wrapper");
@@ -121,7 +122,7 @@ var handle_execute = function(){
 }
 //======================================================
 var execute_code = function(code , extension){
-    $.post({url: "/ExecuteCode",
+    $.post({url: website_url+"/ExecuteCode",
         beforeSubmit:function(){
             toastr.warning("please wait");
             mApp.block(".m-invoice__wrapper");

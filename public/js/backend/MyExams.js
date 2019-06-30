@@ -1,6 +1,7 @@
 var tablename=document.currentScript.getAttribute("tablename");
 var cat_id=document.currentScript.getAttribute("cat_id"); //2
 var cat_type=document.currentScript.getAttribute("cat_type"); //3
+var website_url=document.currentScript.getAttribute("website_url"); //3
  //1
 console.log(tablename);
 var DatatablesDataSourceAjaxServer = function() {
@@ -15,7 +16,7 @@ var DatatablesDataSourceAjaxServer = function() {
       processing: true,
 			serverSide: true,
 
-       ajax:{url:"/"+tablename, function (data, callback, settings) {
+       ajax:{url:website_url+"/"+tablename, function (data, callback, settings) {
        }
        },
 			columns: [
@@ -114,7 +115,7 @@ jQuery(document).ready(function() {
                  validation( {});
 
                  $.ajax({
-                  url: "/Exams",
+                  url: website_url+"/Exams",
 
                   complete: function(jqXHR){
                   var data = $.parseJSON(jqXHR.responseText);

@@ -63,6 +63,6 @@ My answer
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" _id="{{$_GET['_id']}}"  exam_id="{{$_GET['exam_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}"  website_url="{{url("")}}"  _id="{{$_GET['_id']}}"  exam_id="{{$_GET['exam_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection
 

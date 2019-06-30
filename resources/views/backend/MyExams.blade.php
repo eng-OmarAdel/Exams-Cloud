@@ -108,5 +108,5 @@ My Exams
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/backend/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}" website_url="{{url("")}}" src="{{url("js/backend/".$tablename.".js")}}"></script>
 @endsection

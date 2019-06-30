@@ -163,9 +163,27 @@ class ExamController extends Controller
     {
         Exam::where('_id', $id)->delete();
     }
+    
+    
+    public function publish_unpublish($id)
+    {
+        $exam = Exam::find($id);
+        $exam->is_published = 1 - $exam->is_published;
+        $exam->save();
+        return json_encode(['is_published'=>$exam->is_published]);
+    }
 
- 
-
-
+    public function add_existing_question(Request $request)
+    {
+        $exam = Exam::find($request->exam_id);
+        foreach ($request->existing_questions as $q_id) {
+            $q = Question::find($q_id);
+            $q->exam_id = $request->exam_id;
+            $q->save();
+            $exam->questions()->associate($q);
+        }
+        $exam->save();
+        return redirect()->back();
+    }
 
 }
