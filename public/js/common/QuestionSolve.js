@@ -155,4 +155,24 @@ function shuffle(a) {
 // ==============================on ready========================= 
 jQuery(document).ready(function() {
     exam.init();
+    //load recommended questions
+    $.get("http://134.209.204.108/q_rec/?target="+id,function(data){
+        //console.log(data)
+        out_div = `
+        <div class="m-invoice__container col-md-4 pt-5" style="float:right" >
+                                        <h3> recommended questions </h3>
+        `
+        for(var i=2; i < data.length - 1; i=i+2){
+            q_recommended = `<a class="btn rec_q" href="`+website_url+`/?view=QuestionSolve&id=`+data[i]+`">`+data[i+1]+`</a>`
+            out_div += q_recommended;
+        }
+        /*
+                                        <a class="btn rec_q" href="#"> what is yor name? aseeg  sdf sfd asd se asrdt </a>
+        */
+
+        out_div+=`
+         </div>
+        `
+        $("#head").append(out_div);
+    });
 });
