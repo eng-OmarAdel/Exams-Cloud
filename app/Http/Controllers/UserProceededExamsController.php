@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Exam;
 use App\User;
+use App\Report;
 use App\Question;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -86,4 +87,18 @@ class UserProceededExamsController extends Controller
 
     }
 
+    public function report(Request $request)
+    {
+        $exam=Exam::find($request->ExamId);
+        $question=$exam->questions()->where("_id",$request->qId)->first();
+
+        $reported_before=Report::where(array("exam_id"=>$request->examId ,"exam_question_id"=>$request->qId ,"user_id"=>Auth::user()->id  ))->count();
+
+        if($reported_before){
+            return "you reported this question before";
+        }
+        Report::create(array("exam_id"=>$request->examId ,"question_id"=>$question->question_id ,"exam_question_id"=>$request->qId ,"user_id"=>Auth::user()->id ,"status"=>"pending" ));
+        return "Successfully reported";
+
+    }
 }

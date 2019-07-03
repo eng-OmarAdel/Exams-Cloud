@@ -50,3 +50,5 @@ Route::GET('/ViewAnswers', 'UserProceededExamsController@ViewAnswers');
 Route::post('/proceed', 'ExamSolveController@proceed');
 // Route::get('/Category/{id?}','CategoryController@show');
 // Route::get('/?view=Category&id={id?}','CategoryController@index');
+
+Route::GET('/report', 'UserProceededExamsController@report');

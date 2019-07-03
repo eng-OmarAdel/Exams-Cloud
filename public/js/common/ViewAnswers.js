@@ -27,10 +27,10 @@ jQuery(document).ready(function() {
                       var result='';
                       $.each( data.data.questions, function( key, item ) {
                       	if(data.r[key].is_true=="yes"){
-                      		qstyle="style='color:green;'"
+                      		qstyle="style='display:inline;color:green;'"
                       		qIs="true"
                       	}else{
-							qstyle="style='color:red;'"
+							qstyle="style='display:inline;color:red;'"
                       		qIs="false"
 
                       	}
@@ -41,7 +41,7 @@ jQuery(document).ready(function() {
                                                 }
                                               }
 
-                      result+=`<div class=' m-portlet__body row'><div class='col-md-8 offset-2'><h3 ${qstyle}>${item.name} (${qIs})</h3><br><br><input type="hidden"  name="question" value="${item._id.$oid}">`
+                      result+=`<div class=' m-portlet__body row'><div class='col-md-12'><h3 ${qstyle}>${item.name} (${qIs})<button class="btn btn-danger" type="button" style="float:right" onclick="report('${item._id.$oid}','${exam_id}')">Report Question</button></h3><br><br><input type="hidden"  name="question" value="${item._id.$oid}">`
                       if(item.is_programming=="Yes"){
                           result+='<pre><code>'+data.r[key].answer.toString().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&#39;").replace(/"/g, "&#34;")+'</code></pre>';
 
@@ -72,7 +72,6 @@ jQuery(document).ready(function() {
 
 
                       result+='</div>'+next+'</div>';
-                      console.log(result)
 
 
                       });
@@ -86,3 +85,14 @@ jQuery(document).ready(function() {
 
 
 });
+
+function report(qId,ExamId){
+   $.ajax({
+                  url: website_url+`/report?qId=${qId}&ExamId=${ExamId}`,
+          
+                  complete: function(jqXHR){
+                      swal(jqXHR.responseText)
+                  }
+          });
+
+}
