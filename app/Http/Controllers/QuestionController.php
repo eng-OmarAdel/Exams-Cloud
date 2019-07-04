@@ -8,6 +8,7 @@ use App\Track;
 use App\SolvedQuestion;
 use App\Question;
 use App\User;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Validator;
@@ -128,6 +129,8 @@ class QuestionController extends Controller
                 }
             }
             $all['status'] = "approved";
+            $all['user_id']=Auth::user()->_id;
+
             unset($all['answer_id']);// for only programming output
             
             if(isset($request->exam_id)){
@@ -174,7 +177,8 @@ class QuestionController extends Controller
                 }
             }
             $all['status'] = "approved";
-            
+            $all['user_id']=Auth::user()->_id;
+
             if(isset($request->exam_id)){
                 $exam = Exam::find($request->exam_id);
                 $e= $exam->questions()->create($all);
@@ -189,8 +193,12 @@ class QuestionController extends Controller
         }
         // saving question to the bank in case of exam
         if(isset($request->exam_id)){
+
             $new_q = $e->replicate();
             $new_q->save();
+            $e->question_id = $new_q->id;
+            $e->save();
+
         }
     }
 

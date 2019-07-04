@@ -180,6 +180,7 @@ class ExamController extends Controller
             $q = Question::find($q_id);
             $q->exam_id = $request->exam_id;
             $q->save();
+            $q['question_id'] = $q_id;
             $exam->questions()->associate($q);
         }
         $exam->save();
