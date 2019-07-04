@@ -1,7 +1,7 @@
 @extends("layouts.index")
 @section("title")
-@php $tablename="ExamDashboard" @endphp
-Exam Dashboard
+@php $tablename="ManageReports" @endphp
+Question Reports
 @endsection
 @section("content")
 
@@ -21,9 +21,9 @@ Exam Dashboard
 								<table class="" id="m_table_1">
 
 								</table>
-								<!-- accept or reject buttons if there is any report pending -->
-								
-								
+
+								<div id = "accept_reject_div">
+								</div>
 							</div>
 
 						<!-- END EXAMPLE TABLE PORTLET-->
@@ -38,5 +38,5 @@ Exam Dashboard
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" exam_id={{$_GET['_id']}} tablename="{{$tablename}}" user_id="{{Auth::id()}}" website_url="{{url("")}}" src="{{url("js/backend/".$tablename.".js")}}"></script>
+<script type="text/javascript" exam_id={{$_GET['exam_id']}} question_id={{$_GET['question_id']}} tablename="{{$tablename}}" user_id="{{Auth::id()}}" website_url="{{url("")}}" src="{{url("js/backend/".$tablename.".js")}}"></script>
 @endsection
