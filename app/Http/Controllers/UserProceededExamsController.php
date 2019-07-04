@@ -106,6 +106,7 @@ class UserProceededExamsController extends Controller
         }
         Report::create(array("exam_id"=>$request->ExamId ,"question_id"=>$question->question_id ,"exam_question_id"=>$request->qId ,"user_id"=>Auth::user()->id ,"status"=>"pending" ));
         $this->getExamReport($request->ExamId,$request->qId);
+        $this->suspendQuestion($question->question_id);
         return "Successfully reported";
 
     }
@@ -128,28 +129,33 @@ class UserProceededExamsController extends Controller
         }
 
     }
-    // public function getExamReport($exam_id)
-    // {
-    //     $exam=Exam::find($exam_id);
-    //     //number of exam tries per exam groupby user id
-    //     $examTries=$exam->Examtries()->groupBy('user_id')->count();
-    //     $questions=$exam->questions()->where("status","!=","suspended");
+    public function suspendQuestion($question_id){
 
-    //     if($examTries>12)
-    //         foreach ($questions as $key => $value) {
-    //             //reports per question in an exact exam 
-    //             $count = Report::where("exam_question_id",$value->_id)->count();
-    //             $reportsRatio=$count/$examTries;
-    //                 if($reportsRatio>=0.6){
-    //                     $question = $exam->questions()->find($value->_id);
-    //                     $question['status']="suspended";
-    //                     $question->save();
+        $question=Question::find($question_id);
 
-    //                 }  
-    //         }
+        $exams_ids=$question->QuestionExam()->pluck("exam_id");
+        $exams = Exam::whereIn("_id",$exams_ids)->get();
 
+        $examTries=0;
+        foreach ($exams as $key => $value) {
+            $examTries+=$value->Examtries()->groupBy('user_id')->count();
+        }
 
+        if($examTries>12){
 
+                    $count = Report::where("question_id",$question_id)->count();
+                    $reportsRatio=$count/$examTries;
+                        if($reportsRatio>=0.6){
+                            $question['status']="suspended";
+                            $question->save();
+                            foreach ($exams as $key => $value) {
+                                $x=$value->questions()->where("question_id",$question_id)->first();
+                                $x->status = "suspended";
+                                $x->save();
+                            }
+                        }
+        }
 
-    // }
+        
+    }
 }
