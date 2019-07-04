@@ -58,7 +58,7 @@ class ExamDashboardController extends Controller
     public function show($id)
     {
         $exam_id = $id;
-        $questions = Exam::find($exam_id)->questions()->where('status','active')->toArray();
+        $questions = Exam::find($exam_id)->questions()->toArray();
         //counting rejected and pending reports
         foreach ($questions as $key => $q) {
             $rejected_reports =  Report::where("exam_id", $exam_id)->where("exam_question_id",$q["_id"])->where("status",'rejected')->count();
@@ -96,7 +96,35 @@ class ExamDashboardController extends Controller
         return response()->json($data);
     }
  
+    public function accept_report($exam_id,$question_id){
+        $exam = Exam::find($exam_id);
+        $exam_question = $exam->questions()->where('_id',$question_id)->first();
+        $orig_question = Question::find($exam_question->question_id);
+        $current_user = auth()->user()->id;
+        //check if he is the owner of original question
+        if($current_user == $orig_question->user_id){
+            //suspend the questions' bank
+            $orig_question->status = 'suspended';
+            $orig_question->save();
+        }
+        $exam_question->status = 'suspended';
+        $exam_question->save();
+        // make report status accepted
+        $reports=Report::where('exam_id', $exam_id)->where('exam_question_id' , $question_id)->get();
+        foreach ($reports as $report) {
+            $report->status = "accepted";
+            $report->save();
+        }
+        return response()->json(['status'=>'success']);
+    }
 
-
+    public function reject_report($exam_id,$question_id){
+        $reports=Report::where('exam_id', $exam_id)->where('exam_question_id' , $question_id)->get();
+        foreach ($reports as $report) {
+            $report->status = "rejected";
+            $report->save();
+        }
+        return response()->json(['status'=>'success']);
+    }
 
 }

@@ -3,11 +3,11 @@ var website_url=document.currentScript.getAttribute("website_url");
 var user_id=document.currentScript.getAttribute("user_id");
 var exam_id=document.currentScript.getAttribute("exam_id");
 var question_id=document.currentScript.getAttribute("question_id");
-
+var table = $('#m_table_1');
 var DatatablesDataSourceAjaxServer = function() {
 
 	var initTable1 = function() {
-		var table = $('#m_table_1');
+		
 
 		// begin first table
 		table.DataTable({
@@ -33,14 +33,7 @@ var DatatablesDataSourceAjaxServer = function() {
 			],
 			initComplete: function(settings, json) {
 					console.log(json)
-					if( json.can_reject_or_accept === 1){
-							//   accept or reject buttons ....
-							buttons = `
-							<button type="button" class="btn btn-warning" style="margin-left:40%">Aceept</button>
-							<button type="button" class="btn btn-danger">Reject</button>
-							`
-							$("#accept_reject_div").html(buttons)
-					}
+					handle_buttons(json)
 			}
 			
 		});
@@ -65,10 +58,6 @@ var table_reload;
 jQuery(document).ready(function() {
 	table_reload=DatatablesDataSourceAjaxServer.init();
 	validation( {});
-	$('#m_table_1').dataTable( );
-	// records_fetched = $("#m_table_1").DataTable().page.info().recordsDisplay
-	// alert(records_fetched)
-	
 
 });
 
@@ -77,4 +66,37 @@ var custom_after=  function(data){
   alert("welcome to edit")
       $("#tags").val(data.mytags);
 
+}
+function handle_buttons(json){
+	if( json.can_reject_or_accept === 1){
+		//   accept or reject buttons ....
+		buttons = `
+		<button type="button" class="btn btn-warning" style="margin-left:40%" onclick=accept()>Aceept</button>
+		<button type="button" class="btn btn-danger" onclick=reject()>Reject</button>
+		`
+		$("#accept_reject_div").html(buttons)
+	}
+	else{
+		$("#accept_reject_div").html("")
+	}
+}
+
+function accept(){
+	$.get(`${website_url}/accept_report/${exam_id}/${question_id}`,function(data){
+		console.log(data);
+		$(table).DataTable().ajax.reload(function ( json ) {
+			handle_buttons(json)
+			swal("Accepted")
+		});
+	});
+}
+
+function reject(){
+	$.get(`${website_url}/reject_report/${exam_id}/${question_id}`,function(data){
+		console.log(data);
+		$(table).DataTable().ajax.reload(function ( json ) {
+			handle_buttons(json)
+			swal("rejected")
+		});
+	});
 }
