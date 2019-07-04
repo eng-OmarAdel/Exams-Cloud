@@ -100,7 +100,8 @@
                                         <li class="m-menu__item m-menu__item--submenu m-menu__item--rel" m-menu-submenu-toggle="click" aria-haspopup="true"><a href="javascript:;" class="m-menu__link m-menu__toggle" title="Non functional dummy link"><span class="m-menu__item-here"></span><span class="m-menu__link-text">Exams</span><i class="m-menu__hor-arrow la la-angle-down"></i><i class="m-menu__ver-arrow la la-angle-right"></i></a>
                                             <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left"><span class="m-menu__arrow m-menu__arrow--adjust" style="left: 56px;"></span>
                                                 <ul class="m-menu__subnav">
-                                                    <li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="{{url("?view=MyExams")}}" class="m-menu__link "><i class="m-menu__link-icon flaticon-users"></i><span class="m-menu__link-text">My exams</span></a></li>
+                                                    <li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="{{url("?view=MyExams")}}" class="m-menu__link "><i class="m-menu__link-icon flaticon-users"></i><span class="m-menu__link-text">Authored</span></a></li>
+                                                    <li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="{{url("?view=UserProceededExams")}}" class="m-menu__link "><i class="m-menu__link-icon flaticon-users"></i><span class="m-menu__link-text">Solved</span></a></li>
      
                                                 </ul>
                                             </div>
