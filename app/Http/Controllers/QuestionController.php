@@ -31,18 +31,18 @@ class QuestionController extends Controller
         if ($cat_type == "1"){
                 if(isset($request->exam_id)){
                     $exam = Exam::find($request->exam_id);
-                    $questions= $exam->questions()->toArray();
+                    $questions= $exam->questions()->where("status","active")->toArray();
                 }else{
-                    $questions = Question::where("category",$cat_id)->orderBy("id")->with('tags')->get();
+                    $questions = Question::where("category",$cat_id)->where("status","active")->orderBy("id")->with('tags')->get();
 
                 }
         }
         else if ($cat_type == "2") {
                             if(isset($request->exam_id)){
                     $exam = Exam::find($request->exam_id);
-                    $questions= $exam->questions()->toArray();
+                    $questions= $exam->questions()->where("status","active")->toArray();
                 }else{
-                    $questions = Question::where("track",$cat_id)->orderBy("id")->with('tags')->get();
+                    $questions = Question::where("track",$cat_id)->where("status","active")->orderBy("id")->with('tags')->get();
 
                 }
             
@@ -128,7 +128,7 @@ class QuestionController extends Controller
                     return response()->json(["the track is invalid"], 422);
                 }
             }
-            $all['status'] = "approved";
+            $all['status'] = "active";
             $all['user_id']=Auth::user()->_id;
 
             unset($all['answer_id']);// for only programming output
@@ -176,7 +176,7 @@ class QuestionController extends Controller
                     return response()->json(["the track is invalid"], 422);
                 }
             }
-            $all['status'] = "approved";
+            $all['status'] = "active";
             $all['user_id']=Auth::user()->_id;
 
             if(isset($request->exam_id)){
@@ -198,6 +198,7 @@ class QuestionController extends Controller
             $new_q->save();
             $e->question_id = $new_q->id;
             $e->save();
+            $new_q->QuestionExam()->create(['exam_id' => $request->exam_id]);
 
         }
     }
@@ -277,7 +278,7 @@ class QuestionController extends Controller
             else{
                 $e->track = $request->cat_id;
             }
-            $e->status = "approved";
+            $e->status = "active";
             $all = $request->all();
             unset($all['answer_id']);// for only programming output
             $e->fill($all);
@@ -314,7 +315,7 @@ class QuestionController extends Controller
             else{
                 $e->track = $request->cat_id;
             }
-            $all['status'] = "approved";
+            $all['status'] = "active";
             $e->fill($all);
             $e->save();
             $e->tags()->delete();
