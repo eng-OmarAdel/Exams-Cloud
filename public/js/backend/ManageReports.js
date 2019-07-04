@@ -2,6 +2,7 @@ var tablename=document.currentScript.getAttribute("tablename");
 var website_url=document.currentScript.getAttribute("website_url"); 
 var user_id=document.currentScript.getAttribute("user_id");
 var exam_id=document.currentScript.getAttribute("exam_id");
+var question_id=document.currentScript.getAttribute("question_id");
 
 var DatatablesDataSourceAjaxServer = function() {
 
@@ -15,34 +16,33 @@ var DatatablesDataSourceAjaxServer = function() {
       processing: true,
 			serverSide: true,
 
-       ajax:{url:website_url+"/"+tablename+"/"+exam_id, function (data, callback, settings) {
+       ajax:{url:website_url+"/ExamQuestionReports/"+exam_id+"/"+question_id, function (data, callback, settings) {
+				
        }
        },
 			columns: [
 
-                {data: 'name' ,title: "Title"},
-                {data: 'pending_reports_count' ,title: "Pending reports"},
-                {data: 'rejected_reports_count' ,title: "Rejeced reports"},
-								{data: 'Actions',title: "Manage Reports"},
+                {data: 'username' ,title: "User"},
+                {data: 'reason' ,title: "Reason"},
+                {data: 'status' ,title: "Status"},
 				// {data: 'created_at' ,title: "Creation date"},
 				// {data: 'Actions',title: "Actions"},
 			],
 			columnDefs: [
-				{
-					targets: -1,
-					title: 'Manage Reports',
-					orderable: false,
-					render: function(data, type, full  , meta) {
-              manage_reports = `<a href="${website_url}/?view=ManageReports&exam_id=${exam_id}&question_id=${full._id}" target="_blank"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
-              <i class="la la-warning"></i>
-            </a>`;
-
-						return  `
-            ${manage_reports}
-            `;
-					},
-				}
+				
 			],
+			initComplete: function(settings, json) {
+					console.log(json)
+					if( json.can_reject_or_accept === 1){
+							//   accept or reject buttons ....
+							buttons = `
+							<button type="button" class="btn btn-warning" style="margin-left:40%">Aceept</button>
+							<button type="button" class="btn btn-danger">Reject</button>
+							`
+							$("#accept_reject_div").html(buttons)
+					}
+			}
+			
 		});
 		return table;
 	};
@@ -64,8 +64,11 @@ var DatatablesDataSourceAjaxServer = function() {
 var table_reload;
 jQuery(document).ready(function() {
 	table_reload=DatatablesDataSourceAjaxServer.init();
-                 validation( {});
-                  
+	validation( {});
+	$('#m_table_1').dataTable( );
+	// records_fetched = $("#m_table_1").DataTable().page.info().recordsDisplay
+	// alert(records_fetched)
+	
 
 });
 
@@ -73,6 +76,5 @@ jQuery(document).ready(function() {
 var custom_after=  function(data){
   alert("welcome to edit")
       $("#tags").val(data.mytags);
-     
 
 }
