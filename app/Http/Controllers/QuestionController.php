@@ -6,6 +6,7 @@ use App\Category;
 use App\Exam;
 use App\Track;
 use App\SolvedQuestion;
+use App\Report;
 use App\Question;
 use App\User;
 use Auth;
@@ -431,17 +432,5 @@ class QuestionController extends Controller
         ]);
     }
 
+
 }
-
-
-// save it for now (compiler)
-        // function compiler($code,$language){
-        //     $client = new \GuzzleHttp\Client();
-        //     $URI = 'http://134.209.204.108/testsob72.tk/compiler/index.php';
-        //     $params['headers'] =  ['Content-Type' => 'application/x-www-form-urlencoded'];
-    
-        //     $params['form_params'] = array('answer' => $code, 'extension' => $language);
-        //      $response = $client->post($URI, $params);
-    
-        //     return json_decode($response->getBody())->data;
-        // }

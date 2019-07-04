@@ -55,5 +55,6 @@ Route::GET('/report', 'UserProceededExamsController@report');
 
 
 Route::GET('/getExamReport/{exam_id}/{question_id}', 'UserProceededExamsController@getExamReport');
+Route::GET('/suspendQuestion/{question_id}', 'UserProceededExamsController@suspendQuestion');
 
 

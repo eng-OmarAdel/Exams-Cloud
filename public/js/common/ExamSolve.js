@@ -64,6 +64,9 @@ jQuery(document).ready(function() {
                       if(data.page_type=="wizard"){
                         page_type_div=`<div style="zoom: 75%;" id="smartwizard"><ul>`
                         for(i=1;i<=data.questions.length;i++){
+                          if(data.questions[i-1].status=="suspended"){
+                          continue;
+                         }
                           page_type_div+=`<li><a href="#step-${i}">Q${i}<br /></a></li>`
                         }
                           page_type_div+=`</ul><div>`
@@ -79,6 +82,9 @@ jQuery(document).ready(function() {
                       var back='';
                       var result=`${page_type_div}`;
                       $.each( data.questions, function( key, item ) {
+                        if(item.status=="suspended"){
+                          return true;
+                        }
                           select=""
                           options=[];
                       if(item.type=="complete" && item.is_programming=="no"){
