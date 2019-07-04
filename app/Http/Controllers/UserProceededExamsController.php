@@ -56,16 +56,23 @@ class UserProceededExamsController extends Controller
     {
         $exam = Exam::find($request->_id);
         $r=$exam->Examtries()->where("user_id",Auth::id());
+        $question=$exam->questions()->where("status","suspended")->pluck("_id");
+        $countSuspended=$question->count();
+        $question=$question->toArray();
+
 
        foreach ($r as $key => &$value) {
             $count= 0;
             foreach ($value->ExamCorrection as $key2 => $value2) {
+                if(in_array($value2['question'],$question)){
+                    continue;
+                }
                if($value2['is_true']=="yes"){
                 $count++;
                }
             }
-
-            $value['mark']=$count."/".$value->ExamCorrection()->count() ;
+            $total=$value->ExamCorrection()->count()-$countSuspended;
+            $value['mark']=$count."/".$total ;
        }   
         return datatables()->of($r)->toJson();
 
@@ -92,13 +99,57 @@ class UserProceededExamsController extends Controller
         $exam=Exam::find($request->ExamId);
         $question=$exam->questions()->where("_id",$request->qId)->first();
 
-        $reported_before=Report::where(array("exam_id"=>$request->examId ,"exam_question_id"=>$request->qId ,"user_id"=>Auth::user()->id  ))->count();
+        $reported_before=Report::where(array("exam_id"=>$request->ExamId ,"exam_question_id"=>$request->qId ,"user_id"=>Auth::user()->id  ))->count();
 
         if($reported_before){
             return "you reported this question before";
         }
-        Report::create(array("exam_id"=>$request->examId ,"question_id"=>$question->question_id ,"exam_question_id"=>$request->qId ,"user_id"=>Auth::user()->id ,"status"=>"pending" ));
+        Report::create(array("exam_id"=>$request->ExamId ,"question_id"=>$question->question_id ,"exam_question_id"=>$request->qId ,"user_id"=>Auth::user()->id ,"status"=>"pending" ));
+        $this->getExamReport($request->ExamId,$request->qId);
         return "Successfully reported";
 
     }
+
+    public function getExamReport($exam_id,$question_id)
+    {
+        $exam=Exam::find($exam_id);
+        //number of exam tries per exam groupby user id
+        $examTries=$exam->Examtries()->groupBy('user_id')->count();
+
+        if($examTries>12){
+                //reports per question in an exact exam 
+                $count = Report::where("exam_question_id",$question_id)->count();
+                $reportsRatio=$count/$examTries;
+                    if($reportsRatio>=0.6){
+                        $question = $exam->questions()->find($question_id);
+                        $question['status']="suspended";
+                        $question->save();
+                    }       
+        }
+
+    }
+    // public function getExamReport($exam_id)
+    // {
+    //     $exam=Exam::find($exam_id);
+    //     //number of exam tries per exam groupby user id
+    //     $examTries=$exam->Examtries()->groupBy('user_id')->count();
+    //     $questions=$exam->questions()->where("status","!=","suspended");
+
+    //     if($examTries>12)
+    //         foreach ($questions as $key => $value) {
+    //             //reports per question in an exact exam 
+    //             $count = Report::where("exam_question_id",$value->_id)->count();
+    //             $reportsRatio=$count/$examTries;
+    //                 if($reportsRatio>=0.6){
+    //                     $question = $exam->questions()->find($value->_id);
+    //                     $question['status']="suspended";
+    //                     $question->save();
+
+    //                 }  
+    //         }
+
+
+
+
+    // }
 }

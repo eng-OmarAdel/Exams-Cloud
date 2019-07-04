@@ -19,6 +19,11 @@ class Question extends Eloquent
     {
         return $this->embedsMany('App\Tag');
     }
+
+    public function QuestionExam()
+    {
+        return $this->embedsMany('App\QuestionExam');
+    }
     protected $fillable = [
 
         'name',

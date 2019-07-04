@@ -26,6 +26,9 @@ jQuery(document).ready(function() {
                       var back='';
                       var result='';
                       $.each( data.data.questions, function( key, item ) {
+                        if(item.status=="suspended"){
+                          return true;
+                        }
                       	if(data.r[key].is_true=="yes"){
                       		qstyle="style='display:inline;color:green;'"
                       		qIs="true"
