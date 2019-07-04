@@ -182,6 +182,7 @@ class ExamController extends Controller
             $q->save();
             $q['question_id'] = $q_id;
             $exam->questions()->associate($q);
+            $q->QuestionExam()->create(['exam_id' => $request->exam_id]);
         }
         $exam->save();
         return redirect()->back();
