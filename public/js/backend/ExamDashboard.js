@@ -21,6 +21,7 @@ var DatatablesDataSourceAjaxServer = function() {
 			columns: [
 
                 {data: 'name' ,title: "Title"},
+                {data: 'status' ,title: "Status"},
                 {data: 'pending_reports_count' ,title: "Pending reports"},
                 {data: 'rejected_reports_count' ,title: "Rejeced reports"},
 								{data: 'Actions',title: "Manage Reports"},
