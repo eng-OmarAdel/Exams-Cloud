@@ -43,8 +43,13 @@ jQuery(document).ready(function() {
                                                     item.name = item.name.toString().replace('______', `<div  style='display:inline;color:black'>${answerArr[i]}</div>`);
                                                 }
                                               }
-
-                      result+=`<div class=' m-portlet__body row'><div class='col-md-12'><h3 ${qstyle}>${item.name} (${qIs})<button class="btn btn-danger" type="button" style="float:right" onclick="report('${item._id.$oid}','${exam_id}')">Report Question</button></h3><br><br><input type="hidden"  name="question" value="${item._id.$oid}">`
+                            // console.log(data.r[key].is_true)
+                        if(data.r[key].is_true=="no"){
+                          reportButton=`<button class="btn btn-danger" type="button" style="float:right" onclick="report('${item._id.$oid}','${exam_id}')">Report Question</button>`
+                        }else{
+                          reportButton=``;
+                        }
+                      result+=`<div class=' m-portlet__body row'><div class='col-md-12'><h3 ${qstyle}>${item.name} (${qIs})${reportButton}</h3><br><br><input type="hidden"  name="question" value="${item._id.$oid}">`
                       if(item.is_programming=="Yes"){
                           result+='<pre><code>'+data.r[key].answer.toString().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&#39;").replace(/"/g, "&#34;")+'</code></pre>';
 
@@ -90,12 +95,40 @@ jQuery(document).ready(function() {
 });
 
 function report(qId,ExamId){
-   $.ajax({
-                  url: website_url+`/report?qId=${qId}&ExamId=${ExamId}`,
-          
-                  complete: function(jqXHR){
-                      swal(jqXHR.responseText)
-                  }
-          });
+
+  Swal.fire({
+  title: 'Please state your reason.',
+  input: 'textarea',
+  inputAttributes: {
+    autocapitalize: 'off',
+    name : "reason"
+  },
+  showCancelButton: true,
+  confirmButtonText: 'Send',
+  showLoaderOnConfirm: true,
+  preConfirm: (reason) => {
+    return fetch(website_url+`/report?qId=${qId}&ExamId=${ExamId}&reason=${reason}`)
+      .then(response => {
+         if (!response.ok) {
+                      
+          return "you reported this question before"
+
+        }else{
+
+          return "Successfully reported";
+
+        }
+      })
+   
+  },
+  allowOutsideClick: () => !Swal.isLoading()
+}).then((result) => {
+  if (result.value) {
+    Swal.fire({
+      title: `${result.value}`
+    })
+  }
+})
+
 
 }

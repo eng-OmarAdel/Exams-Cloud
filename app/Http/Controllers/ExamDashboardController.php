@@ -126,5 +126,146 @@ class ExamDashboardController extends Controller
         }
         return response()->json(['status'=>'success']);
     }
+    public function charts(Request $request){
+
+        $Exam=Exam::find($request->_id);
+        $activeQuestions=$Exam->questions()->where("status","active")->pluck("_id");
+        $suspendedQuestions=$Exam->questions()->where("status","!=","active")->pluck("_id");
+        $examTries=$Exam->Examtries;
+        
+        //no of Participants 
+        $Participants=$Exam->Examtries()->groupBy("user_id")->count();
+
+        //no Trials 
+        $noOfTrials=$Exam->Examtries->count();
+        //no of exam active questions
+        $noOfActiveQuestions=count($activeQuestions);
+        //no of exam suspended questions
+        $noOfSuspendedQuestions=count($suspendedQuestions);
+
+        $trueTrials =0;
+        $falseTrials =0;
+    
+        foreach ($examTries as $key => $value) {
+            //no of questions solved as true 
+            $trueTrials+=$value->ExamCorrection()->whereIn("question",$activeQuestions)->where("is_true","!=","no")->count();
+            //no of questions solved as false 
+            $falseTrials+=$value->ExamCorrection()->whereIn("question",$activeQuestions)->where("is_true","no")->count();
+
+            foreach ($value->ExamCorrection as $key2 => $value1) {
+                if(in_array($value1->question,$suspendedQuestions->toArray())){
+                    $true[$value1->question]="suspended";
+                    $false[$value1->question]="suspended";
+                    continue;
+                }
+                if(!isset($true[$value1->question])){
+                    $true[$value1->question]=0;
+                }
+                if(!isset($false[$value1->question])){
+                    $false[$value1->question]=0;
+                }
+                $true[$value1->question] = ($value1->is_true=="yes") ? $true[$value1->question]+1:$true[$value1->question];
+                $false[$value1->question]= ($value1->is_true=="no") ? $false[$value1->question]+1:$false[$value1->question];
+            }
+
+        }
+        $MarksDistribution=$this->MarksDistribution($request->_id);
+        $array= array(
+            "trueTrials"=>$trueTrials,//no of questions solved as true 
+            "falseTrials"=>$falseTrials,//no of questions solved as false
+            "noOfTrials"=>$noOfTrials, //no of Trials 
+            "noOfActiveQuestions"=>$noOfActiveQuestions,//no of questions solved as true
+            "noOfSuspendedQuestions"=>$noOfSuspendedQuestions,//no of questions solved as false
+            "Participants"=>$Participants,//no of Participants 
+            "MarksDistribution"=>$MarksDistribution,//no of Marks Distribution 
+            "questionsRatio"=>array("true"=>$true,"false"=>$false)//each question answers  
+        );
+        return response()->json($array);
+
+    }
+    public function UsersExamined(Request $request)
+    {   
+        $Exam=Exam::find($request->_id);
+        $Participants=$Exam->Examtries()->pluck("user_id")->unique();
+        $user=User::whereIn("_id",$Participants)->get();
+
+        foreach ($user as $key => &$value) {
+            $value["count"]=$value->UserExams()->where("exam_id",$request->_id)->first()->count;
+            $value["submitedTries"]=$Exam->Examtries()->where("user_id",$value->_id)->count();
+
+        }
+
+        return datatables()->of($user)->toJson();
+    }
+
+    public function UserMarks (Request $request){
+
+
+        $exam = Exam::find($request->exam_id);
+        $r=$exam->Examtries()->where("user_id",$request->user_id);
+        $question=$exam->questions()->where("status","suspended")->pluck("_id");
+        $countSuspended=$question->count();
+        $question=$question->toArray();
+
+
+       foreach ($r as $key => &$value) {
+            $count= 0;
+            foreach ($value->ExamCorrection as $key2 => $value2) {
+                if(in_array($value2['question'],$question)){
+                    continue;
+                }
+               if($value2['is_true']=="yes"){
+                $count++;
+               }
+            }
+            $total=$value->ExamCorrection()->count()-$countSuspended;
+            $value['mark']=$count."/".$total ;
+       }   
+        return datatables()->of($r)->toJson();
+
+
+    }
+    public function MarksDistribution ($exam_id){
+
+
+        $exam = Exam::find($exam_id);
+        $r=$exam->Examtries()->get();
+        $question=$exam->questions()->where("status","suspended")->pluck("_id");
+        $countSuspended=$question->count();
+        $question=$question->toArray();
+
+            $marks["<0.2"]=0;
+            $marks["<0.4"]=0;
+            $marks["<0.6"]=0;
+            $marks["<0.8"]=0;
+            $marks["<1"]=0;
+       foreach ($r as $key => &$value) {
+            $count= 0;
+            foreach ($value->ExamCorrection as $key2 => $value2) {
+                if(in_array($value2['question'],$question)){
+                    continue;
+                }
+               if($value2['is_true']=="yes"){
+                $count++;
+               }
+            }
+            $total=$value->ExamCorrection()->count()-$countSuspended;
+            $value['mark']=$count/$total ;
+
+            if($value['mark']<=0.2){
+                $marks["<0.2"]++;
+            }elseif($value['mark']<=0.4){
+                $marks["<0.4"]++;
+            }elseif($value['mark']<=0.6){
+                $marks["<0.6"]++;
+            }elseif($value['mark']<=0.8){
+                $marks["<0.8"]++;
+            }else{
+                $marks["<1"]++;
+            }
+       }   
+       return $marks;
+
+    }
 
 }
