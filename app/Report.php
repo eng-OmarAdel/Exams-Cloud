@@ -14,6 +14,7 @@ class Report extends Eloquent
         'question_id',
         'exam_question_id',
         'user_id',
+        'reason',
         'status', 'created_at','updated_at',
     ];
 }

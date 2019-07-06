@@ -1,6 +1,7 @@
 
 
 		<!--begin:: Global Mandatory Vendors -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 		<script src="{{url('')}}/vendors/popper.js/dist/umd/popper.js" type="text/javascript"></script>
 		<script src="{{url('')}}/vendors/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>

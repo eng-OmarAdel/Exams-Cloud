@@ -102,9 +102,10 @@ class UserProceededExamsController extends Controller
         $reported_before=Report::where(array("exam_id"=>$request->ExamId ,"exam_question_id"=>$request->qId ,"user_id"=>Auth::user()->id  ))->count();
 
         if($reported_before){
-            return "you reported this question before";
+            return response()->json("you reported this question before", 422);
+
         }
-        Report::create(array("exam_id"=>$request->ExamId ,"question_id"=>$question->question_id ,"exam_question_id"=>$request->qId ,"user_id"=>Auth::user()->id ,"status"=>"pending" ));
+        Report::create(array("exam_id"=>$request->ExamId ,"question_id"=>$question->question_id ,"exam_question_id"=>$request->qId ,"user_id"=>Auth::user()->id ,"status"=>"pending" ,"reason"=>$request->reason));
         $this->getExamReport($request->ExamId,$request->qId);
         $this->suspendQuestion($question->question_id);
         return "Successfully reported";
@@ -158,4 +159,5 @@ class UserProceededExamsController extends Controller
 
         
     }
+
 }

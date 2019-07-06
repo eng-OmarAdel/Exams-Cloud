@@ -61,3 +61,8 @@ Route::GET('/report', 'UserProceededExamsController@report');
 Route::GET('/getExamReport/{exam_id}/{question_id}', 'UserProceededExamsController@getExamReport');
 Route::GET('/suspendQuestion/{question_id}', 'UserProceededExamsController@suspendQuestion');
 
+Route::GET('/charts', 'ExamDashboardController@charts');
+Route::GET('/UsersExamined', 'ExamDashboardController@UsersExamined');
+Route::GET('/UserMarks', 'ExamDashboardController@UserMarks');
+
+
