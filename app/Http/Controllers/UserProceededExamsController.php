@@ -81,6 +81,7 @@ class UserProceededExamsController extends Controller
 
     public function ViewAnswers(Request $request)
     {
+        //for auth user
         $exam = Exam::with(['trackName' => function($q) {
             $q->select('name');
         },'categoryName' => function($q) {
@@ -93,6 +94,24 @@ class UserProceededExamsController extends Controller
 
 
     }
+
+    public function ViewAnswersByUserID(Request $request)
+    {
+        //for auth user
+        $exam = Exam::with(['trackName' => function($q) {
+            $q->select('name');
+        },'categoryName' => function($q) {
+            $q->select('name');
+        }
+            ])->find($request->exam_id);
+        $r=$exam->Examtries()->where("user_id",$request->user_id)->where("_id",$request->_id)->first();
+        return response()->json(array("data"=> $exam,"r"=> $r['ExamCorrection']));
+         
+
+
+    }
+
+
 
     public function report(Request $request)
     {

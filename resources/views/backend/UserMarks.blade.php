@@ -30,6 +30,22 @@
 								<table class="" id="m_table_1">
 
 								</table>
+								
+								<div id="testscroll" class="mt-4">
+                                 </div>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<!-- questions details -->
+								<div id="test" class="">
+                                 </div>
 							</div>
 
 						<!-- END EXAMPLE TABLE PORTLET-->

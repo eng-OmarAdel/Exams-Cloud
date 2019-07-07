@@ -51,6 +51,7 @@ Route::resource('/ExamSolve', 'ExamSolveController');
 Route::GET('/UserProceededExams', 'UserProceededExamsController@UserProceededExams');
 Route::GET('/SubmittedExams', 'UserProceededExamsController@SubmittedExams');
 Route::GET('/ViewAnswers', 'UserProceededExamsController@ViewAnswers');
+Route::GET('/ViewAnswersByUserID', 'UserProceededExamsController@ViewAnswersByUserID');
 Route::post('/proceed', 'ExamSolveController@proceed');
 // Route::get('/Category/{id?}','CategoryController@show');
 // Route::get('/?view=Category&id={id?}','CategoryController@index');
