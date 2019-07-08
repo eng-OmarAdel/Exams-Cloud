@@ -86,6 +86,12 @@ class QuestionController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->all(), 422);
         }
+        //profanity;
+        $res =  self::isOffensive($request->name);
+        if($res != "not_offensive"){
+            return response()->json(["This question has OFFENSIVE words!!"], 422);
+        }
+        //=================================
         // dd($request->all());
         if ($request->is_programming == "no") {
             //not programming validation code
@@ -247,6 +253,12 @@ class QuestionController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->all(), 422);
         }
+        //profanity;
+        $res =  self::isOffensive($request->name);
+        if($res != "not_offensive"){
+            return response()->json(["This question has OFFENSIVE words!!"], 422);
+        }
+        //=================================
         // dd($request->all());
         if ($request->is_programming == "no") {
             //not programming validation code
@@ -392,9 +404,9 @@ class QuestionController extends Controller
         return json_encode($solved_question);
     }
     
-    public function isDuplicate($target_question, $target_answer)
+    public function isOffensive($target_question)
     {
-        $URI = 'http://134.209.204.108/duplication?target='.$target_question."(@)".$target_answer;
+        $URI = 'http://134.209.204.108/profanity_check?target='.$target_question;
         $URI = preg_replace("/ /", "%20", $URI); //very fucking important
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -410,12 +422,12 @@ class QuestionController extends Controller
         $response = curl_exec($curl);
         $err = curl_error($curl);
         curl_close($curl);
-        // "true" -> not duplicate
-        // "duplicated entry" -> duplicate
-        if($response === "true"){
-            return "not_duplicate";
-        }
-        return "duplicate";
+        // \"oddensive\"
+        // \"not_offensive\"
+        $response = preg_replace("/[\"]/", "", $response);
+        return $response;
+        // oddensive
+        // not_offensive
     }
 
     public function ExecuteCode(Request $request) {
