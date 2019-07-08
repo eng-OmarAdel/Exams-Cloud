@@ -228,10 +228,19 @@ jQuery(document).ready(function() {
           alert("No question provided, idiot!");
         }
         else{
-          $.get( "http://134.209.204.108/tagmaker?target="+quest_body, function( data ) {
-            // alert(data);
-            if($("#is_programming").val()=="Yes"){ data+=", programming" }
-            $("#tags").val(data);
+          $("#tags").html("")
+          $.get( "http://134.209.204.108/tagmaker_deep/?target="+quest_body, function( data ) {
+            if(data != "google(@)failed"){
+              $("#tags").val(data);
+            }
+            else{
+              swal("the question is too short, but cheer we gonna try different way ... less accurate but will do the trick")
+              $.get( "http://134.209.204.108/tagmaker/?target="+quest_body, function( data ) {
+                if($("#is_programming").val()=="Yes"){ data+=", programming" }
+                // alert(data);
+                $("#tags").val(data);
+              });
+            }
           });
         }
       });
