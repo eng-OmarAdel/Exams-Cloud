@@ -1,8 +1,8 @@
 var tablename=document.currentScript.getAttribute("tablename");
 var cat_id=document.currentScript.getAttribute("cat_id"); //2
 var cat_type=document.currentScript.getAttribute("cat_type"); //3
-var user_id=document.currentScript.getAttribute("user_id"); //3
- //1
+var website_url=document.currentScript.getAttribute("website_url"); //3
+var user_id=document.currentScript.getAttribute("user_id"); //
 console.log(tablename);
 var DatatablesDataSourceAjaxServer = function() {
 
@@ -16,7 +16,7 @@ var DatatablesDataSourceAjaxServer = function() {
       processing: true,
 			serverSide: true,
 
-       ajax:{url:tablename+"?cat_id="+cat_id+"&cat_type="+cat_type, function (data, callback, settings) {
+       ajax:{url:website_url+"/"+tablename, function (data, callback, settings) {
        }
        },
 			columns: [
@@ -36,8 +36,13 @@ var DatatablesDataSourceAjaxServer = function() {
 					orderable: false,
 					render: function(data, type, full, meta) {
 
-												status = `<a id="view" href="?view=Question&cat_id=${cat_id}&cat_type=${cat_type}&exam_id=${full._id}" class="dropdown-item">`+full.title+`</a>`
-												return status;
+            if (typeof full.category !== 'undefined') {
+                    status = `<a id="view" href="?view=Question&cat_id=${full.category}&cat_type=1&exam_id=${full._id}" class="dropdown-item">${full.title}</a>`;
+            }else if (typeof full.track !== 'undefined'){
+                    status = `<a id="view" href="?view=Question&cat_id=${full.track}&cat_type=2&exam_id=${full._id}" class="dropdown-item">${full.title}</a>`;
+            }
+						
+            return status;
 
 					},
 				},
@@ -62,21 +67,28 @@ var DatatablesDataSourceAjaxServer = function() {
 					title: 'Actions',
 					orderable: false,
 					render: function(data, type, full  , meta) {
-            edit_ok= `<a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
+
+            if (typeof full.category !== 'undefined') {
+                    showQuestions_ok = `<a id="view" href="?view=Question&cat_id=${full.category}&cat_type=1&exam_id=${full._id}" class="dropdown-item">Manage Questions</a>`;
+            }else if (typeof full.track !== 'undefined'){
+                    showQuestions_ok = `<a id="view" href="?view=Question&cat_id=${full.track}&cat_type=2&exam_id=${full._id}" class="dropdown-item">Manage Questions</a>`;
+
+            }
+          showQuestions_not_ok=``;
+          Solve_ok = `<a id="view" href="?view=ExamSolve&_id=${full._id}" class="dropdown-item">Solve Exam</a>`
+          Solve_not_ok = `<a id="view" href="#" class="dropdown-item">Can't be Solved (under construction)</a>`
+          edit_ok= `<a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
             <i class="la la-edit"></i>
           </a>`
-            edit_not_ok = ``
-            //-----
-            showQuestions_ok = `<a id="view" href="?view=Question&cat_id=${cat_id}&cat_type=${cat_type}&exam_id=${full._id}" class="dropdown-item">Manage Questions</a>`
-            showQuestions_not_ok =``
-            //------
-            Solve_ok = `<a id="view" href="?view=ExamSolve&_id=${full._id}" class="dropdown-item">Solve Exam</a>`
-            Solve_not_ok = `<a id="view" href="#" class="dropdown-item">Can't be Solved (under construction)</a>`
-
+          edit_not_ok =``;
+          dash_board_ok=`<a id="view" href="?view=ExamDashboard&_id=${full._id}" class="dropdown-item" target="_blank">View Dashboard</a>`;
+          dash_board_not_ok=``;
             
             edit =edit_not_ok;
             showQuestions =showQuestions_not_ok;
+            dash_board =dash_board_not_ok;
             if(user_id==full.ownerID ){
+              dash_board =dash_board_ok;
                 if(full.hasOwnProperty('is_editable')){
                   if(full.is_editable == 1){
                     edit = edit_ok;
@@ -95,17 +107,16 @@ var DatatablesDataSourceAjaxServer = function() {
 
               Solve = Solve_ok;
             }
-
-						return `
-                        <span class="dropdown">
-                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
-                              <i class="la la-ellipsis-h"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                ${showQuestions}${Solve}
-                            </div>
-                        </span>${edit}
-                        `;
+						return  `
+            <span class="dropdown">
+                <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
+                  <i class="la la-ellipsis-h"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    ${dash_board}${showQuestions}${Solve}
+                </div>
+            </span>${edit}
+            `;
 					},
 				}
 			],
@@ -133,13 +144,16 @@ jQuery(document).ready(function() {
                  validation( {});
 
                  $.ajax({
-                  url: "/Exams",
+                  url: website_url+"/Exams",
 
                   complete: function(jqXHR){
                   var data = $.parseJSON(jqXHR.responseText);
                   console.log(data);
                   $("#Category").html(data);
                   }});
+
+                  
+
 });
 
 

@@ -1,7 +1,7 @@
 @extends("layouts.index")
 @section("title")
-@php $tablename="SubmittedExams" @endphp
-Submitted Exams
+@php $tablename="UserMarks" @endphp
+{{$_GET['user_name']}} Marks
 @endsection
 @section("content")						
 
@@ -10,7 +10,8 @@ Submitted Exams
 								<div class="m-portlet__head-caption">
 									<div class="m-portlet__head-title">
 										<h3 class="m-portlet__head-text">
-											Submitted Exams
+											{{$_GET['user_name']}} Marks
+											
 										</h3>
 									</div>
 								</div>
@@ -29,6 +30,22 @@ Submitted Exams
 								<table class="" id="m_table_1">
 
 								</table>
+								
+								<div id="testscroll" class="mt-4">
+                                 </div>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<!-- questions details -->
+								<div id="test" class="">
+                                 </div>
 							</div>
 
 						<!-- END EXAMPLE TABLE PORTLET-->
@@ -43,6 +60,6 @@ Submitted Exams
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" website_url="{{url("")}}" _id="{{$_GET['_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}" website_url="{{url("")}}" user_id="{{$_GET['user_id']}}"  exam_id="{{$_GET['exam_id']}}" src="{{url("js/backend/".$tablename.".js")}}"></script>
 @endsection
 

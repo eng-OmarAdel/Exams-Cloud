@@ -15,7 +15,17 @@
 								</div>
 								<div class="m-portlet__head-tools">
 									<ul class="m-portlet__nav">
-										<li class="m-portlet__nav-item">
+									@if(isset($_GET['exam_id']))
+									<li class="m-portlet__nav-item">
+												<a href="#" onclick="" class="btn btn-primary m-btn m-btn--pill m-btn--custom m-btn--icon m-btn--air" id="modal_existing" data-toggle="modal" data-target="#m_modal_existing">
+												<span>
+												    <i class="la la-cloud"></i>
+														<span>Existing Question</span>
+												</span>
+											</a>
+										</li>
+										@endif
+											<li class="m-portlet__nav-item">
 											<a href="#" onclick="actions()" class="btn btn-primary m-btn m-btn--pill m-btn--custom m-btn--icon m-btn--air" id="modal_button" data-toggle="modal" data-target="#m_modal_4">
 												<span>
 													<i class="la la-cart-plus"></i>
@@ -23,6 +33,12 @@
 												</span>
 											</a>
 										</li>
+										@if(isset($_GET['exam_id']))
+										<li class="m-portlet__nav-item" id="publish">
+												
+										</li>
+										@endif
+
 										<li class="m-portlet__nav-item"></li>
 									</ul>
 								</div>
@@ -48,7 +64,7 @@
 						        </button>
 						      </div>
 						      <div class="modal-body">
-						        <form action="{{$tablename}}" method="post" enctype="multipart/form-data" id="form_add">
+						        <form action="{{url("$tablename")}}" method="post" enctype="multipart/form-data" id="form_add">
 						        	@if(isset($_GET['exam_id']))
 										<input type="hidden" name="exam_id" value="{{$_GET['exam_id']}}">
 						        	@endif
@@ -153,12 +169,53 @@
 						      </div>
 						        </form>
 						      </div>
+						
 
 						    </div>
 						  </div>
 						</div>
 
 						<!-- End::modal form-->
+						</div>
+						@if(isset($_GET['exam_id']))
+							<!-- Start::modal form existing question-->
+							<div class="modal fade" id="m_modal_existing" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+						  <div class="modal-dialog modal-lg" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="exampleModalLabel">Add Existing question</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">×</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+						        <form action="{{url("/Exam/add_existing_question")}}" method="post" enctype="multipart/form-data" id="form_add_existing">
+										{{csrf_field()}}
+										<input type="hidden" name="exam_id" value="{{$_GET['exam_id']}}">
+						         <input type="hidden" name="_method" value="post" fillable="never"/>
+										<div id="test">
+											<div class="m-portlet__body">
+											  	<div class="form-group m-form__group">
+													        <label for="exampleInputEmail1" id="question_label">choose multiple questions</label>
+													            <select id="existing_questions" required name="existing_questions[]" class="form-control m-input" id="existing_questions" multiple="multiple" style="height:50%;">
+													            	
+													            </select>
+													    </div>
+													</div>
+						        <input style="display: none" type="reset" id="form_reset" class="btn btn-secondary">
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						        <button type="submit" class="btn btn-primary">Add question</button>
+						      </div>
+						        </form>
+						      </div>
+						
+
+						    </div>
+						  </div>
+						</div>
+						@endif
+						<!-- End::modal form existing question-->
 						</div>
     <form method="post" id="delete_form">
         {{csrf_field()}}
@@ -168,6 +225,6 @@
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" cat_type="{{$_GET['cat_type']}}" cat_id="{{$_GET['cat_id']}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" cat_type="{{$_GET['cat_type']}}"	@if(isset($_GET['exam_id'])) exam_id="{{$_GET['exam_id']}}" @endif cat_id="{{$_GET['cat_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{url("$tablename")}}" cat_type="{{$_GET['cat_type']}}"  website_url="{{url("")}}" 	@if(isset($_GET['exam_id'])) exam_id="{{$_GET['exam_id']}}" @endif cat_id="{{$_GET['cat_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection
 

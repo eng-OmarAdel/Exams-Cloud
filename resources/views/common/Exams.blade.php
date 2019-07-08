@@ -65,7 +65,7 @@
 											                      placeholder="Exam title"></textarea>
 											        </div>
 											        <div class="form-group m-form__group">
-											            <label for="exampleInputEmail1" id="question_label">duration</label>
+											            <label for="exampleInputEmail1" id="question_label">duration in minutes</label>
 											            <input type="number" class="ignoreField form-control m-input" name="duration" id="duration"
 											                      placeholder="duration">
 											        </div>
@@ -111,5 +111,5 @@
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" cat_type="{{$_GET['cat_type']}}" cat_id="{{$_GET['cat_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" user_id="{{Auth::id()}}" tablename="{{url("$tablename")}}" cat_type="{{$_GET['cat_type']}}" cat_id="{{$_GET['cat_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection

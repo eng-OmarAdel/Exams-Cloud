@@ -1,26 +1,18 @@
 @extends("layouts.index")
 @section("title")
-@php $tablename="SubmittedExams" @endphp
-Submitted Exams
+@php $tablename="ManageReports" @endphp
+Question Reports
 @endsection
-@section("content")						
+@section("content")
 
 						<div class="m-portlet m-portlet--mobile">
 							<div class="m-portlet__head">
 								<div class="m-portlet__head-caption">
 									<div class="m-portlet__head-title">
 										<h3 class="m-portlet__head-text">
-											Submitted Exams
+											Reports
 										</h3>
 									</div>
-								</div>
-								<div class="m-portlet__head-tools">
-									<ul class="m-portlet__nav">
-										<li class="m-portlet__nav-item">
-
-										</li>
-										<li class="m-portlet__nav-item"></li>
-									</ul>
 								</div>
 							</div>
 							<div class="m-portlet__body">
@@ -29,10 +21,13 @@ Submitted Exams
 								<table class="" id="m_table_1">
 
 								</table>
+
+								<div id = "accept_reject_div">
+								</div>
 							</div>
 
 						<!-- END EXAMPLE TABLE PORTLET-->
-
+					
 
 						</div>
     <form method="post" id="delete_form">
@@ -43,6 +38,5 @@ Submitted Exams
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" website_url="{{url("")}}" _id="{{$_GET['_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+<script type="text/javascript" exam_id={{$_GET['exam_id']}} question_id={{$_GET['question_id']}} tablename="{{$tablename}}" user_id="{{Auth::id()}}" website_url="{{url("")}}" src="{{url("js/backend/".$tablename.".js")}}"></script>
 @endsection
-

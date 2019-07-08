@@ -89,21 +89,21 @@ jQuery(document).ready(function() {
                         required: true,
                         email: true,
                         maxlength: 255,
-                        remote: {
-                            url: 'emailcheck',
-                            type: 'get',
-                            data: {
+                        // remote: {
+                        //     url: 'emailcheck',
+                        //     type: 'get',
+                        //     data: {
 
 
-                                email: function () {
-                                    return $('#email').val();
-                                },
-                                user: function () {
-                                    return $('#form_add').attr('action').split("/")[1];
-                                },
+                        //         email: function () {
+                        //             return $('#email').val();
+                        //         },
+                        //         user: function () {
+                        //             return $('#form_add').attr('action').split("/")[1];
+                        //         },
 
-                            },
-                        }
+                        //     },
+                        // }
                     },
                     password: {
 

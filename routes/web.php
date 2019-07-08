@@ -30,6 +30,13 @@ Route::get('categoryOptions','CategoryController@travesre_for_options');
 Route::get('AuthcategoryOptions','AuthProfileController@travesre_for_options');
 Route::get('AuthtrackOptions','AuthProfileController@travesre_for_options1');
 Route::resource('Exams','ExamController');
+Route::get('Exam_publish_unpublish/{id}','ExamController@publish_unpublish');
+Route::post('Exam/add_existing_question','ExamController@add_existing_question');
+Route::resource('MyExams','MyExamsController');
+Route::resource('ExamDashboard','ExamDashboardController');
+Route::get('ExamQuestionReports/{exam_id}/{question_id}','ExamDashboardController@get_exam_question_reports');
+Route::get('accept_report/{exam_id}/{question_id}','ExamDashboardController@accept_report');
+Route::get('reject_report/{exam_id}/{question_id}','ExamDashboardController@reject_report');
 Route::post('AuthProfile','AuthProfileController@addTrack');
 Route::resource('Tracks','TracksController1');
 Route::get('TrackParents/{id}','TracksController1@TrackParents');
@@ -44,6 +51,19 @@ Route::resource('/ExamSolve', 'ExamSolveController');
 Route::GET('/UserProceededExams', 'UserProceededExamsController@UserProceededExams');
 Route::GET('/SubmittedExams', 'UserProceededExamsController@SubmittedExams');
 Route::GET('/ViewAnswers', 'UserProceededExamsController@ViewAnswers');
+Route::GET('/ViewAnswersByUserID', 'UserProceededExamsController@ViewAnswersByUserID');
 Route::post('/proceed', 'ExamSolveController@proceed');
 // Route::get('/Category/{id?}','CategoryController@show');
 // Route::get('/?view=Category&id={id?}','CategoryController@index');
+
+Route::GET('/report', 'UserProceededExamsController@report');
+
+
+Route::GET('/getExamReport/{exam_id}/{question_id}', 'UserProceededExamsController@getExamReport');
+Route::GET('/suspendQuestion/{question_id}', 'UserProceededExamsController@suspendQuestion');
+
+Route::GET('/charts', 'ExamDashboardController@charts');
+Route::GET('/UsersExamined', 'ExamDashboardController@UsersExamined');
+Route::GET('/UserMarks', 'ExamDashboardController@UserMarks');
+
+

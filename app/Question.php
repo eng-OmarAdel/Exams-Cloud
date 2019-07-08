@@ -19,15 +19,21 @@ class Question extends Eloquent
     {
         return $this->embedsMany('App\Tag');
     }
+
+    public function QuestionExam()
+    {
+        return $this->embedsMany('App\QuestionExam');
+    }
     protected $fillable = [
 
         'name',
-        'Qtype',
         'category',
         'track' , 
         'type',
         'programming_language',
-        'user_id',  'weight','exam_id',
+        'exam_id',
+        'question_id',
+        'user_id',
         'answer_id', // programing output -> 120 (factroial of 5)
         'is_programming','status', 'created_at','updated_at',
     ];

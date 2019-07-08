@@ -1,5 +1,6 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
 var authid=document.currentScript.getAttribute("authid"); //1
+var website_url=document.currentScript.getAttribute("website_url"); //1
 //alert(authid)
 var DatatablesDataSourceAjaxServer = function() {
 
@@ -16,13 +17,13 @@ var DatatablesDataSourceAjaxServer = function() {
 			// 	ajaxTracks();
 
 			// },
-			ajax: tablename,
+			ajax: website_url+"/"+tablename,
 			columns: [
 
 				{data: 'name' ,title: "Name"},
 				{data: 'type' ,title: "Type"},
 				{data: 'created_at' ,title: "Creation date"},
-				{data: 'Actions',title: "Actions"},
+				// {data: 'Actions',title: "Actions"},
 			],
 			columnDefs: [
 				{
@@ -39,32 +40,33 @@ var DatatablesDataSourceAjaxServer = function() {
 								// data += '<a href="/Category/' + full._id + '">' + full.name + '</a>';
             return data;
          }
-				},
-				{
-					targets: -1,
-					title: 'Actions',
-					orderable: false,
-					render: function(data, type, full, meta) {
-						//alert(full._id);
-                        // if (full.status == "approved") {
+				}
+// 				,
+// 				{
+// 					targets: -1,
+// 					title: 'Actions',
+// 					orderable: false,
+// 					render: function(data, type, full, meta) {
+// 						//alert(full._id);
+//                         // if (full.status == "approved") {
 
-                        //     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\')" href="javascript:;"><i class="la la-ban"></i> suspend</a>'
+//                         //     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\')" href="javascript:;"><i class="la la-ban"></i> suspend</a>'
 
-                        // } else {
-                        //     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\' )" href="javascript:;"><i class="la la-check-circle"></i> approve</a>'
-                        // }
-          status = '<a class="dropdown-item" target="_blank" href="?view=QuestionSolve&id=' + full._id + '"><i class="la la-check-circle"></i> Solve the question</a>'
+//                         // } else {
+//                         //     status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\' )" href="javascript:;"><i class="la la-check-circle"></i> approve</a>'
+//                         // }
+//           status = '<a class="dropdown-item" target="_blank" href="?view=QuestionSolve&id=' + full._id + '"><i class="la la-check-circle"></i> Solve the question</a>'
 
-						return `
+// 						return `
                         
-                        <a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Edit">
-                          <i class="la la-edit"></i>
-                        </a>
-<a href="#" onclick="delete_item('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Remove">
-                          <i class="la la-remove"></i>
-                        </a>`;
-					},
-				},
+//                         <a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Edit">
+//                           <i class="la la-edit"></i>
+//                         </a>
+// <a href="#" onclick="delete_item('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="Remove">
+//                           <i class="la la-remove"></i>
+//                         </a>`;
+// 					},
+// 				},
 			],
 		});
 		return table;
@@ -109,13 +111,13 @@ jQuery(document).ready(function() {
 									validation({},form=$("#form_add2"));
 
 	 // ================= add the tree ============================
-	 $.get( "/CategoryParents/"+authid, function( data ) {
+	 $.get( website_url+"/CategoryParents/"+authid, function( data ) {
       //alert(data);
 			var cats = $.parseJSON(data);
 			// console.log(cats)
 			$.each(cats , function(index, cat){
 				$("#tree").append(
-					"<a href='/?view=Category&id="+cat._id+"'>"+cat.name+"</a>"+" / "
+					"<a href='"+website_url+"/?view=Category&id="+cat._id+"'>"+cat.name+"</a>"+" / "
 				)
 			});
   });

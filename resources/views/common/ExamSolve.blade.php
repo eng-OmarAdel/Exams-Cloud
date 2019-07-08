@@ -7,7 +7,7 @@
 
         <!-- begin::Body -->
             
-            <div  class="m-grid__item m-grid__item--fluid m-wrapper">
+            <div class="m-grid__item m-grid__item--fluid m-wrapper">
 
                 <div class="m-content">
                     <div class="row">
@@ -22,21 +22,21 @@
                                                     <br><br>
                                                     <div class="m-invoice__logo">
                                                         {{--  --}}
-                                                        <span   style="float:left">
-                                                        <h6 style="display: none" id="track_name"><b>track : </b></h6>
-                                                        <h6 style="display: none" id="category_name"><b>category : </b></h6>
+                                                        <span style="float:left">
+															<h4 id="authority_name"><b>authority : </b></h4>
+                                                        <h4 id="track_name"><b>track : </b></h4>
 														</span>
                                                         <a style="float: right" href="#">
-                                                            <div id="timer" class="text-center" style="font-size:40px;"></div>
+                                                            <div id="timer" class="text-center" style="font-size:40px;position:fixed;margin-left:-100px;z-index:99;"></div>
                                                         </a>
-                                                    </div><br><br><br><br>
+                                                    </div><br><br><br><br><br><br>
                                                     <a style="" href="#">
                                                         <h1 class="text-center" id="title"></h1>
                                                     </a>
                                                 </div>
                                             </div>
                                             {{-- <div class="m-invoice__body m-invoice__body--centered"> --}}
-                                                <div style="zoom: 90%;">
+                                                <div >
                                                         <form action="{{$tablename}}" method="post"  id="form_add">
                                                             {{csrf_field()}}
                                                             <input type="hidden" name="_method" value="post" fillable="never"/>
@@ -44,7 +44,7 @@
 
                                                             <div id="test" style="margin-left:-200px">
                                                             </div>
-                                                            
+                                                            <!-- <h2 class="text-center"><input type="submit" id="submitExam" class="btn btn-accent"></h2> -->
                                                         </form>
                                                         <br><br>
                                                 </div>
@@ -76,7 +76,7 @@
 
                                                             <div id="test">
                                                             </div>
-                                                            <button type="button" id="submit"  class="btn btn-accent">Proceed</button>
+                                                            <input type="submit" id="submit" value="Proceed" class="btn btn-accent">
                                                         </form>
                                                         <br><br>
                                                 </div>
@@ -105,6 +105,6 @@
 @section("script")
     <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
 
-    <script type="text/javascript" tablename="{{$tablename}}" csrf_token="{{ csrf_token() }}" _id="{{$_GET['_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
+    <script type="text/javascript" tablename="{{$tablename}}" website_url="{{url("")}}" csrf_token="{{ csrf_token() }}" _id="{{$_GET['_id']}}" src="{{url("js/common/".$tablename.".js")}}"></script>
 @endsection
 

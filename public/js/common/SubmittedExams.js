@@ -1,5 +1,6 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
 var _id=document.currentScript.getAttribute("_id"); //1
+var website_url=document.currentScript.getAttribute("website_url"); //1
 
 var DatatablesDataSourceAjaxServer = function() {
 
@@ -13,7 +14,7 @@ var DatatablesDataSourceAjaxServer = function() {
       processing: true,
 			serverSide: true,
 
-       ajax:{url: "/"+tablename+"?_id="+_id , function (data, callback, settings) {
+       ajax:{url: website_url+"/"+tablename+"?_id="+_id , function (data, callback, settings) {
        }
        },
 			columns: [
