@@ -404,6 +404,33 @@ class QuestionController extends Controller
         return json_encode($solved_question);
     }
     
+    public function isDuplicate($target_question, $target_answer)
+    {
+        $URI = 'http://134.209.204.108/duplication?target='.$target_question."(@)".$target_answer;
+        $URI = preg_replace("/ /", "%20", $URI); //very fucking important
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $URI,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache"
+            ),
+        ));
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+        // "true" -> not duplicate
+        // "duplicated entry" -> duplicate
+        if($response === "true"){
+            return "not_duplicate";
+        }
+        return "duplicate";
+    }
+
+
     public function isOffensive($target_question)
     {
         $URI = 'http://134.209.204.108/profanity_check?target='.$target_question;
