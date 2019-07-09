@@ -86,6 +86,12 @@ class QuestionController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->all(), 422);
         }
+        //profanity;
+        $res =  self::isOffensive($request->name);
+        if($res != "not_offensive"){
+            return response()->json(["This question has OFFENSIVE words!!"], 422);
+        }
+        //=================================
         // dd($request->all());
         if ($request->is_programming == "no") {
             //not programming validation code
@@ -247,6 +253,12 @@ class QuestionController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->all(), 422);
         }
+        //profanity;
+        $res =  self::isOffensive($request->name);
+        if($res != "not_offensive"){
+            return response()->json(["This question has OFFENSIVE words!!"], 422);
+        }
+        //=================================
         // dd($request->all());
         if ($request->is_programming == "no") {
             //not programming validation code
@@ -416,6 +428,33 @@ class QuestionController extends Controller
             return "not_duplicate";
         }
         return "duplicate";
+    }
+
+
+    public function isOffensive($target_question)
+    {
+        $URI = 'http://134.209.204.108/profanity_check?target='.$target_question;
+        $URI = preg_replace("/ /", "%20", $URI); //very fucking important
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $URI,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache"
+            ),
+        ));
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+        // \"oddensive\"
+        // \"not_offensive\"
+        $response = preg_replace("/[\"]/", "", $response);
+        return $response;
+        // oddensive
+        // not_offensive
     }
 
     public function ExecuteCode(Request $request) {
