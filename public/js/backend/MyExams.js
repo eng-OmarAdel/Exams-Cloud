@@ -81,10 +81,14 @@ var DatatablesDataSourceAjaxServer = function() {
             <i class="la la-edit"></i>
           </a>`
           edit_not_ok =``;
+          dash_board_ok=`<a id="view" href="?view=ExamDashboard&_id=${full._id}" class="dropdown-item" target="_blank">View Dashboard</a>`;
+          dash_board_not_ok=``;
             
             edit =edit_not_ok;
             showQuestions =showQuestions_not_ok;
+            dash_board =dash_board_not_ok;
             if(user_id==full.ownerID ){
+              dash_board =dash_board_ok;
                 if(full.hasOwnProperty('is_editable')){
                   if(full.is_editable == 1){
                     edit = edit_ok;
@@ -109,7 +113,7 @@ var DatatablesDataSourceAjaxServer = function() {
                   <i class="la la-ellipsis-h"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    ${showQuestions}${Solve}
+                    ${dash_board}${showQuestions}${Solve}
                 </div>
             </span>${edit}
             `;
@@ -147,6 +151,9 @@ jQuery(document).ready(function() {
                   console.log(data);
                   $("#Category").html(data);
                   }});
+
+                  
+
 });
 
 

@@ -6,8 +6,10 @@ use App\Category;
 use App\Exam;
 use App\Track;
 use App\SolvedQuestion;
+use App\Report;
 use App\Question;
 use App\User;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Validator;
@@ -30,18 +32,18 @@ class QuestionController extends Controller
         if ($cat_type == "1"){
                 if(isset($request->exam_id)){
                     $exam = Exam::find($request->exam_id);
-                    $questions= $exam->questions()->toArray();
+                    $questions= $exam->questions()->where("status","active")->toArray();
                 }else{
-                    $questions = Question::where("category",$cat_id)->orderBy("id")->with('tags')->get();
+                    $questions = Question::where("category",$cat_id)->where("status","active")->orderBy("id")->with('tags')->get();
 
                 }
         }
         else if ($cat_type == "2") {
                             if(isset($request->exam_id)){
                     $exam = Exam::find($request->exam_id);
-                    $questions= $exam->questions()->toArray();
+                    $questions= $exam->questions()->where("status","active")->toArray();
                 }else{
-                    $questions = Question::where("track",$cat_id)->orderBy("id")->with('tags')->get();
+                    $questions = Question::where("track",$cat_id)->where("status","active")->orderBy("id")->with('tags')->get();
 
                 }
             
@@ -84,6 +86,12 @@ class QuestionController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->all(), 422);
         }
+        //profanity;
+        $res =  self::isOffensive($request->name);
+        if($res != "not_offensive"){
+            return response()->json(["This question has OFFENSIVE words!!"], 422);
+        }
+        //=================================
         // dd($request->all());
         if ($request->is_programming == "no") {
             //not programming validation code
@@ -127,7 +135,9 @@ class QuestionController extends Controller
                     return response()->json(["the track is invalid"], 422);
                 }
             }
-            $all['status'] = "approved";
+            $all['status'] = "active";
+            $all['user_id']=Auth::user()->_id;
+
             unset($all['answer_id']);// for only programming output
             
             if(isset($request->exam_id)){
@@ -173,8 +183,9 @@ class QuestionController extends Controller
                     return response()->json(["the track is invalid"], 422);
                 }
             }
-            $all['status'] = "approved";
-            
+            $all['status'] = "active";
+            $all['user_id']=Auth::user()->_id;
+
             if(isset($request->exam_id)){
                 $exam = Exam::find($request->exam_id);
                 $e= $exam->questions()->create($all);
@@ -189,8 +200,13 @@ class QuestionController extends Controller
         }
         // saving question to the bank in case of exam
         if(isset($request->exam_id)){
+
             $new_q = $e->replicate();
             $new_q->save();
+            $e->question_id = $new_q->id;
+            $e->save();
+            $new_q->QuestionExam()->create(['exam_id' => $request->exam_id]);
+
         }
     }
 
@@ -237,6 +253,12 @@ class QuestionController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->all(), 422);
         }
+        //profanity;
+        $res =  self::isOffensive($request->name);
+        if($res != "not_offensive"){
+            return response()->json(["This question has OFFENSIVE words!!"], 422);
+        }
+        //=================================
         // dd($request->all());
         if ($request->is_programming == "no") {
             //not programming validation code
@@ -269,7 +291,7 @@ class QuestionController extends Controller
             else{
                 $e->track = $request->cat_id;
             }
-            $e->status = "approved";
+            $e->status = "active";
             $all = $request->all();
             unset($all['answer_id']);// for only programming output
             $e->fill($all);
@@ -306,7 +328,7 @@ class QuestionController extends Controller
             else{
                 $e->track = $request->cat_id;
             }
-            $all['status'] = "approved";
+            $all['status'] = "active";
             $e->fill($all);
             $e->save();
             $e->tags()->delete();
@@ -382,9 +404,9 @@ class QuestionController extends Controller
         return json_encode($solved_question);
     }
     
-    public function isDuplicate($target_question, $target_answer)
+    public function isOffensive($target_question)
     {
-        $URI = 'http://134.209.204.108/duplication?target='.$target_question."(@)".$target_answer;
+        $URI = 'http://134.209.204.108/profanity_check?target='.$target_question;
         $URI = preg_replace("/ /", "%20", $URI); //very fucking important
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -400,12 +422,12 @@ class QuestionController extends Controller
         $response = curl_exec($curl);
         $err = curl_error($curl);
         curl_close($curl);
-        // "true" -> not duplicate
-        // "duplicated entry" -> duplicate
-        if($response === "true"){
-            return "not_duplicate";
-        }
-        return "duplicate";
+        // \"oddensive\"
+        // \"not_offensive\"
+        $response = preg_replace("/[\"]/", "", $response);
+        return $response;
+        // oddensive
+        // not_offensive
     }
 
     public function ExecuteCode(Request $request) {
@@ -422,17 +444,5 @@ class QuestionController extends Controller
         ]);
     }
 
+
 }
-
-
-// save it for now (compiler)
-        // function compiler($code,$language){
-        //     $client = new \GuzzleHttp\Client();
-        //     $URI = 'http://134.209.204.108/testsob72.tk/compiler/index.php';
-        //     $params['headers'] =  ['Content-Type' => 'application/x-www-form-urlencoded'];
-    
-        //     $params['form_params'] = array('answer' => $code, 'extension' => $language);
-        //      $response = $client->post($URI, $params);
-    
-        //     return json_decode($response->getBody())->data;
-        // }
