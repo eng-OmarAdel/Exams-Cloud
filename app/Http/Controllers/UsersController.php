@@ -41,7 +41,8 @@ class UsersController extends Controller
     
     public function index()
     {
-        $users = User::where('type', "admin")->orderBy("updated_at", "desc")->get();
+        // $users = User::where('type', "admin")->orderBy("updated_at", "desc")->get();
+        $users = User::orderBy("updated_at", "desc")->get();
         return datatables()->of($users)->toJson();
 
     }

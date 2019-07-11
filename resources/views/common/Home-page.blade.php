@@ -1,6 +1,6 @@
 @extends("layouts.index")
 @section("title")
-@php $tablename="Home-page" @endphp
+@php echo "Exam Cloud"; @endphp
 @endsection
 @section("css")
 <link href="{{url('css/Home-page.css')}}" rel="stylesheet">
@@ -24,7 +24,7 @@
                         <p class="text-white">
                             Success is no accident. It is hard work, perseverance, learning, studying, sacrifice and most of all, love of what you are doing or learning to do.
                         </p>
-                        <div class="input-wrap">
+                        {{--<div class="input-wrap">
                             <form action="" class="form-box d-flex justify-content-between">
                                 <input class="form-control" name="username" placeholder="Search Questions" type="text">
                                     <button class="btn search-btn" type="submit">
@@ -32,19 +32,21 @@
                                     </button>
                                 
                             </form>
-                        </div>
+                        </div> --}}
+                        <div></br></br></br></div>
+                         
                         <h4 class="text-white">
                             Make your Choice
                         </h4>
                         <div class="courses pt-20">
 
-                            <a class="genric-btn primary-border e-large mr-10 mb-10 wow fadeInDown" data-wow-delay=".3s" data-wow-duration="1s" href="#">
-                                Test Your knowledge
+                            <a class="genric-btn primary-border e-large mr-10 mb-10 wow fadeInDown" data-wow-delay=".3s" data-wow-duration="1s" href="{{url('')}}/?view=Category&id=5cacb5fcf34cdb15b5657de9">
+                                Test Your knowledge or Create Your Exams
                             </a>
             
-                            <a class="genric-btn primary-border e-large mr-10 mb-10 wow fadeInDown" data-wow-delay=".3s" data-wow-duration="1s" href="#">
+                            <!-- <a class="genric-btn primary-border e-large mr-10 mb-10 wow fadeInDown" data-wow-delay=".3s" data-wow-duration="1s" href="#">
                                 Create an Exam
-                            </a>
+                            </a> -->
 
                         </div>
                     </div>
@@ -67,69 +69,72 @@
                 <div class="row justify-content-center d-flex align-items-center">
                     <div class="col-lg-6 col-md-6 col-sm-12 single-faculty">
                         <div class="meta-text text-center">
-                            <h4>
-                                Maths
-                            </h4>
+                            <h3>
+                                @php $cat=$categories[0]; @endphp
+                                <a href="{{url('')}}/?view=Category&id={{$cat->_id}}" style="color:black;font-size:22px">{{$cat->name}}</a>
+                            </h3>
                             <div class="info wow fadeIn" data-wow-delay=".1s" data-wow-duration="1s">
                                 <ul>
+                                @foreach ($cat->questions as $question)
                                     <li>
-                                            <a href="#"><h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit ?</h6></a>
-                                        
-                                    </li>
-                                    
-                                    <li>
-                                            <a href="#"><h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit ?</h6></a>
+                                            <a href="{{url('')}}/?view=QuestionSolve&id={{$question->_id}}"><h6>{{$question->name}}</h6></a>
                                             <br>
-                                                <a  class="genric-btn primary-border small circle" href="#">
-                                                    Small
-                                                </a>
+                                            @foreach($question->tags as $tag)
+                                                <button  class="genric-btn primary-border small circle m-1" href="#">
+                                                    {{$tag->tag}}
+                                                </button>
+                                            @endforeach
                                             </br>
                                     </li>
-                                    <li>
-                                            <a href="#"><h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit ?</h6></a>
-                                            <br>
-                                                <a  class="genric-btn primary-border small circle" href="#">
-                                                    Small
-                                                </a><a  class="genric-btn primary-border small circle" href="#">
-                                                    Small
-                                                </a>
-                                            </br>
-                                    </li>
-                                    
+                                @endforeach  
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 single-faculty">
                         <div class="meta-text text-center">
-                            <h4>
-                                Maths
-                            </h4>
+                        <h3>
+                                @php $cat=$categories[1]; @endphp
+                                <a href="{{url('')}}/?view=Category&id={{$cat->_id}}" style="color:black;font-size:22px">{{$cat->name}}</a>
+                            </h3>
                             <div class="info wow fadeIn" data-wow-delay=".1s" data-wow-duration="1s">
                                 <ul>
+                                @foreach ($cat->questions as $question)
                                     <li>
-                                            <a href="#"><h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit ?</h6></a>
-                                        
-                                    </li>
-                                    
-                                    <li>
-                                            <a href="#"><h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit ?</h6></a>
+                                            <a href="{{url('')}}/?view=QuestionSolve&id={{$question->_id}}"><h6>{{$question->name}}</h6></a>
                                             <br>
-                                                <a  class="genric-btn primary-border small circle" href="#">
-                                                    Small
-                                                </a>
+                                            @foreach($question->tags as $tag)
+                                                <button  class="genric-btn primary-border small circle m-1" href="#">
+                                                    {{$tag->tag}}
+                                                </button>
+                                            @endforeach
                                             </br>
                                     </li>
+                                @endforeach  
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 col-lg-6 col-md-6 col-sm-12 single-faculty">
+                        <div class="meta-text text-center">
+                        <h3>
+                                @php $cat=$categories[2]; @endphp
+                                <a href="{{url('')}}/?view=Category&id={{$cat->_id}}" style="color:black;font-size:22px">{{$cat->name}}</a>
+                            </h3>
+                            <div class="info wow fadeIn" data-wow-delay=".1s" data-wow-duration="1s">
+                                <ul>
+                                @foreach ($cat->questions as $question)
                                     <li>
-                                            <a href="#"><h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit ?</h6></a>
+                                            <a href="{{url('')}}/?view=QuestionSolve&id={{$question->_id}}"><h6>{{$question->name}}</h6></a>
                                             <br>
-                                                <a  class="genric-btn primary-border small circle" href="#">
-                                                    Small
-                                                </a><a  class="genric-btn primary-border small circle" href="#">
-                                                    Small
-                                                </a>
+                                            @foreach($question->tags as $tag)
+                                                <button  class="genric-btn primary-border small circle m-1" href="#">
+                                                    {{$tag->tag}}
+                                                </button>
+                                            @endforeach
                                             </br>
                                     </li>
+                                @endforeach  
                                     
                                 </ul>
                             </div>
@@ -137,70 +142,24 @@
                     </div>
                     <div class="mt-3 col-lg-6 col-md-6 col-sm-12 single-faculty">
                         <div class="meta-text text-center">
-                            <h4>
-                                Maths
-                            </h4>
+                        <h3>
+                                @php $cat=$categories[3]; @endphp
+                                <a href="{{url('')}}/?view=Category&id={{$cat->_id}}" style="color:black;font-size:22px">{{$cat->name}}</a>
+                            </h3>
                             <div class="info wow fadeIn" data-wow-delay=".1s" data-wow-duration="1s">
                                 <ul>
+                                @foreach ($cat->questions as $question)
                                     <li>
-                                            <a href="#"><h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit ?</h6></a>
-                                        
-                                    </li>
-                                    
-                                    <li>
-                                            <a href="#"><h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit ?</h6></a>
+                                            <a href="{{url('')}}/?view=QuestionSolve&id={{$question->_id}}"><h6>{{$question->name}}</h6></a>
                                             <br>
-                                                <a  class="genric-btn primary-border small circle" href="#">
-                                                    Small
-                                                </a>
+                                            @foreach($question->tags as $tag)
+                                                <button  class="genric-btn primary-border small circle m-1" href="#">
+                                                    {{$tag->tag}}
+                                                </button>
+                                            @endforeach
                                             </br>
                                     </li>
-                                    <li>
-                                            <a href="#"><h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit ?</h6></a>
-                                            <br>
-                                                <a  class="genric-btn primary-border small circle" href="#">
-                                                    Small
-                                                </a><a  class="genric-btn primary-border small circle" href="#">
-                                                    Small
-                                                </a>
-                                            </br>
-                                    </li>
-                                    
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-3 col-lg-6 col-md-6 col-sm-12 single-faculty">
-                        <div class="meta-text text-center">
-                            <h4>
-                                Maths
-                            </h4>
-                            <div class="info wow fadeIn" data-wow-delay=".1s" data-wow-duration="1s">
-                                <ul>
-                                    <li>
-                                            <a href="#"><h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit ?</h6></a>
-                                        
-                                    </li>
-                                    
-                                    <li>
-                                            <a href="#"><h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit ?</h6></a>
-                                            <br>
-                                                <a  class="genric-btn primary-border small circle" href="#">
-                                                    Small
-                                                </a>
-                                            </br>
-                                    </li>
-                                    <li>
-                                            <a href="#"><h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit ?</h6></a>
-                                            <br>
-                                                <a  class="genric-btn primary-border small circle" href="#">
-                                                    Small
-                                                </a><a  class="genric-btn primary-border small circle" href="#">
-                                                    Small
-                                                </a>
-                                            </br>
-                                    </li>
-                                    
+                                @endforeach  
                                 </ul>
                             </div>
                         </div>
@@ -228,7 +187,7 @@
                                 By nature, we’re creatures of habit. If it’s a challenge for you to get motivated to study, you can put this principle to work for you.
                             </p>
                         </div>
-                        <a class="primary-btn" href="courses.html">
+                        <a class="primary-btn"  href="{{url('')}}/?view=Category&id=5cacb5fcf34cdb15b5657de9">
                             Explore Questions
                         </a>
                     </div>
@@ -238,7 +197,6 @@
         <!-- End About Area -->			
 @endsection
 @section("script")
-<script type="text/javascript" tablename="{{$tablename}}" src="{{url('js/main.js')}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" src="{{url('js/common/'.$tablename.'.js')}}"></script>
+
 @endsection
 

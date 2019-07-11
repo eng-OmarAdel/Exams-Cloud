@@ -21,18 +21,20 @@
 
 										<li class="m-portlet__nav-item">
 											<div class="dropdown">
-												<button onclick="actions()" id="modal_button" data-toggle="modal" data-target="#m_modal_4" href="#" class="btn btn-brand" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-														New child track
+												<button onclick="actions()" id="modal_button" data-toggle="modal" data-target="#m_modal_4" href="#" class="btn btn-success" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														New child track <i class="la la-plus"></i>
 												</button>
 										</div>
 
 										</li>
 
-
+										<li class="m-portlet__nav-item">		<a class="btn btn-brand" href="{{url('/?view=Question&cat_id='.$_GET['track_id'].'&cat_type=2')}}">Questions<i class="la la-question"></i></a></li>
+										<li class="m-portlet__nav-item">				<a class="btn btn-brand" href="{{url('/?view=Exams&cat_id='.$_GET['track_id'].'&cat_type=2')}}">Exams <i class="la la-list-ol"></i></a></li>
+									{{--
 										<li class="m-portlet__nav-item">
 											<div class="dropdown">
 												<button class="btn btn-brand dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-														Train
+														Practice
 												</button>
 												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
 
@@ -44,6 +46,7 @@
 										</div>
 
 										</li>
+									--}}
 
 										<li class="m-portlet__nav-item"></li>
 									</ul>
