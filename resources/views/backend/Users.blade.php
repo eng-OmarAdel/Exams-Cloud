@@ -108,6 +108,6 @@
 @endsection
 @section("script")
 <script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/main.js")}}"></script>
-<script type="text/javascript" tablename="{{$tablename}}" src="{{url("js/backend/".$tablename.".js")}}"></script>
+<script type="text/javascript" tablename="{{$tablename}}" is_admin={{auth()->user()->type}} src="{{url("js/backend/".$tablename.".js")}}"></script>
 @endsection
 

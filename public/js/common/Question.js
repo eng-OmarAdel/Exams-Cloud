@@ -228,9 +228,10 @@ jQuery(document).ready(function() {
           alert("No question provided, idiot!");
         }
         else{
-          $("#tags").html("")
+          $("#tags").val("")
           $.get( "http://134.209.204.108/tagmaker_deep/?target="+quest_body, function( data ) {
-            if(data != "google(@)failed"){
+            data_length = data.replace(/\s/g, '').length
+            if(data != "google(@)failed" && data_length){
               $("#tags").val(data);
             }
             else{
