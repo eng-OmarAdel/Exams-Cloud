@@ -1,5 +1,6 @@
 var tablename=document.currentScript.getAttribute("tablename"); //1
-
+var is_admin=document.currentScript.getAttribute("is_admin"); //2
+// is_admin=""
 var DatatablesDataSourceAjaxServer = function() {
 
 	var initTable1 = function() {
@@ -28,26 +29,33 @@ var DatatablesDataSourceAjaxServer = function() {
 					title: 'Actions',
 					orderable: false,
 					render: function(data, type, full, meta) {
-                        if (full.status == "approved") {
+                        if(is_admin == "admin"){
 
-                            status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\')" href="javascript:;"><i class="la la-ban"></i> suspend</a>'
+                            if (full.status == "approved") {
 
-                        } else {
-                            status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\' )" href="javascript:;"><i class="la la-check-circle"></i> approve</a>'
+                                status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\')" href="javascript:;"><i class="la la-ban"></i> suspend</a>'
+
+                            } else {
+                                status = '<a class="dropdown-item" onclick="delete_item(\'' + full._id + '\' )" href="javascript:;"><i class="la la-check-circle"></i> approve</a>'
+                            }
+
+                            return `
+                            <span class="dropdown">
+                                <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
+                                <i class="la la-ellipsis-h"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    `+status+`
+                                </div>
+                            </span>
+                            `;
+                            // <a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
+                            // <i class="la la-edit"></i>
+                            // </a>
                         }
-
-						return `
-                        <span class="dropdown">
-                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
-                              <i class="la la-ellipsis-h"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                `+status+`
-                            </div>
-                        </span>
-                        <a href="#" onclick="fill_portlet('` + full._id + `')"  class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
-                          <i class="la la-edit"></i>
-                        </a>`;
+                        else{
+                            return ``
+                        }
 					},
 				},{
 					targets: -3,
