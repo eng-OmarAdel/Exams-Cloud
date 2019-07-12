@@ -88,6 +88,9 @@ class QuestionController extends Controller
         }
         //profanity;
         $res =  self::isOffensive($request->name);
+        while(!($res=='offensive' | $res=='not_offensive' )){
+            $res =  self::isOffensive($request->name);
+        }
         if($res != "not_offensive"){
             return response()->json(["This question has OFFENSIVE words!!"], 422);
         }
@@ -255,6 +258,9 @@ class QuestionController extends Controller
         }
         //profanity;
         $res =  self::isOffensive($request->name);
+        while(!($res=='offensive' | $res=='not_offensive' )){
+            $res =  self::isOffensive($request->name);
+        }
         if($res != "not_offensive"){
             return response()->json(["This question has OFFENSIVE words!!"], 422);
         }
