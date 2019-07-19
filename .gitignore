@@ -33,3 +33,5 @@ Homestead.json
 # for server
 /public/.htaccess
 /public/index.php
+# slight change grom server
+server.php
