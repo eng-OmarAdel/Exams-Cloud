@@ -235,7 +235,7 @@ jQuery(document).ready(function() {
               $("#tags").val(data);
             }
             else{
-              swal("the question is too short, but cheer we gonna try different way ... less accurate but will do the trick")
+              // swal("the question is too short, but cheer we gonna try different way ... less accurate but will do the trick")
               $.get( "http://134.209.204.108/tagmaker/?target="+quest_body, function( data ) {
                 if($("#is_programming").val()=="Yes"){ data+=", programming" }
                 // alert(data);
